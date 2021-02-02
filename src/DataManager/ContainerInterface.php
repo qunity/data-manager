@@ -48,7 +48,7 @@ interface ContainerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return $this
      */
-    public function setElement(string|int $path, mixed $value): self;
+    public function setElement(string | int $path, mixed $value): self;
 
     /**
      * Add elements into container data
@@ -66,7 +66,7 @@ interface ContainerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return $this
      */
-    public function addElement(string|int $path, mixed $value): self;
+    public function addElement(string | int $path, mixed $value): self;
 
     /**
      * Get elements from container data
@@ -84,7 +84,7 @@ interface ContainerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return mixed
      */
-    public function getElement(string|int $path, mixed $default = null): mixed;
+    public function getElement(string | int $path, mixed $default = null): mixed;
 
     /**
      * Check existence elements in container data
@@ -100,7 +100,7 @@ interface ContainerInterface extends ArrayAccess, IteratorAggregate
      * @param string|int $path
      * @return bool
      */
-    public function hasElement(string|int $path): bool;
+    public function hasElement(string | int $path): bool;
 
     /**
      * Remove elements from container data
@@ -116,5 +116,5 @@ interface ContainerInterface extends ArrayAccess, IteratorAggregate
      * @param string|int $path
      * @return $this
      */
-    public function delElement(string|int $path): self;
+    public function delElement(string | int $path): self;
 }

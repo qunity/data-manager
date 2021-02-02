@@ -53,10 +53,9 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function container(
-        string|int $name = null,
-        ContainerInterface|array $container = null
-    ): ContainerInterface
-    {
+        string | int $name = null,
+        ContainerInterface | array $container = null
+    ): ContainerInterface {
         if ($name === null || $name == '') {
             $name = static::DEFAULT_CONTAINER_NAME;
         }
@@ -96,11 +95,10 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function set(
-        array|string|int $path,
+        array | string | int $path,
         mixed $value = null,
-        string|int $container = null
-    ): DataManagerInterface
-    {
+        string | int $container = null
+    ): DataManagerInterface {
         if (is_array($path)) {
             $this->container($container)->setElements($path);
         } else {
@@ -113,11 +111,10 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function add(
-        array|string|int $path,
+        array | string | int $path,
         mixed $value = null,
-        string|int $container = null
-    ): DataManagerInterface
-    {
+        string | int $container = null
+    ): DataManagerInterface {
         if (is_array($path)) {
             $this->container($container)->addElements($path);
         } else {
@@ -130,11 +127,10 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function get(
-        array|string|int $path = null,
+        array | string | int $path = null,
         mixed $default = null,
-        string|int $container = null
-    ): mixed
-    {
+        string | int $container = null
+    ): mixed {
         if ($path === null || is_array($path)) {
             return $this->container($container)->getElements($path);
         } else {
@@ -146,10 +142,9 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function has(
-        array|string|int $path = null,
-        string|int $container = null
-    ): bool
-    {
+        array | string | int $path = null,
+        string | int $container = null
+    ): bool {
         if ($path === null || is_array($path)) {
             return $this->container($container)->hasElements($path);
         } else {
@@ -161,10 +156,9 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @inheritDoc
      */
     public function del(
-        array|string|int $path = null,
-        string|int $container = null
-    ): DataManagerInterface
-    {
+        array | string | int $path = null,
+        string | int $container = null
+    ): DataManagerInterface {
         if ($path === null || is_array($path)) {
             $this->container($container)->delElements($path);
         } else {

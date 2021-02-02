@@ -30,8 +30,8 @@ interface DataManagerInterface
      * @return ContainerInterface
      */
     public function container(
-        string|int $name = null,
-        ContainerInterface|array $container = null
+        string | int $name = null,
+        ContainerInterface | array $container = null
     ): ContainerInterface;
 
     /**
@@ -44,9 +44,9 @@ interface DataManagerInterface
      * @return $this
      */
     public function set(
-        array|string|int $path,
+        array | string | int $path,
         mixed $value = null,
-        string|int $container = null
+        string | int $container = null
     ): self;
 
     /**
@@ -59,9 +59,9 @@ interface DataManagerInterface
      * @return $this
      */
     public function add(
-        array|string|int $path,
+        array | string | int $path,
         mixed $value = null,
-        string|int $container = null
+        string | int $container = null
     ): self;
 
     /**
@@ -74,9 +74,9 @@ interface DataManagerInterface
      * @return mixed
      */
     public function get(
-        array|string|int $path = null,
+        array | string | int $path = null,
         mixed $default = null,
-        string|int $container = null
+        string | int $container = null
     ): mixed;
 
     /**
@@ -88,8 +88,8 @@ interface DataManagerInterface
      * @return bool
      */
     public function has(
-        array|string|int $path = null,
-        string|int $container = null
+        array | string | int $path = null,
+        string | int $container = null
     ): bool;
 
     /**
@@ -101,7 +101,7 @@ interface DataManagerInterface
      * @return $this
      */
     public function del(
-        array|string|int $path = null,
-        string|int $container = null
+        array | string | int $path = null,
+        string | int $container = null
     ): self;
 }

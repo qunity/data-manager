@@ -40,10 +40,9 @@ class Test extends TestCase
     public function testContainer(
         mixed $expectedInstanceOf,
         mixed $expectedData,
-        string|int $name,
-        ContainerInterface|array $container
-    )
-    {
+        string | int $name,
+        ContainerInterface | array $container
+    ) {
         $dataManager = DataManagerFactory::create();
         $this->assertInstanceOf($expectedInstanceOf, $dataManager->container($name, $container));
         $this->assertEquals($expectedData, $dataManager->container($name)->getElements());
@@ -61,8 +60,7 @@ class Test extends TestCase
         DataManagerInterface $dataManager,
         string $method,
         mixed ...$args
-    )
-    {
+    ) {
         $this->assertEquals($expected, call_user_func_array([$dataManager, $method], $args));
     }
 

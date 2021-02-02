@@ -30,7 +30,7 @@ class Recursive
      *
      * @return void
      */
-    public static function set(array $keys, mixed $value, ContainerInterface|array &$data): void
+    public static function set(array $keys, mixed $value, ContainerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -57,7 +57,7 @@ class Recursive
      *
      * @return void
      */
-    public static function add(array $keys, mixed $value, ContainerInterface|array &$data): void
+    public static function add(array $keys, mixed $value, ContainerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -145,7 +145,7 @@ class Recursive
      *
      * @return mixed
      */
-    public static function get(array $keys, ContainerInterface|array $data, mixed $default = null): mixed
+    public static function get(array $keys, ContainerInterface | array $data, mixed $default = null): mixed
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -171,7 +171,7 @@ class Recursive
      *
      * @return bool
      */
-    public static function has(array $keys, ContainerInterface|array $data): bool
+    public static function has(array $keys, ContainerInterface | array $data): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -197,7 +197,7 @@ class Recursive
      *
      * @return void
      */
-    public static function del(array $keys, ContainerInterface|array &$data): void
+    public static function del(array $keys, ContainerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {

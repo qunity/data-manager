@@ -56,7 +56,7 @@ abstract class AbstractContainer implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function setElement(string|int $path, mixed $value): ContainerInterface
+    public function setElement(string | int $path, mixed $value): ContainerInterface
     {
         if ($path != '') {
             if (Converter::isPath($path)) {
@@ -101,7 +101,7 @@ abstract class AbstractContainer implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function getElement(string|int $path, mixed $default = null): mixed
+    public function getElement(string | int $path, mixed $default = null): mixed
     {
         if ($path != '') {
             if (Converter::isPath($path)) {
@@ -140,7 +140,7 @@ abstract class AbstractContainer implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function hasElement(string|int $path): bool
+    public function hasElement(string | int $path): bool
     {
         if ($path != '') {
             if (Converter::isPath($path)) {
@@ -163,7 +163,7 @@ abstract class AbstractContainer implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function delElement(string|int $path): ContainerInterface
+    public function delElement(string | int $path): ContainerInterface
     {
         if ($path != '') {
             if (Converter::isPath($path)) {
@@ -191,7 +191,7 @@ abstract class AbstractContainer implements ContainerInterface
     /**
      * @inheritDoc
      */
-    public function addElement(string|int $path, mixed $value): ContainerInterface
+    public function addElement(string | int $path, mixed $value): ContainerInterface
     {
         if ($path != '') {
             if (Converter::isPath($path)) {

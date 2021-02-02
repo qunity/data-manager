@@ -29,7 +29,7 @@ class Test extends TestCase
      * @param string|int $path
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, string|int $path)
+    public function testIsPath(mixed $expected, string | int $path)
     {
         $this->assertEquals($expected, Converter::isPath($path));
     }
@@ -39,7 +39,7 @@ class Test extends TestCase
      * @param string|int $path
      * @dataProvider providerGetKeysByPath
      */
-    public function testGetKeysByPath(mixed $expected, string|int $path)
+    public function testGetKeysByPath(mixed $expected, string | int $path)
     {
         $this->assertEquals($expected, Converter::getKeysByPath($path));
     }
@@ -60,7 +60,7 @@ class Test extends TestCase
      * @param string $prefix
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(mixed $expected, string|int $path, string $prefix)
+    public function testGetMethodByPath(mixed $expected, string | int $path, string $prefix)
     {
         $this->assertEquals($expected, Converter::getMethodByPath($path, $prefix));
     }

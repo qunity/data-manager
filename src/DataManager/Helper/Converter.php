@@ -34,7 +34,7 @@ class Converter
      * @param string|int $path
      * @return array
      */
-    public static function getKeysByPath(string|int $path): array
+    public static function getKeysByPath(string | int $path): array
     {
         $result = [];
         if (($path = self::clearPath($path)) != '') {
@@ -53,7 +53,7 @@ class Converter
      * @param string|int $path
      * @return string
      */
-    protected static function clearPath(string|int $path): string
+    protected static function clearPath(string | int $path): string
     {
         $result = '';
         if ($path != '') {
@@ -82,7 +82,7 @@ class Converter
      *
      * @return mixed
      */
-    protected static function getCache(?int $id, string|int $key): mixed
+    protected static function getCache(?int $id, string | int $key): mixed
     {
         if ($id !== null && isset(self::$cache[$id][$key])) {
             return self::$cache[$id][$key];
@@ -97,7 +97,7 @@ class Converter
      * @param string|int $key
      * @param mixed $value
      */
-    protected static function setCache(?int &$id, string|int $key, mixed $value): void
+    protected static function setCache(?int &$id, string | int $key, mixed $value): void
     {
         if ($id === null) {
             $id = array_key_last(self::$cache) + 1;
@@ -119,7 +119,7 @@ class Converter
         if (($keys = self::clearKeys($keys)) != []) {
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
-                array_walk($keys, function (string|int &$key): void {
+                array_walk($keys, function (string | int &$key): void {
                     $key = explode(ContainerInterface::DELIMITER_PATH, $key);
                 });
                 $result = implode(ContainerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
@@ -142,7 +142,7 @@ class Converter
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 $keys = array_diff($keys, ['', null]);
-                array_walk($keys, function (string|int &$key): void {
+                array_walk($keys, function (string | int &$key): void {
                     $key = self::clearPath($key);
                 });
                 $result = $keys;
@@ -171,7 +171,7 @@ class Converter
      *
      * @return string
      */
-    public static function getMethodByPath(string|int $path, string $prefix = ''): string
+    public static function getMethodByPath(string | int $path, string $prefix = ''): string
     {
         $result = '';
         if (($path = self::clearPath($path)) != '') {
@@ -231,7 +231,7 @@ class Converter
      * @param string|int $path
      * @return bool
      */
-    public static function isPath(string|int $path): bool
+    public static function isPath(string | int $path): bool
     {
         $result = false;
         if (($path = self::clearPath($path)) != '') {

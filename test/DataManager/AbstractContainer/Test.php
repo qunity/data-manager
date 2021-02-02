@@ -43,7 +43,7 @@ class Test extends TestCase
      * @param mixed $value
      * @dataProvider providerArrayAccess
      */
-    public function testArrayAccess(string|int $path, mixed $value)
+    public function testArrayAccess(string | int $path, mixed $value)
     {
         $object = ContainerFactory::create();
 

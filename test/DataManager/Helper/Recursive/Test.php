@@ -42,7 +42,7 @@ class Test extends TestCase
      * @param ContainerInterface|array $data
      * @dataProvider providerSet
      */
-    public function testSet(mixed $expected, array $keys, mixed $value, ContainerInterface|array $data)
+    public function testSet(mixed $expected, array $keys, mixed $value, ContainerInterface | array $data)
     {
         Recursive::set($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -55,7 +55,7 @@ class Test extends TestCase
      * @param ContainerInterface|array $data
      * @dataProvider providerAdd
      */
-    public function testAdd(mixed $expected, array $keys, mixed $value, ContainerInterface|array $data)
+    public function testAdd(mixed $expected, array $keys, mixed $value, ContainerInterface | array $data)
     {
         Recursive::add($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -68,7 +68,7 @@ class Test extends TestCase
      * @param mixed $default
      * @dataProvider providerGet
      */
-    public function testGet(mixed $expected, array $keys, ContainerInterface|array $data, mixed $default)
+    public function testGet(mixed $expected, array $keys, ContainerInterface | array $data, mixed $default)
     {
         $this->assertEquals($expected, Recursive::get($keys, $data, $default));
     }
@@ -79,7 +79,7 @@ class Test extends TestCase
      * @param ContainerInterface|array $data
      * @dataProvider providerHas
      */
-    public function testHas(mixed $expected, array $keys, ContainerInterface|array $data)
+    public function testHas(mixed $expected, array $keys, ContainerInterface | array $data)
     {
         $this->assertEquals($expected, Recursive::has($keys, $data));
     }
@@ -90,7 +90,7 @@ class Test extends TestCase
      * @param ContainerInterface|array $data
      * @dataProvider providerDel
      */
-    public function testDel(mixed $expected, array $keys, ContainerInterface|array $data)
+    public function testDel(mixed $expected, array $keys, ContainerInterface | array $data)
     {
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
