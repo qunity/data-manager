@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Qunity\Component\DataManager\Helper;
 
 use JetBrains\PhpStorm\Pure;
-use Qunity\Component\DataManager\ContainerInterface;
+use Qunity\Component\DataManagerInterface;
 
 /**
  * Class Converter
@@ -40,7 +40,7 @@ class Converter
         if (($path = self::clearPath($path)) != '') {
             static $cacheId;
             if (($result = self::getCache($cacheId, $path)) === null) {
-                $result = array_reverse(explode(ContainerInterface::DELIMITER_PATH, $path));
+                $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $path));
                 self::setCache($cacheId, $path, $result);
             }
         }
@@ -60,14 +60,15 @@ class Converter
             static $cacheId;
             if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = preg_replace([
-                    '%' . ContainerInterface::DELIMITER_KEY . '{2,}%',
-                    '%[^a-z0-9]*' . ContainerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
+                    '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
+                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
                 ], [
-                    ContainerInterface::DELIMITER_KEY,
-                    ContainerInterface::DELIMITER_PATH
-                ], strtolower(
-                    trim((string)$path, ' ' . ContainerInterface::DELIMITER_KEY . ContainerInterface::DELIMITER_PATH)
-                ));
+                    DataManagerInterface::DELIMITER_KEY,
+                    DataManagerInterface::DELIMITER_PATH
+                ], strtolower(trim(
+                    (string)$path,
+                    ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
+                )));
                 self::setCache($cacheId, $path, $result);
             }
         }
@@ -120,9 +121,9 @@ class Converter
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (string | int &$key): void {
-                    $key = explode(ContainerInterface::DELIMITER_PATH, $key);
+                    $key = explode(DataManagerInterface::DELIMITER_PATH, $key);
                 });
-                $result = implode(ContainerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
+                $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
                 self::setCache($cacheId, $keysId, $result);
             }
         }
@@ -176,15 +177,15 @@ class Converter
         $result = '';
         if (($path = self::clearPath($path)) != '') {
             if ($prefix != '') {
-                $path = $prefix . ContainerInterface::DELIMITER_KEY . $path;
+                $path = $prefix . DataManagerInterface::DELIMITER_KEY . $path;
             }
             static $cacheId;
             if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = str_replace(
-                    ContainerInterface::DELIMITER_PATH,
-                    ContainerInterface::DELIMITER_KEY,
+                    DataManagerInterface::DELIMITER_PATH,
+                    DataManagerInterface::DELIMITER_KEY,
                     preg_replace_callback(
-                        '%' . ContainerInterface::DELIMITER_KEY . '[a-z0-9]%',
+                        '%' . DataManagerInterface::DELIMITER_KEY . '[a-z0-9]%',
                         function (array $matches): string {
                             return strtoupper(substr(reset($matches), 1));
                         },
@@ -215,8 +216,8 @@ class Converter
             static $cacheId;
             if (($result = self::getCache($cacheId, $method)) === null) {
                 $result = self::clearPath(preg_replace(
-                    ['%' . ContainerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
-                    [ContainerInterface::DELIMITER_PATH, ContainerInterface::DELIMITER_KEY . "$1"],
+                    ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
+                    [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . "$1"],
                     $method
                 ));
                 self::setCache($cacheId, $method, $result);
@@ -237,7 +238,7 @@ class Converter
         if (($path = self::clearPath($path)) != '') {
             static $cacheId;
             if (($result = self::getCache($cacheId, $path)) === null) {
-                $result = str_contains($path, ContainerInterface::DELIMITER_PATH);
+                $result = str_contains($path, DataManagerInterface::DELIMITER_PATH);
                 self::setCache($cacheId, $path, $result);
             }
         }

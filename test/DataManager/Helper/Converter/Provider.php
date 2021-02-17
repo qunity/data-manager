@@ -58,7 +58,7 @@ trait Provider
             ['0', [0]],
             ['0/0/0/0', [0, 0, 0, 0]],
             ['key_1/key_2/key_3/0', ['0', 'key_3', 'key_2', 'key_1']],
-            ['key_1/key_2/key_3/0', ['', '0', 'key_3', 'key_2', 'key_1', '']],
+            ['key_1/key_2/key_3/0', ['', 0, 'key_3', 'key_2', 'key_1', '']],
             ['key_1/key_2/key_3/0', [null, '_0_', 'key_3', '', '_key_2', 'key_1', null]],
             ['key_1/key_2/key_3/0', ['', null, '_0_', 'key_3', '', 'KEY_2_', 'key_1', null, '']],
             ['key_1/key_2/key_3/0', ['', null, '_0_', 'key_3', '', '/key_2/ _KEY_1 ', null, '']],
