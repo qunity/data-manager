@@ -22,20 +22,20 @@ use LogicException;
 class DataManagerFactory
 {
     /**
-     * Create new data manager instance
+     * Create new DataManager instance
      *
-     * @param array $containers
+     * @param array $data
      * @param string $class
      *
      * @return DataManagerInterface
      * @throws LogicException
      */
-    public static function create(array $containers = [], string $class = DataManager::class): DataManagerInterface
+    public static function create(array $data = [], string $class = DataManager::class): DataManagerInterface
     {
-        $instance = new $class($containers);
+        $instance = new $class($data); // TODO: fix for getting through object-manager
         if (!($instance instanceof DataManagerInterface)) {
             $interface = DataManagerInterface::class;
-            throw new LogicException("Class ${class} does not implement the interface ${interface}");
+            throw new LogicException("Class {$class} does not implement the interface {$interface}");
         }
         return $instance;
     }

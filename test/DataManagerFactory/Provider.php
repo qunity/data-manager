@@ -15,7 +15,6 @@ namespace Qunity\UnitTest\Component\DataManagerFactory;
 
 use LogicException;
 use Qunity\Component\DataManager;
-use Qunity\Component\DataManager\ContainerFactory;
 use Qunity\Component\DataManagerInterface;
 use stdClass;
 
@@ -38,13 +37,8 @@ trait Provider
                 DataManager::class
             ], [
                 DataManagerInterface::class,
-                new AnotherDataManager(['another' => ['data' => ['value']]]),
-                ['another' => ['data' => ['value']]],
-                AnotherDataManager::class
-            ], [
-                DataManagerInterface::class,
-                new AnotherDataManager(['another' => ContainerFactory::create(['data' => ['value']])]),
-                ['another' => ContainerFactory::create(['data' => ['value']])],
+                new AnotherDataManager(['another' => ['key' => ['value']]]),
+                ['another' => ['key' => ['value']]],
                 AnotherDataManager::class
             ],
         ];

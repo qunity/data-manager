@@ -27,13 +27,13 @@ class Test extends TestCase
     /**
      * @param mixed $expectedInstanceOf
      * @param mixed $expectedData
-     * @param array $containers
+     * @param array $data
      * @param string $class
      * @dataProvider providerSuccessCreate
      */
-    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $containers, string $class)
+    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $data, string $class)
     {
-        $dataManager = DataManagerFactory::create($containers, $class);
+        $dataManager = DataManagerFactory::create($data, $class);
         $this->assertInstanceOf($expectedInstanceOf, $dataManager);
         $this->assertEquals($expectedData, $dataManager);
     }
@@ -41,14 +41,14 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array $containers
+     * @param array $data
      * @param string $class
      * @dataProvider providerErrorCreate
      */
-    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, array $containers, string $class)
+    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, array $data, string $class)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        DataManagerFactory::create($containers, $class);
+        DataManagerFactory::create($data, $class);
     }
 }
