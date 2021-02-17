@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\AbstractContainer;
+namespace Qunity\UnitTest\Component\AbstractDataManager;
 
 use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Trait Helper
- * @package Qunity\UnitTest\Component\DataManager\AbstractContainer
+ * @package Qunity\UnitTest\Component\AbstractDataManager
  */
 trait Helper
 {

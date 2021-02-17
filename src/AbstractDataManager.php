@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Qunity\Component;
 
-use Qunity\Component\DataManager\Container;
-use Qunity\Component\DataManager\ContainerFactory;
-use Qunity\Component\DataManager\ContainerInterface;
+use ArrayIterator;
 use Qunity\Component\DataManager\Helper\Converter;
+use Qunity\Component\DataManager\Helper\Recursive;
+use Traversable;
 
 /**
  * Class AbstractDataManager
@@ -24,52 +24,19 @@ use Qunity\Component\DataManager\Helper\Converter;
  */
 abstract class AbstractDataManager implements DataManagerInterface
 {
-    /**#@+
-     * Default container information
-     */
-    protected const DEFAULT_CONTAINER_NAME = 'main';
-    protected const DEFAULT_CONTAINER_DATA = [];
-    protected const DEFAULT_CONTAINER_CLASS = Container::class;
-    /**#@-*/
-
     /**
-     * Containers list
-     * @var ContainerInterface[]
+     * Object data
+     * @var array
      */
-    protected array $containers = [];
+    protected array $data = [];
 
     /**
      * AbstractDataManager constructor
-     * @param ContainerInterface[]|array $containers
+     * @param array $data
      */
-    public function __construct(array $containers = [])
+    public function __construct(array $data = [])
     {
-        foreach ($containers as $name => $container) {
-            $this->container($name, $container);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function container(
-        string | int $name = null,
-        ContainerInterface | array $container = null
-    ): ContainerInterface {
-        if ($name === null || $name == '') {
-            $name = static::DEFAULT_CONTAINER_NAME;
-        }
-        if (!isset($this->containers[$name])) {
-            if ($container instanceof ContainerInterface) {
-                $this->containers[$name] = $container;
-            } else {
-                $this->containers[$name] = ContainerFactory::create(
-                    ($container['data'] ?? static::DEFAULT_CONTAINER_DATA),
-                    ($container['class'] ?? static::DEFAULT_CONTAINER_CLASS)
-                );
-            }
-        }
-        return $this->containers[$name];
+        $this->set($data);
     }
 
     /**
@@ -82,27 +49,69 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function __call(string $method, array $args): mixed
     {
-        $keys = Converter::getKeysByPath(Converter::getPathByMethod($method, 3));
-        $param[] = Converter::getPathByKeys(array_slice($keys, 0, -1));
-        if ($args != []) {
-            $param[] = reset($args);
-        }
-        $param[] = end($keys);
-        return call_user_func_array([$this, substr($method, 0, 3)], $param);
+        return call_user_func_array(
+            [$this, substr($method, 0, 3)],
+            [Converter::getPathByMethod($method, 3), ...$args]
+        );
     }
 
     /**
      * @inheritDoc
      */
-    public function set(
-        array | string | int $path,
-        mixed $value = null,
-        string | int $container = null
-    ): DataManagerInterface {
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->get());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->del($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function set(array | string | int $path, mixed $value = null): DataManagerInterface
+    {
         if (is_array($path)) {
-            $this->container($container)->setElements($path);
-        } else {
-            $this->container($container)->setElement($path, $value);
+            $this->data = [];
+            $data = $path;
+            foreach ($data as $path => $value) {
+                $this->set($path, $value);
+            }
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                Recursive::set(Converter::getKeysByPath($path), $value, $this->data);
+            } else {
+                $this->data[$path] = $value;
+            }
         }
         return $this;
     }
@@ -110,15 +119,21 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function add(
-        array | string | int $path,
-        mixed $value = null,
-        string | int $container = null
-    ): DataManagerInterface {
+    public function add(array | string | int $path, mixed $value = null): DataManagerInterface
+    {
         if (is_array($path)) {
-            $this->container($container)->addElements($path);
-        } else {
-            $this->container($container)->addElement($path, $value);
+            $data = $path;
+            foreach ($data as $path => $value) {
+                $this->add($path, $value);
+            }
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                Recursive::add(Converter::getKeysByPath($path), $value, $this->data);
+            } elseif (isset($this->data[$path])) {
+                $this->data[$path] = Recursive::join($this->data[$path], $value);
+            } else {
+                $this->data[$path] = $value;
+            }
         }
         return $this;
     }
@@ -126,43 +141,78 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function get(
-        array | string | int $path = null,
-        mixed $default = null,
-        string | int $container = null
-    ): mixed {
-        if ($path === null || is_array($path)) {
-            return $this->container($container)->getElements($path);
-        } else {
-            return $this->container($container)->getElement($path, $default);
+    public function get(array | string | int $path = null, mixed $default = null): mixed
+    {
+        if ($path === null) {
+            return $this->data;
+        } elseif (is_array($path)) {
+            $data = [];
+            $paths = $path;
+            foreach ($paths as $value) {
+                if (is_array($value)) {
+                    if (!isset($value['default'])) {
+                        $value['default'] = $default;
+                    }
+                    list('path' => $path, 'default' => $default) = $value;
+                } else {
+                    list('path' => $path, 'default' => $default) = ['path' => $value, 'default' => $default];
+                }
+                $data[$path] = $this->get($path, $default);
+            }
+            return $data;
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                return Recursive::get(Converter::getKeysByPath($path), $this->data, $default);
+            } elseif (isset($this->data[$path])) {
+                return $this->data[$path];
+            }
         }
+        return $default;
     }
 
     /**
      * @inheritDoc
      */
-    public function has(
-        array | string | int $path = null,
-        string | int $container = null
-    ): bool {
-        if ($path === null || is_array($path)) {
-            return $this->container($container)->hasElements($path);
-        } else {
-            return $this->container($container)->hasElement($path);
+    public function has(array | string | int $path = null): bool
+    {
+        if ($path === null) {
+            return (bool)$this->data;
+        } elseif (is_array($path)) {
+            $paths = $path;
+            foreach ($paths as $path) {
+                if (!$this->has($path)) {
+                    return false;
+                }
+            }
+            return (bool)$paths;
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                return Recursive::has(Converter::getKeysByPath($path), $this->data);
+            } else {
+                return isset($this->data[$path]);
+            }
         }
+        return false;
     }
 
     /**
      * @inheritDoc
      */
-    public function del(
-        array | string | int $path = null,
-        string | int $container = null
-    ): DataManagerInterface {
-        if ($path === null || is_array($path)) {
-            $this->container($container)->delElements($path);
-        } else {
-            $this->container($container)->delElement($path);
+    public function del(array | string | int $path = null): DataManagerInterface
+    {
+        if ($path === null) {
+            $this->data = [];
+        } elseif (is_array($path)) {
+            $paths = $path;
+            foreach ($paths as $path) {
+                $this->del($path);
+            }
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                Recursive::del(Converter::getKeysByPath($path), $this->data);
+            } else {
+                unset($this->data[$path]);
+            }
         }
         return $this;
     }

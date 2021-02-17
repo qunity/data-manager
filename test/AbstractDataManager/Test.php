@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\ContainerInterface;
 use Qunity\Component\DataManagerFactory;
 use Qunity\Component\DataManagerInterface;
-use Qunity\UnitTest\Component\DataManager\AbstractContainer\Helper as AbstractContainerHelper;
-use Qunity\UnitTest\Component\DataManager\AbstractContainer\Provider as AbstractContainerProvider;
 
 /**
  * Class Test
@@ -27,25 +25,38 @@ use Qunity\UnitTest\Component\DataManager\AbstractContainer\Provider as Abstract
 class Test extends TestCase
 {
     use Provider;
-    use AbstractContainerHelper;
-    use AbstractContainerProvider;
+    use Helper;
 
     /**
-     * @param mixed $expectedInstanceOf
-     * @param mixed $expectedData
-     * @param string|int $name
-     * @param ContainerInterface|array $container
-     * @dataProvider providerContainer
+     * @param mixed $expected
+     * @param DataManagerInterface $container
+     * @throws Exception
+     * @dataProvider providerGetIterator
      */
-    public function testContainer(
-        mixed $expectedInstanceOf,
-        mixed $expectedData,
-        string | int $name,
-        ContainerInterface | array $container
-    ) {
-        $dataManager = DataManagerFactory::create();
-        $this->assertInstanceOf($expectedInstanceOf, $dataManager->container($name, $container));
-        $this->assertEquals($expectedData, $dataManager->container($name)->getElements());
+    public function testGetIterator(mixed $expected, DataManagerInterface $container)
+    {
+        $this->assertEquals($expected, $container->getIterator());
+    }
+
+    /**
+     * @param string|int $path
+     * @param mixed $value
+     * @dataProvider providerArrayAccess
+     */
+    public function testArrayAccess(string | int $path, mixed $value)
+    {
+        $object = DataManagerFactory::create();
+
+        $this->assertFalse(isset($object[$path]));
+        $this->assertNull($object[$path]);
+        $object[$path] = $value;
+
+        $this->assertTrue(isset($object[$path]));
+        $this->assertEquals($value, $object[$path]);
+
+        unset($object[$path]);
+        $this->assertFalse(isset($object[$path]));
+        $this->assertNull($object[$path]);
     }
 
     /**

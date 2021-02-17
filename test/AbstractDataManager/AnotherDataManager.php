@@ -21,11 +21,5 @@ use Qunity\Component\DataManager;
  */
 class AnotherDataManager extends DataManager
 {
-    /**#@+
-     * @inheritDoc
-     */
-    protected const DEFAULT_CONTAINER_NAME = 'another';
-    protected const DEFAULT_CONTAINER_DATA = ['test' => 'value'];
-    protected const DEFAULT_CONTAINER_CLASS = AnotherContainer::class;
-    /**#@-*/
+    // code...
 }
