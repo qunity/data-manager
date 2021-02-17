@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
-use Qunity\Component\DataManager\ContainerInterface;
+use Qunity\Component\DataManagerInterface;
 
 /**
  * Class Recursive
@@ -26,21 +26,21 @@ class Recursive
      *
      * @param array $keys
      * @param mixed $value
-     * @param ContainerInterface|array $data
+     * @param DataManagerInterface|array $data
      *
      * @return void
      */
-    public static function set(array $keys, mixed $value, ContainerInterface | array &$data): void
+    public static function set(array $keys, mixed $value, DataManagerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof ContainerInterface))) {
+                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof DataManagerInterface))) {
                     $data[$key] = [];
                 }
                 if (is_array($data[$key])) {
                     self::set($keys, $value, $data[$key]);
-                } elseif ($data[$key] instanceof ContainerInterface) {
-                    $data[$key]->setElement(Converter::getPathByKeys($keys), $value);
+                } elseif ($data[$key] instanceof DataManagerInterface) {
+                    $data[$key]->set(Converter::getPathByKeys($keys), $value);
                 }
             } else {
                 $data[$key] = $value;
@@ -53,21 +53,21 @@ class Recursive
      *
      * @param array $keys
      * @param mixed $value
-     * @param ContainerInterface|array $data
+     * @param DataManagerInterface|array $data
      *
      * @return void
      */
-    public static function add(array $keys, mixed $value, ContainerInterface | array &$data): void
+    public static function add(array $keys, mixed $value, DataManagerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof ContainerInterface))) {
+                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof DataManagerInterface))) {
                     $data[$key] = [];
                 }
                 if (is_array($data[$key])) {
                     self::add($keys, $value, $data[$key]);
-                } elseif ($data[$key] instanceof ContainerInterface) {
-                    $data[$key]->addElement(Converter::getPathByKeys($keys), $value);
+                } elseif ($data[$key] instanceof DataManagerInterface) {
+                    $data[$key]->add(Converter::getPathByKeys($keys), $value);
                 }
             } elseif (isset($data[$key])) {
                 $data[$key] = self::join($data[$key], $value);
@@ -78,7 +78,7 @@ class Recursive
     }
 
     /**
-     * Join data (arrays, containers, etc.)
+     * Join data (arrays, DataManager`s, etc.)
      *
      * @param mixed ...$items
      * @return mixed
@@ -89,16 +89,16 @@ class Recursive
             if (is_array($carry)) {
                 if (is_array($item)) {
                     return self::joinArrays($carry, $item);
-                } elseif ($item instanceof ContainerInterface) {
-                    return $item->setElements(self::join($carry, $item->getElements()));
+                } elseif ($item instanceof DataManagerInterface) {
+                    return $item->set(self::join($carry, $item->get()));
                 } else {
                     return array_merge($carry, (array)$item);
                 }
-            } elseif ($carry instanceof ContainerInterface) {
+            } elseif ($carry instanceof DataManagerInterface) {
                 if (is_array($item)) {
-                    return $carry->addElements($item);
-                } elseif ($item instanceof ContainerInterface) {
-                    return $item->setElements(self::join($carry->getElements(), $item->getElements()));
+                    return $carry->add($item);
+                } elseif ($item instanceof DataManagerInterface) {
+                    return $item->set(self::join($carry->get(), $item->get()));
                 } else {
                     return $item;
                 }
@@ -121,8 +121,8 @@ class Recursive
                 foreach ($item as $key => $value) {
                     if (isset($carry[$key]) && is_array($value)) {
                         $carry[$key] = self::join($carry[$key], $value);
-                    } elseif (isset($carry[$key]) && $value instanceof ContainerInterface) {
-                        $carry[$key] = $value->setElements(self::join($carry[$key], $value->getElements()));
+                    } elseif (isset($carry[$key]) && $value instanceof DataManagerInterface) {
+                        $carry[$key] = $value->set(self::join($carry[$key], $value->get()));
                     } elseif (is_numeric($key)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {
@@ -140,20 +140,20 @@ class Recursive
      * Get element recursively
      *
      * @param array $keys
-     * @param ContainerInterface|array $data
+     * @param DataManagerInterface|array $data
      * @param mixed $default
      *
      * @return mixed
      */
-    public static function get(array $keys, ContainerInterface | array $data, mixed $default = null): mixed
+    public static function get(array $keys, DataManagerInterface | array $data, mixed $default = null): mixed
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
                     if (is_array($data[$key])) {
                         return self::get($keys, $data[$key], $default);
-                    } elseif ($data[$key] instanceof ContainerInterface) {
-                        return $data[$key]->getElement(Converter::getPathByKeys($keys), $default);
+                    } elseif ($data[$key] instanceof DataManagerInterface) {
+                        return $data[$key]->get(Converter::getPathByKeys($keys), $default);
                     }
                 }
             } elseif (isset($data[$key])) {
@@ -167,19 +167,19 @@ class Recursive
      * Check existence element recursively
      *
      * @param array $keys
-     * @param ContainerInterface|array $data
+     * @param DataManagerInterface|array $data
      *
      * @return bool
      */
-    public static function has(array $keys, ContainerInterface | array $data): bool
+    public static function has(array $keys, DataManagerInterface | array $data): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
                     if (is_array($data[$key])) {
                         return self::has($keys, $data[$key]);
-                    } elseif ($data[$key] instanceof ContainerInterface) {
-                        return $data[$key]->hasElement(Converter::getPathByKeys($keys));
+                    } elseif ($data[$key] instanceof DataManagerInterface) {
+                        return $data[$key]->has(Converter::getPathByKeys($keys));
                     }
                 }
             } else {
@@ -193,19 +193,19 @@ class Recursive
      * Remove element recursively
      *
      * @param array $keys
-     * @param ContainerInterface|array $data
+     * @param DataManagerInterface|array $data
      *
      * @return void
      */
-    public static function del(array $keys, ContainerInterface | array &$data): void
+    public static function del(array $keys, DataManagerInterface | array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
                     if (is_array($data[$key])) {
                         self::del($keys, $data[$key]);
-                    } elseif ($data[$key] instanceof ContainerInterface) {
-                        $data[$key]->delElement(Converter::getPathByKeys($keys));
+                    } elseif ($data[$key] instanceof DataManagerInterface) {
+                        $data[$key]->del(Converter::getPathByKeys($keys));
                     }
                 }
             } else {
