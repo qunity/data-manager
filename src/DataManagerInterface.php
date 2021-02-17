@@ -13,95 +13,68 @@ declare(strict_types=1);
 
 namespace Qunity\Component;
 
-use Qunity\Component\DataManager\ContainerInterface;
+use ArrayAccess;
+use IteratorAggregate;
 
 /**
  * Interface DataManagerInterface
  * @package Qunity\Component
  */
-interface DataManagerInterface
+interface DataManagerInterface extends ArrayAccess, IteratorAggregate
 {
     /**
-     * Get exist / create new container
-     *
-     * @param string|int|null $name
-     * @param ContainerInterface|array|null $container
-     *
-     * @return ContainerInterface
+     * Path delimiter for item
      */
-    public function container(
-        string | int $name = null,
-        ContainerInterface | array $container = null
-    ): ContainerInterface;
+    public const DELIMITER_PATH = '/';
 
     /**
-     * Set data into container
+     * Key delimiter for item
+     */
+    public const DELIMITER_KEY = '_';
+
+    /**
+     * Set data into object
      *
      * @param array|string|int $path
      * @param mixed $value
-     * @param string|int|null $container
      *
      * @return $this
      */
-    public function set(
-        array | string | int $path,
-        mixed $value = null,
-        string | int $container = null
-    ): self;
+    public function set(array | string | int $path, mixed $value = null): self;
 
     /**
-     * Add data into container
+     * Add data into object
      *
      * @param array|string|int $path
      * @param mixed $value
-     * @param string|int|null $container
      *
      * @return $this
      */
-    public function add(
-        array | string | int $path,
-        mixed $value = null,
-        string | int $container = null
-    ): self;
+    public function add(array | string | int $path, mixed $value = null): self;
 
     /**
-     * Get data from container
+     * Get data from object
      *
      * @param array|string|int|null $path
      * @param mixed $default
-     * @param string|int|null $container
      *
      * @return mixed
      */
-    public function get(
-        array | string | int $path = null,
-        mixed $default = null,
-        string | int $container = null
-    ): mixed;
+    public function get(array | string | int $path = null, mixed $default = null): mixed;
 
     /**
-     * Check existence data in container
+     * Check existence data in object
      *
      * @param array|string|int|null $path
-     * @param string|int|null $container
-     *
      * @return bool
      */
-    public function has(
-        array | string | int $path = null,
-        string | int $container = null
-    ): bool;
+    public function has(array | string | int $path = null): bool;
 
     /**
-     * Remove data from container
+     * Remove data from object
      *
      * @param array|string|int|null $path
-     * @param string|int|null $container
-     *
      * @return $this
      */
-    public function del(
-        array | string | int $path = null,
-        string | int $container = null
-    ): self;
+    public function del(array | string | int $path = null): self;
 }
