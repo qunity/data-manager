@@ -25,13 +25,16 @@ class DataManagerFactory
      * Create new manager instance
      *
      * @param array $data
-     * @param string $class
+     * @param string|null $class
      *
      * @return DataManagerInterface
      * @throws LogicException
      */
-    public static function create(array $data = [], string $class = DataManager::class): DataManagerInterface
+    public static function create(array $data = [], string $class = null): DataManagerInterface
     {
+        if (!$class) {
+            $class = DataManager::class;
+        }
         $instance = new $class($data); // TODO: fix for getting through object-manager
         if (!($instance instanceof DataManagerInterface)) {
             $interface = DataManagerInterface::class;
