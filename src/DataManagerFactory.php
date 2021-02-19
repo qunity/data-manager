@@ -22,7 +22,7 @@ use LogicException;
 class DataManagerFactory
 {
     /**
-     * Create new DataManager instance
+     * Create new manager instance
      *
      * @param array $data
      * @param string $class

@@ -78,7 +78,7 @@ class Recursive
     }
 
     /**
-     * Join data (arrays, DataManager`s, etc.)
+     * Join data (arrays, managers, etc.)
      *
      * @param mixed ...$items
      * @return mixed
