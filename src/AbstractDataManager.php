@@ -102,9 +102,8 @@ abstract class AbstractDataManager implements DataManagerInterface
     {
         if (is_array($path)) {
             $this->data = [];
-            $data = $path;
-            foreach ($data as $path => $value) {
-                $this->set($path, $value);
+            foreach ($path as $itemPath => $itemValue) {
+                $this->set($itemPath, $itemValue);
             }
         } elseif ($path != '') {
             if (Converter::isPath($path)) {
@@ -122,9 +121,8 @@ abstract class AbstractDataManager implements DataManagerInterface
     public function add(array | string | int $path, mixed $value = null): DataManagerInterface
     {
         if (is_array($path)) {
-            $data = $path;
-            foreach ($data as $path => $value) {
-                $this->add($path, $value);
+            foreach ($path as $itemPath => $itemValue) {
+                $this->add($itemPath, $itemValue);
             }
         } elseif ($path != '') {
             if (Converter::isPath($path)) {
@@ -147,17 +145,16 @@ abstract class AbstractDataManager implements DataManagerInterface
             return $this->data;
         } elseif (is_array($path)) {
             $data = [];
-            $paths = $path;
-            foreach ($paths as $value) {
-                if (is_array($value)) {
-                    if (!isset($value['default'])) {
-                        $value['default'] = $default;
+            foreach ($path as $item) {
+                if (is_array($item)) {
+                    if (!isset($item['default'])) {
+                        $item['default'] = $default;
                     }
-                    list('path' => $path, 'default' => $default) = $value;
+                    list('path' => $itemPath, 'default' => $itemDefault) = $item;
                 } else {
-                    list('path' => $path, 'default' => $default) = ['path' => $value, 'default' => $default];
+                    list('path' => $itemPath, 'default' => $itemDefault) = ['path' => $item, 'default' => $default];
                 }
-                $data[$path] = $this->get($path, $default);
+                $data[$itemPath] = $this->get($itemPath, $itemDefault);
             }
             return $data;
         } elseif ($path != '') {
@@ -178,13 +175,12 @@ abstract class AbstractDataManager implements DataManagerInterface
         if ($path === null) {
             return (bool)$this->data;
         } elseif (is_array($path)) {
-            $paths = $path;
-            foreach ($paths as $path) {
-                if (!$this->has($path)) {
+            foreach ($path as $itemPath) {
+                if (!$this->has($itemPath)) {
                     return false;
                 }
             }
-            return (bool)$paths;
+            return (bool)$path;
         } elseif ($path != '') {
             if (Converter::isPath($path)) {
                 return Recursive::has(Converter::getKeysByPath($path), $this->data);
@@ -203,9 +199,8 @@ abstract class AbstractDataManager implements DataManagerInterface
         if ($path === null) {
             $this->data = [];
         } elseif (is_array($path)) {
-            $paths = $path;
-            foreach ($paths as $path) {
-                $this->del($path);
+            foreach ($path as $itemPath) {
+                $this->del($itemPath);
             }
         } elseif ($path != '') {
             if (Converter::isPath($path)) {
