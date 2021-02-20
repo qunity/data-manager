@@ -19,5 +19,5 @@ namespace Qunity\Component;
  */
 class DataManager extends AbstractDataManager
 {
-    // code ...
+    // code...
 }
