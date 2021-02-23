@@ -27,6 +27,20 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
+     * @param DataManagerInterface|array $config
+     * @dataProvider providerConfigure
+     */
+    public function testConfigure(mixed $expected, DataManagerInterface | array $config)
+    {
+        $data = [];
+        Recursive::configure(function (array $items) use (&$data): void {
+            $data = $items;
+        }, $config);
+        $this->assertEquals($expected, $data);
+    }
+
+    /**
+     * @param mixed $expected
      * @param mixed ...$items
      * @dataProvider providerJoin
      */

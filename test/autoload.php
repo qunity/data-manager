@@ -11,6 +11,7 @@
 
 require __DIR__ . '/DataManager/Helper/Converter/Provider.php';
 require __DIR__ . '/DataManager/Helper/Recursive/Provider.php';
+require __DIR__ . '/DataManager/Helper/Recursive/AnotherDataManager.php';
 require __DIR__ . '/DataManagerFactory/AnotherDataManager.php';
 require __DIR__ . '/DataManagerFactory/Provider.php';
 require __DIR__ . '/AbstractDataManager/Helper.php';

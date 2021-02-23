@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
+use Qunity\Component\DataManagerFactory;
 use Qunity\Component\DataManagerInterface;
 
 /**
@@ -212,5 +213,32 @@ class Recursive
                 unset($data[$key]);
             }
         }
+    }
+
+    /**
+     * Configure managers
+     *
+     * @param callable $callback
+     * @param DataManagerInterface|array $config
+     *
+     * @return void
+     */
+    public static function configure(callable $callback, DataManagerInterface | array $config): void
+    {
+        $instances = [];
+        foreach ($config as $name => $item) {
+            if (!isset($item['data'])) {
+                $item['data'] = [];
+            }
+            if (!isset($item['class'])) {
+                $item['class'] = null;
+            }
+            $instance = DataManagerFactory::create($item['data'], $item['class']);
+            if (isset($item['config'])) {
+                self::configure([$instance, 'configure'], $item['config']);
+            }
+            $instances[$name] = $instance;
+        }
+        call_user_func($callback, $instances);
     }
 }

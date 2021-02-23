@@ -24,6 +24,89 @@ trait Provider
     /**
      * @return array[]
      */
+    public function providerConfigure(): array
+    {
+        $expected = function () {
+            /** @var AnotherDataManager $manager */
+            $manager = DataManagerFactory::create(['key' => 'value_1'], AnotherDataManager::class);
+            /** @var AnotherDataManager $config1 */
+            $config1 = DataManagerFactory::create(['key' => 'config_value_1'], AnotherDataManager::class);
+            /** @var AnotherDataManager $config2 */
+            $config2 = DataManagerFactory::create(['key' => 'config_value_2'], AnotherDataManager::class);
+            return $manager->setInstances([
+                'config_1' => $config1->setInstances([DataManagerFactory::create(['key' => 'value_1'])]),
+                'config_2' => $config2->setInstances([DataManagerFactory::create(['key' => 'value_2'])])
+            ]);
+        };
+        return [
+            [
+                [],
+                []
+            ], [
+                [
+                    DataManagerFactory::create(),
+                    DataManagerFactory::create(['key' => 'value_1']),
+                    DataManagerFactory::create(['key' => 'value_2'], AnotherDataManager::class)
+                ],
+                [
+                    [],
+                    ['data' => ['key' => 'value_1']],
+                    ['data' => ['key' => 'value_2'], 'class' => AnotherDataManager::class]
+                ]
+            ], [
+                [
+                    $expected(),
+                    $expected()
+                ],
+                [
+                    [
+                        'class' => AnotherDataManager::class,
+                        'data' => ['key' => 'value_1'],
+                        'config' => [
+                            'config_1' => [
+                                'class' => AnotherDataManager::class,
+                                'data' => ['key' => 'config_value_1'],
+                                'config' => [
+                                    ['data' => ['key' => 'value_1']]
+                                ]
+                            ],
+                            'config_2' => [
+                                'class' => AnotherDataManager::class,
+                                'data' => ['key' => 'config_value_2'],
+                                'config' => [
+                                    ['data' => ['key' => 'value_2']]
+                                ]
+                            ]
+                        ]
+                    ],
+                    DataManagerFactory::create([
+                        'class' => AnotherDataManager::class,
+                        'data' => ['key' => 'value_1'],
+                        'config' => DataManagerFactory::create([
+                            'config_1' => [
+                                'class' => AnotherDataManager::class,
+                                'data' => ['key' => 'config_value_1'],
+                                'config' => DataManagerFactory::create([
+                                    ['data' => ['key' => 'value_1']]
+                                ])
+                            ],
+                            'config_2' => [
+                                'class' => AnotherDataManager::class,
+                                'data' => ['key' => 'config_value_2'],
+                                'config' => DataManagerFactory::create([
+                                    ['data' => ['key' => 'value_2']]
+                                ])
+                            ]
+                        ])
+                    ])
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
     public function providerJoin(): array
     {
         return [
