@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
 
+use LogicException;
+use Qunity\Component\DataManager;
+use Qunity\Component\DataManager\ConfigurableInterface;
 use Qunity\Component\DataManagerFactory;
 
 /**
@@ -24,7 +27,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerConfigure(): array
+    public function providerSuccessConfigure(): array
     {
         $expected = function () {
             /** @var AnotherDataManager $manager */
@@ -33,9 +36,9 @@ trait Provider
             $config1 = DataManagerFactory::create(['key' => 'config_value_1'], AnotherDataManager::class);
             /** @var AnotherDataManager $config2 */
             $config2 = DataManagerFactory::create(['key' => 'config_value_2'], AnotherDataManager::class);
-            return $manager->setInstances([
-                'config_1' => $config1->setInstances([DataManagerFactory::create(['key' => 'value_1'])]),
-                'config_2' => $config2->setInstances([DataManagerFactory::create(['key' => 'value_2'])])
+            return $manager->setObjects([
+                'config_1' => $config1->setObjects([DataManagerFactory::create(['key' => 'value_1'])]),
+                'config_2' => $config2->setObjects([DataManagerFactory::create(['key' => 'value_2'])])
             ]);
         };
         return [
@@ -99,6 +102,22 @@ trait Provider
                             ]
                         ])
                     ])
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function providerErrorConfigure(): array
+    {
+        return [
+            [
+                LogicException::class,
+                'Class ' . DataManager::class . ' does not implement the interface ' . ConfigurableInterface::class,
+                [
+                    ['config' => []]
                 ]
             ],
         ];

@@ -40,7 +40,9 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return $this
      */
-    public function set(array | string | int $path, mixed $value = null): self;
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function set(array | string | int $path, mixed $value = null): static;
 
     /**
      * Add data into object
@@ -50,7 +52,9 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return $this
      */
-    public function add(array | string | int $path, mixed $value = null): self;
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function add(array | string | int $path, mixed $value = null): static;
 
     /**
      * Get data from object
@@ -76,5 +80,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * @param array|string|int|null $path
      * @return $this
      */
-    public function del(array | string | int $path = null): self;
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function del(array | string | int $path = null): static;
 }

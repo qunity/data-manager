@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
+use LogicException;
+use Qunity\Component\DataManager\ConfigurableInterface;
 use Qunity\Component\DataManagerFactory;
 use Qunity\Component\DataManagerInterface;
 
@@ -216,16 +218,18 @@ class Recursive
     }
 
     /**
-     * Configure managers
+     * Configure manager
+     * Works recursively only with classes implement the interface ConfigurableInterface
      *
      * @param callable $callback
      * @param DataManagerInterface|array $config
      *
      * @return void
+     * @throws LogicException
      */
     public static function configure(callable $callback, DataManagerInterface | array $config): void
     {
-        $instances = [];
+        $objects = [];
         foreach ($config as $name => $item) {
             if (!isset($item['data'])) {
                 $item['data'] = [];
@@ -233,12 +237,17 @@ class Recursive
             if (!isset($item['class'])) {
                 $item['class'] = null;
             }
-            $instance = DataManagerFactory::create($item['data'], $item['class']);
+            $object = DataManagerFactory::create($item['data'], $item['class']);
             if (isset($item['config'])) {
-                self::configure([$instance, 'configure'], $item['config']);
+                if (!($object instanceof ConfigurableInterface)) {
+                    $class = $object::class;
+                    $interface = ConfigurableInterface::class;
+                    throw new LogicException("Class {$class} does not implement the interface {$interface}");
+                }
+                call_user_func([$object, 'configure'], $item['config']);
             }
-            $instances[$name] = $instance;
+            $objects[$name] = $object;
         }
-        call_user_func($callback, $instances);
+        call_user_func($callback, $objects);
     }
 }

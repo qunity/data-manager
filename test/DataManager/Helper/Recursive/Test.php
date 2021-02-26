@@ -28,15 +28,33 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param DataManagerInterface|array $config
-     * @dataProvider providerConfigure
+     * @dataProvider providerSuccessConfigure
      */
-    public function testConfigure(mixed $expected, DataManagerInterface | array $config)
+    public function testSuccessConfigure(mixed $expected, DataManagerInterface | array $config)
     {
-        $data = [];
-        Recursive::configure(function (array $items) use (&$data): void {
-            $data = $items;
+        $actual = [];
+        Recursive::configure(function (array $objects) use (&$actual): void {
+            $actual = $objects;
         }, $config);
-        $this->assertEquals($expected, $data);
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @param mixed $expectedException
+     * @param mixed $expectedMessage
+     * @param DataManagerInterface|array $config
+     * @dataProvider providerErrorConfigure
+     */
+    public function testErrorConfigure(
+        mixed $expectedException,
+        mixed $expectedMessage,
+        DataManagerInterface | array $config
+    ) {
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($expectedMessage);
+        Recursive::configure(function (array $objects): void {
+            unset($objects);
+        }, $config);
     }
 
     /**

@@ -98,7 +98,9 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function set(array | string | int $path, mixed $value = null): DataManagerInterface
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function set(array | string | int $path, mixed $value = null): static
     {
         if (is_array($path)) {
             $this->data = [];
@@ -118,7 +120,9 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function add(array | string | int $path, mixed $value = null): DataManagerInterface
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function add(array | string | int $path, mixed $value = null): static
     {
         if (is_array($path)) {
             foreach ($path as $itemPath => $itemValue) {
@@ -194,7 +198,9 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function del(array | string | int $path = null): DataManagerInterface
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function del(array | string | int $path = null): static
     {
         if ($path === null) {
             $this->data = [];

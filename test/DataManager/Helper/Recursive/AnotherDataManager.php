@@ -14,37 +14,44 @@ declare(strict_types=1);
 namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
 
 use Qunity\Component\DataManager;
+use Qunity\Component\DataManager\ConfigurableInterface;
+use Qunity\Component\DataManager\Helper\Recursive;
+use Qunity\Component\DataManagerInterface;
 
 /**
  * Class AnotherDataManager
  * @package Qunity\UnitTest\Component\DataManager\Helper\Recursive
  */
-class AnotherDataManager extends DataManager
+class AnotherDataManager extends DataManager implements ConfigurableInterface
 {
     /**
-     * Internal instances
+     * Internal objects
      * @var array
      */
-    protected array $instances = [];
+    protected array $objects = [];
 
     /**
-     * Configure manager
-     * @param array $instances
+     * @inheritDoc
      */
-    public function configure(array $instances): void
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function configure(DataManagerInterface | array $config): static
     {
-        $this->setInstances($instances);
+        Recursive::configure([$this, 'setObjects'], $config);
+        return $this;
     }
 
     /**
-     * Set internal instances
+     * Set internal objects
      *
-     * @param array $instances
+     * @param array $objects
      * @return $this
      */
-    public function setInstances(array $instances): self
+    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
+    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    public function setObjects(array $objects): static
     {
-        $this->instances = $instances;
+        $this->objects = $objects;
         return $this;
     }
 }
