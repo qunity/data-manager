@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\DataManager\Helper\Converter;
 
+use InvalidArgumentException;
+
 /**
  * Trait Provider
  * @package Qunity\UnitTest\Component\DataManager\Helper\Converter
@@ -30,6 +32,26 @@ trait Provider
             [false, 'key'],
             [true, '0/0/0/0'],
             [true, 'key_1/key_2/key_3/0'],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function providerIsPathThrow(): array
+    {
+        return [
+            [
+                InvalidArgumentException::class,
+                'Argument must be of the form "name", given argument is be "path": key/key',
+                'key/key',
+                true
+            ], [
+                InvalidArgumentException::class,
+                'Argument must be of the form "path", given argument is be "name": key',
+                'key',
+                false
+            ],
         ];
     }
 

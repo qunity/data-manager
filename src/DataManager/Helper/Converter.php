@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
+use InvalidArgumentException;
 use JetBrains\PhpStorm\Pure;
 use Qunity\Component\DataManagerInterface;
 
@@ -232,9 +233,11 @@ class Converter
      * Check if string is path
      *
      * @param string|int $path
+     * @param bool|null $throw
+     *
      * @return bool
      */
-    public static function isPath(string | int $path): bool
+    public static function isPath(string | int $path, bool $throw = null): bool
     {
         $result = false;
         if (($path = self::clearPath($path)) != '') {
@@ -243,6 +246,12 @@ class Converter
                 $result = str_contains($path, DataManagerInterface::DELIMITER_PATH);
                 self::setCache($cacheId, $path, $result);
             }
+        }
+        if ($throw !== null && $throw == $result) {
+            throw new InvalidArgumentException(sprintf(
+                'Argument must be of the form "%s", given argument is be "%s": %s',
+                ...($throw ? ['name', 'path', $path] : ['path', 'name', $path])
+            ));
         }
         return $result;
     }

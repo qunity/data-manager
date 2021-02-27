@@ -35,6 +35,20 @@ class Test extends TestCase
     }
 
     /**
+     * @param mixed $expectedException
+     * @param mixed $expectedMessage
+     * @param string|int $path
+     * @param bool $throw
+     * @dataProvider providerIsPathThrow
+     */
+    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, string | int $path, bool $throw)
+    {
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($expectedMessage);
+        Converter::isPath($path, $throw);
+    }
+
+    /**
      * @param mixed $expected
      * @param string|int $path
      * @dataProvider providerGetKeysByPath
