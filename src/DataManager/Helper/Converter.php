@@ -97,6 +97,8 @@ class Converter
      * @param int|null $id
      * @param string|int $key
      * @param mixed $value
+     *
+     * @return void
      */
     protected static function setCache(?int &$id, string | int $key, mixed $value): void
     {
