@@ -22,7 +22,7 @@ use LogicException;
 class DataManagerFactory
 {
     /**
-     * Create new manager instance
+     * Create new manager object
      *
      * @param array $data
      * @param string|null $class
@@ -35,11 +35,12 @@ class DataManagerFactory
         if (!$class) {
             $class = DataManager::class;
         }
-        $instance = new $class($data); // TODO: fix for getting through object-manager
-        if (!($instance instanceof DataManagerInterface)) {
+        $object = new $class($data); // TODO: fix for getting through object-manager
+        if (!($object instanceof DataManagerInterface)) {
+            $class = $object::class;
             $interface = DataManagerInterface::class;
             throw new LogicException("Class {$class} does not implement the interface {$interface}");
         }
-        return $instance;
+        return $object;
     }
 }
