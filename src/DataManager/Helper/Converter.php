@@ -232,25 +232,25 @@ class Converter
     /**
      * Check if string is path
      *
-     * @param string|int $path
+     * @param string|int $string
      * @param bool|null $throw
      *
      * @return bool
      */
-    public static function isPath(string | int $path, bool $throw = null): bool
+    public static function isPath(string | int $string, bool $throw = null): bool
     {
         $result = false;
-        if (($path = self::clearPath($path)) != '') {
+        if (($string = self::clearPath($string)) != '') {
             static $cacheId;
-            if (($result = self::getCache($cacheId, $path)) === null) {
-                $result = str_contains($path, DataManagerInterface::DELIMITER_PATH);
-                self::setCache($cacheId, $path, $result);
+            if (($result = self::getCache($cacheId, $string)) === null) {
+                $result = str_contains($string, DataManagerInterface::DELIMITER_PATH);
+                self::setCache($cacheId, $string, $result);
             }
         }
         if ($throw !== null && $throw == $result) {
             throw new InvalidArgumentException(sprintf(
                 'Argument must be of the form "%s", given argument is be "%s": %s',
-                ...($throw ? ['name', 'path', $path] : ['path', 'name', $path])
+                ...($throw ? ['name', 'path', $string] : ['path', 'name', $string])
             ));
         }
         return $result;
