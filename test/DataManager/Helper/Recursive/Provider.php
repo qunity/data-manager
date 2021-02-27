@@ -29,7 +29,7 @@ trait Provider
      */
     public function providerSuccessConfigure(): array
     {
-        $expected = function () {
+        $expected = function (): object {
             /** @var AnotherDataManager $manager */
             $manager = DataManagerFactory::create(['key' => 'value_1'], AnotherDataManager::class);
             /** @var AnotherDataManager $config1 */
