@@ -202,7 +202,7 @@ trait Provider
         ($dataManager41 = DataManagerFactory::create([], AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]);
         ($dataManager42 = DataManagerFactory::create([], AnotherDataManager::class))
-            ->set('key_1', 'value')->set('key_2/0', 'value_1');
+            ->set(['key_1' => 'value', 'key_2/0' => 'value_1']);
 
         ($dataManager5 = DataManagerFactory::create())->set('key/0', 'value');
         ($dataManager6 = DataManagerFactory::create([], AnotherDataManager::class))->set('key/0', 'value');
