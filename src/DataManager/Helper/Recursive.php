@@ -29,11 +29,9 @@ class Recursive
      *
      * @param array $keys
      * @param mixed $value
-     * @param DataManagerInterface|array $data
-     *
-     * @return void
+     * @param array|DataManagerInterface $data
      */
-    public static function set(array $keys, mixed $value, DataManagerInterface | array &$data): void
+    public static function set(array $keys, mixed $value, array | DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -56,11 +54,9 @@ class Recursive
      *
      * @param array $keys
      * @param mixed $value
-     * @param DataManagerInterface|array $data
-     *
-     * @return void
+     * @param array|DataManagerInterface $data
      */
-    public static function add(array $keys, mixed $value, DataManagerInterface | array &$data): void
+    public static function add(array $keys, mixed $value, array | DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -93,7 +89,7 @@ class Recursive
                 if (is_array($item)) {
                     return self::joinArrays($carry, $item);
                 } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::join($carry, $item->get()));
+                    return $item->set(self::joinArrays($carry, $item->get()));
                 } else {
                     return array_merge($carry, (array)$item);
                 }
@@ -101,7 +97,7 @@ class Recursive
                 if (is_array($item)) {
                     return $carry->add($item);
                 } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::join($carry->get(), $item->get()));
+                    return $item->set(self::joinArrays($carry->get(), $item->get()));
                 } else {
                     return $item;
                 }
@@ -143,12 +139,12 @@ class Recursive
      * Get element recursively
      *
      * @param array $keys
-     * @param DataManagerInterface|array $data
-     * @param mixed $default
+     * @param array|DataManagerInterface $data
+     * @param mixed|null $default
      *
      * @return mixed
      */
-    public static function get(array $keys, DataManagerInterface | array $data, mixed $default = null): mixed
+    public static function get(array $keys, array | DataManagerInterface $data, mixed $default = null): mixed
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -170,11 +166,11 @@ class Recursive
      * Check existence element recursively
      *
      * @param array $keys
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      *
      * @return bool
      */
-    public static function has(array $keys, DataManagerInterface | array $data): bool
+    public static function has(array $keys, array | DataManagerInterface $data): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -196,11 +192,9 @@ class Recursive
      * Remove element recursively
      *
      * @param array $keys
-     * @param DataManagerInterface|array $data
-     *
-     * @return void
+     * @param array|DataManagerInterface $data
      */
-    public static function del(array $keys, DataManagerInterface | array &$data): void
+    public static function del(array $keys, array | DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -222,12 +216,11 @@ class Recursive
      * Works recursively only with classes implement the interface ConfigurableInterface
      *
      * @param callable $callback
-     * @param DataManagerInterface|array $config
+     * @param array|DataManagerInterface $config
      *
-     * @return void
      * @throws LogicException
      */
-    public static function configure(callable $callback, DataManagerInterface | array $config): void
+    public static function configure(callable $callback, array | DataManagerInterface $config): void
     {
         $objects = [];
         foreach ($config as $name => $item) {

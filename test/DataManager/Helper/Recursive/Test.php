@@ -27,10 +27,10 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param DataManagerInterface|array $config
+     * @param array|DataManagerInterface $config
      * @dataProvider providerSuccessConfigure
      */
-    public function testSuccessConfigure(mixed $expected, DataManagerInterface | array $config)
+    public function testSuccessConfigure(mixed $expected, array | DataManagerInterface $config)
     {
         $actual = [];
         Recursive::configure(function (array $objects) use (&$actual): void {
@@ -42,13 +42,13 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param DataManagerInterface|array $config
+     * @param array|DataManagerInterface $config
      * @dataProvider providerErrorConfigure
      */
     public function testErrorConfigure(
         mixed $expectedException,
         mixed $expectedMessage,
-        DataManagerInterface | array $config
+        array | DataManagerInterface $config
     ) {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
@@ -71,10 +71,10 @@ class Test extends TestCase
      * @param mixed $expected
      * @param array $keys
      * @param mixed $value
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      * @dataProvider providerSet
      */
-    public function testSet(mixed $expected, array $keys, mixed $value, DataManagerInterface | array $data)
+    public function testSet(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
     {
         Recursive::set($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -84,10 +84,10 @@ class Test extends TestCase
      * @param mixed $expected
      * @param array $keys
      * @param mixed $value
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      * @dataProvider providerAdd
      */
-    public function testAdd(mixed $expected, array $keys, mixed $value, DataManagerInterface | array $data)
+    public function testAdd(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
     {
         Recursive::add($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -96,11 +96,11 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param array $keys
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      * @param mixed $default
      * @dataProvider providerGet
      */
-    public function testGet(mixed $expected, array $keys, DataManagerInterface | array $data, mixed $default)
+    public function testGet(mixed $expected, array $keys, array | DataManagerInterface $data, mixed $default)
     {
         $this->assertEquals($expected, Recursive::get($keys, $data, $default));
     }
@@ -108,10 +108,10 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param array $keys
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      * @dataProvider providerHas
      */
-    public function testHas(mixed $expected, array $keys, DataManagerInterface | array $data)
+    public function testHas(mixed $expected, array $keys, array | DataManagerInterface $data)
     {
         $this->assertEquals($expected, Recursive::has($keys, $data));
     }
@@ -119,10 +119,10 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param array $keys
-     * @param DataManagerInterface|array $data
+     * @param array|DataManagerInterface $data
      * @dataProvider providerDel
      */
-    public function testDel(mixed $expected, array $keys, DataManagerInterface | array $data)
+    public function testDel(mixed $expected, array $keys, array | DataManagerInterface $data)
     {
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
