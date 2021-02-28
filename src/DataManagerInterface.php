@@ -35,52 +35,52 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Set data into object
      *
-     * @param array|string|int $path
-     * @param mixed $value
+     * @param array|int|string $path
+     * @param mixed|null $value
      *
      * @return $this
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function set(array | string | int $path, mixed $value = null): static;
+    public function set(array | int | string $path, mixed $value = null): static;
 
     /**
      * Add data into object
      *
-     * @param array|string|int $path
-     * @param mixed $value
+     * @param array|int|string $path
+     * @param mixed|null $value
      *
      * @return $this
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function add(array | string | int $path, mixed $value = null): static;
+    public function add(array | int | string $path, mixed $value = null): static;
 
     /**
      * Get data from object
      *
-     * @param array|string|int|null $path
-     * @param mixed $default
+     * @param array|int|string|null $path
+     * @param mixed|null $default
      *
      * @return mixed
      */
-    public function get(array | string | int $path = null, mixed $default = null): mixed;
+    public function get(array | int | string $path = null, mixed $default = null): mixed;
 
     /**
      * Check existence data in object
      *
-     * @param array|string|int|null $path
+     * @param array|int|string|null $path
      * @return bool
      */
-    public function has(array | string | int $path = null): bool;
+    public function has(array | int | string $path = null): bool;
 
     /**
      * Remove data from object
      *
-     * @param array|string|int|null $path
+     * @param array|int|string|null $path
      * @return $this
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function del(array | string | int $path = null): static;
+    public function del(array | int | string $path = null): static;
 }
