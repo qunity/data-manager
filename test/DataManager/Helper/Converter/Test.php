@@ -26,10 +26,10 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param string|int $string
+     * @param int|string $string
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, string | int $string)
+    public function testIsPath(mixed $expected, int | string $string)
     {
         $this->assertEquals($expected, Converter::isPath($string));
     }
@@ -37,11 +37,11 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param string|int $string
+     * @param int|string $string
      * @param bool $throw
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, string | int $string, bool $throw)
+    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, int | string $string, bool $throw)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
@@ -50,10 +50,30 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param string|int $path
+     * @param int|string $path
+     * @dataProvider providerClearPath
+     */
+    public function testClearPath(mixed $expected, int | string $path)
+    {
+        $this->assertEquals($expected, Converter::clearPath($path));
+    }
+
+    /**
+     * @param mixed $expected
+     * @param array $keys
+     * @dataProvider providerClearKeys
+     */
+    public function testClearKeys(mixed $expected, array $keys)
+    {
+        $this->assertEquals($expected, Converter::clearKeys($keys));
+    }
+
+    /**
+     * @param mixed $expected
+     * @param int|string $path
      * @dataProvider providerGetKeysByPath
      */
-    public function testGetKeysByPath(mixed $expected, string | int $path)
+    public function testGetKeysByPath(mixed $expected, int | string $path)
     {
         $this->assertEquals($expected, Converter::getKeysByPath($path));
     }
@@ -70,11 +90,11 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param string|int $path
+     * @param int|string $path
      * @param string $prefix
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(mixed $expected, string | int $path, string $prefix)
+    public function testGetMethodByPath(mixed $expected, int | string $path, string $prefix)
     {
         $this->assertEquals($expected, Converter::getMethodByPath($path, $prefix));
     }

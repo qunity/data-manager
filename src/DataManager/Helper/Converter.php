@@ -32,10 +32,10 @@ class Converter
     /**
      * Get keys by path
      *
-     * @param string|int $path
+     * @param int|string $path
      * @return array
      */
-    public static function getKeysByPath(string | int $path): array
+    public static function getKeysByPath(int | string $path): array
     {
         $result = [];
         if (($path = self::clearPath($path)) != '') {
@@ -51,10 +51,10 @@ class Converter
     /**
      * Clear the trash path
      *
-     * @param string|int $path
+     * @param int|string $path
      * @return string
      */
-    protected static function clearPath(string | int $path): string
+    public static function clearPath(int | string $path): string
     {
         $result = '';
         if ($path != '') {
@@ -80,11 +80,11 @@ class Converter
      * Get value from software cache
      *
      * @param int|null $id
-     * @param string|int $key
+     * @param int|string $key
      *
      * @return mixed
      */
-    protected static function getCache(?int $id, string | int $key): mixed
+    protected static function getCache(?int $id, int | string $key): mixed
     {
         if ($id !== null && isset(self::$cache[$id][$key])) {
             return self::$cache[$id][$key];
@@ -96,12 +96,10 @@ class Converter
      * Set value to software cache
      *
      * @param int|null $id
-     * @param string|int $key
+     * @param int|string $key
      * @param mixed $value
-     *
-     * @return void
      */
-    protected static function setCache(?int &$id, string | int $key, mixed $value): void
+    protected static function setCache(?int &$id, int | string $key, mixed $value): void
     {
         if ($id === null) {
             $id = array_key_last(self::$cache) + 1;
@@ -123,8 +121,8 @@ class Converter
         if (($keys = self::clearKeys($keys)) != []) {
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
-                array_walk($keys, function (string | int &$key): void {
-                    $key = explode(DataManagerInterface::DELIMITER_PATH, $key);
+                array_walk($keys, function (int | string &$key): void {
+                    $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $key));
                 });
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
                 self::setCache($cacheId, $keysId, $result);
@@ -139,17 +137,16 @@ class Converter
      * @param array $keys
      * @return array
      */
-    protected static function clearKeys(array $keys): array
+    public static function clearKeys(array $keys): array
     {
         $result = [];
         if ($keys != []) {
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
-                $keys = array_diff($keys, ['', null]);
-                array_walk($keys, function (string | int &$key): void {
+                array_walk($keys, function (int | string &$key): void {
                     $key = self::clearPath($key);
                 });
-                $result = $keys;
+                $result = array_values(array_diff($keys, ['']));
                 self::setCache($cacheId, $keysId, $result);
             }
         }
@@ -170,12 +167,12 @@ class Converter
     /**
      * Get method name by path
      *
-     * @param string|int $path
+     * @param int|string $path
      * @param string $prefix
      *
      * @return string
      */
-    public static function getMethodByPath(string | int $path, string $prefix = ''): string
+    public static function getMethodByPath(int | string $path, string $prefix = ''): string
     {
         $result = '';
         if (($path = self::clearPath($path)) != '') {
@@ -232,12 +229,12 @@ class Converter
     /**
      * Check if string is path
      *
-     * @param string|int $string
+     * @param int|string $string
      * @param bool|null $throw
      *
      * @return bool
      */
-    public static function isPath(string | int $string, bool $throw = null): bool
+    public static function isPath(int | string $string, bool $throw = null): bool
     {
         $result = false;
         if (($string = self::clearPath($string)) != '') {

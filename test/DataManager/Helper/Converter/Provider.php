@@ -58,6 +58,33 @@ trait Provider
     /**
      * @return array[]
      */
+    public function providerClearPath(): array
+    {
+        return [
+            ['0', 0],
+            ['key_1/key_2/key_3/0', 'key_1/key_2/key_3/0'],
+            ['key_1/key_2/key_3/0', '_//_key_1/key_2/ _/key_3/0_//_'],
+            ['key_1/key_2/key_3/0', '_//_key_1/KEY_2/_ /key_3/0_//_'],
+            ['key_1/key_2/key_3/0', ' _//_key_1/KEY_2/_ _/key_3/0_//_ '],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function providerClearKeys(): array
+    {
+        return [
+            [['key_1', 'key_2', 'key_3', '0'], ['key_1', 'key_2', 'key_3', 0]],
+            [['key_1', 'key_2/key_3', '0'], ['_//_key_1/', 'key_2/ _/key_3/', '0_//_']],
+            [['key_1', 'key_2', 'key_3/0'], ['_//_key_1', '/KEY_2/_ /', 'key_3/0_//_']],
+            [['key_1/key_2', 'key_3/0'], ['', ' _//_key_1/KEY_2', '/_ _/', 'key_3/0_//_ ', '']],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
     public function providerGetKeysByPath(): array
     {
         return [
@@ -81,9 +108,9 @@ trait Provider
             ['0/0/0/0', [0, 0, 0, 0]],
             ['key_1/key_2/key_3/0', ['0', 'key_3', 'key_2', 'key_1']],
             ['key_1/key_2/key_3/0', ['', 0, 'key_3', 'key_2', 'key_1', '']],
-            ['key_1/key_2/key_3/0', [null, '_0_', 'key_3', '', '_key_2', 'key_1', null]],
-            ['key_1/key_2/key_3/0', ['', null, '_0_', 'key_3', '', 'KEY_2_', 'key_1', null, '']],
-            ['key_1/key_2/key_3/0', ['', null, '_0_', 'key_3', '', '/key_2/ _KEY_1 ', null, '']],
+            ['key_1/key_2/key_3/0', ['', '_0_', 'key_3', '', '_key_2', 'key_1', '']],
+            ['key_1/key_2/key_3/0', ['', '', '_0_', 'key_3', '', 'KEY_2_', 'key_1', '', '']],
+            ['key_1/key_2/key_3/0', ['', '', '_0_', 'key_3', '', '/key_1/ _KEY_2 ', '', '']],
         ];
     }
 
