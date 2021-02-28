@@ -38,7 +38,7 @@ trait Helper
             'data' => $data, 'flat' => $flat, 'real' => $real, 'paths' => $paths,
             'dataNull' => array_fill_keys($paths, null),
             'dataDefault' => array_fill_keys($paths, 'default'),
-            'pathsDefault' => array_map(function (string | int $path): array {
+            'pathsDefault' => array_map(function (int | string $path): array {
                 return ['path' => $path, 'default' => 'default'];
             }, $paths)
         ];

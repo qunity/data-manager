@@ -29,21 +29,21 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param DataManagerInterface $container
+     * @param DataManagerInterface $dataManager
      * @throws Exception
      * @dataProvider providerGetIterator
      */
-    public function testGetIterator(mixed $expected, DataManagerInterface $container)
+    public function testGetIterator(mixed $expected, DataManagerInterface $dataManager)
     {
-        $this->assertEquals($expected, $container->getIterator());
+        $this->assertEquals($expected, $dataManager->getIterator());
     }
 
     /**
-     * @param string|int $path
+     * @param int|string $path
      * @param mixed $value
      * @dataProvider providerArrayAccess
      */
-    public function testArrayAccess(string | int $path, mixed $value)
+    public function testArrayAccess(int | string $path, mixed $value)
     {
         $object = DataManagerFactory::create();
 
