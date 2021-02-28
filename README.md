@@ -23,5 +23,5 @@ $this->getKey1_key2_key3() == 'value'; // is true
 
 ```
 $this->set(['key/0' => 'value', 'key/1' => 'value']);
-$this->get() == ['key' => ['value', 'value']; // is true
+$this->get() == ['key' => ['value', 'value']]; // is true
 ```
