@@ -227,7 +227,7 @@ class Converter
     }
 
     /**
-     * Check if string is path
+     * Check if value is path
      *
      * @param int|string $value
      * @param bool|null $throw
