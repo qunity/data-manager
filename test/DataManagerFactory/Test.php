@@ -33,9 +33,9 @@ class Test extends TestCase
      */
     public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $data, string $class)
     {
-        $dataManager = DataManagerFactory::create($data, $class);
-        $this->assertInstanceOf($expectedInstanceOf, $dataManager);
-        $this->assertEquals($expectedData, $dataManager);
+        $object = DataManagerFactory::create($data, $class);
+        $this->assertInstanceOf($expectedInstanceOf, $object);
+        $this->assertEquals($expectedData, $object);
     }
 
     /**
