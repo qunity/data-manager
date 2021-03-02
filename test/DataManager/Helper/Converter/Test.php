@@ -26,26 +26,26 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param int|string $string
+     * @param int|string $value
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, int | string $string)
+    public function testIsPath(mixed $expected, int | string $value)
     {
-        $this->assertEquals($expected, Converter::isPath($string));
+        $this->assertEquals($expected, Converter::isPath($value));
     }
 
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param int|string $string
+     * @param int|string $value
      * @param bool $throw
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, int | string $string, bool $throw)
+    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, int | string $value, bool $throw)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        Converter::isPath($string, $throw);
+        Converter::isPath($value, $throw);
     }
 
     /**
