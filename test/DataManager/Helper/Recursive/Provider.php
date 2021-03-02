@@ -30,15 +30,15 @@ trait Provider
     public function providerSuccessConfigure(): array
     {
         $expected = function (): object {
-            /** @var AnotherDataManager $manager */
-            $manager = DataManagerFactory::create(['key' => 'value_1'], AnotherDataManager::class);
-            /** @var AnotherDataManager $config1 */
-            $config1 = DataManagerFactory::create(['key' => 'config_value_1'], AnotherDataManager::class);
-            /** @var AnotherDataManager $config2 */
-            $config2 = DataManagerFactory::create(['key' => 'config_value_2'], AnotherDataManager::class);
-            return $manager->setObjects([
-                'config_1' => $config1->setObjects([DataManagerFactory::create(['key' => 'value_1'])]),
-                'config_2' => $config2->setObjects([DataManagerFactory::create(['key' => 'value_2'])])
+            /** @var AnotherDataManager $object */
+            $object = DataManagerFactory::create(['key' => 'value_1'], AnotherDataManager::class);
+            /** @var AnotherDataManager $object1 */
+            $object1 = DataManagerFactory::create(['key' => 'config_value_1'], AnotherDataManager::class);
+            /** @var AnotherDataManager $object2 */
+            $object2 = DataManagerFactory::create(['key' => 'config_value_2'], AnotherDataManager::class);
+            return $object->setObjects([
+                'config_1' => $object1->setObjects([DataManagerFactory::create(['key' => 'value_1'])]),
+                'config_2' => $object2->setObjects([DataManagerFactory::create(['key' => 'value_2'])])
             ]);
         };
         return [

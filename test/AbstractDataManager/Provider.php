@@ -186,45 +186,45 @@ trait Provider
      */
     public function providerMagicMethods(): array
     {
-        ($dataManager11 = DataManagerFactory::create())->set(['key' => ['value']]);
-        $dataManager12 = DataManagerFactory::create();
+        ($object11 = DataManagerFactory::create())->set(['key' => ['value']]);
+        $object12 = DataManagerFactory::create();
 
-        ($dataManager21 = DataManagerFactory::create([], AnotherDataManager::class))
+        ($object21 = DataManagerFactory::create([], AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2' => ['value']]);
-        $dataManager22 = DataManagerFactory::create(
+        $object22 = DataManagerFactory::create(
             ['key_1' => 'value', 'key_2' => ['value_error']],
             AnotherDataManager::class
         );
 
-        ($dataManager31 = DataManagerFactory::create())->set(['key' => ['value_1', 'value_2']]);
-        ($dataManager32 = DataManagerFactory::create())->set('key/0', 'value_1');
+        ($object31 = DataManagerFactory::create())->set(['key' => ['value_1', 'value_2']]);
+        ($object32 = DataManagerFactory::create())->set('key/0', 'value_1');
 
-        ($dataManager41 = DataManagerFactory::create([], AnotherDataManager::class))
+        ($object41 = DataManagerFactory::create([], AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]);
-        ($dataManager42 = DataManagerFactory::create([], AnotherDataManager::class))
+        ($object42 = DataManagerFactory::create([], AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2/0' => 'value_1']);
 
-        ($dataManager5 = DataManagerFactory::create())->set('key/0', 'value');
-        ($dataManager6 = DataManagerFactory::create([], AnotherDataManager::class))->set('key/0', 'value');
+        ($object5 = DataManagerFactory::create())->set('key/0', 'value');
+        ($object6 = DataManagerFactory::create([], AnotherDataManager::class))->set('key/0', 'value');
 
-        ($dataManager7 = DataManagerFactory::create());
-        ($dataManager8 = DataManagerFactory::create([], AnotherDataManager::class));
+        ($object7 = DataManagerFactory::create());
+        ($object8 = DataManagerFactory::create([], AnotherDataManager::class));
 
         return [
-            [$dataManager11, $dataManager12, 'setKey_0', 'value'],
-            [$dataManager21, $dataManager22, 'setKey2_0', 'value'],
-            [$dataManager31, $dataManager32, 'addKey', 'value_2'],
-            [$dataManager41, $dataManager42, 'addKey2', 'value_2'],
-            ['value', $dataManager5, 'getKey_0'],
-            ['default', $dataManager5, 'getKey_5', 'default'],
-            ['value', $dataManager6, 'getKey_0'],
-            ['default', $dataManager6, 'getKey_5', 'default'],
-            [true, $dataManager5, 'hasKey_0'],
-            [false, $dataManager5, 'hasKey_5'],
-            [true, $dataManager6, 'hasKey_0'],
-            [false, $dataManager6, 'hasKey_5'],
-            [$dataManager7, $dataManager5, 'delKey'],
-            [$dataManager8, $dataManager6, 'delKey'],
+            [$object11, $object12, 'setKey_0', 'value'],
+            [$object21, $object22, 'setKey2_0', 'value'],
+            [$object31, $object32, 'addKey', 'value_2'],
+            [$object41, $object42, 'addKey2', 'value_2'],
+            ['value', $object5, 'getKey_0'],
+            ['default', $object5, 'getKey_5', 'default'],
+            ['value', $object6, 'getKey_0'],
+            ['default', $object6, 'getKey_5', 'default'],
+            [true, $object5, 'hasKey_0'],
+            [false, $object5, 'hasKey_5'],
+            [true, $object6, 'hasKey_0'],
+            [false, $object6, 'hasKey_5'],
+            [$object7, $object5, 'delKey'],
+            [$object8, $object6, 'delKey'],
         ];
     }
 }
