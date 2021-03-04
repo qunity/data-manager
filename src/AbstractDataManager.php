@@ -62,6 +62,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function getIterator(): Traversable
     {
+        // TODO: make two variations of the result (flat and nested)
         return new ArrayIterator($this->get());
     }
 
