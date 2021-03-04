@@ -158,6 +158,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 } else {
                     list('path' => $itemPath, 'default' => $itemDefault) = ['path' => $item, 'default' => $default];
                 }
+                // TODO: make two variations of the result (flat and nested)
                 $data[$itemPath] = $this->get($itemPath, $itemDefault);
             }
             return $data;
