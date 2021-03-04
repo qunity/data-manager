@@ -27,11 +27,16 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param int|string $value
+     * @param bool|null $throw
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, int | string $value)
+    public function testIsPath(mixed $expected, int | string $value, ?bool $throw)
     {
-        $this->assertEquals($expected, Converter::isPath($value));
+        if ($throw === null) {
+            $this->assertEquals($expected, Converter::isPath($value));
+        } else {
+            $this->assertEquals($expected, Converter::isPath($value, $throw));
+        }
     }
 
     /**
@@ -91,22 +96,30 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param int|string $path
-     * @param string $prefix
+     * @param string|null $prefix
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(mixed $expected, int | string $path, string $prefix)
+    public function testGetMethodByPath(mixed $expected, int | string $path, ?string $prefix)
     {
-        $this->assertEquals($expected, Converter::getMethodByPath($path, $prefix));
+        if ($prefix === null) {
+            $this->assertEquals($expected, Converter::getMethodByPath($path));
+        } else {
+            $this->assertEquals($expected, Converter::getMethodByPath($path, $prefix));
+        }
     }
 
     /**
      * @param mixed $expected
      * @param string $method
-     * @param int $offset
+     * @param int|null $offset
      * @dataProvider providerGetPathByMethod
      */
-    public function testGetPathByMethod(mixed $expected, string $method, int $offset)
+    public function testGetPathByMethod(mixed $expected, string $method, ?int $offset)
     {
-        $this->assertEquals($expected, Converter::getPathByMethod($method, $offset));
+        if ($offset === null) {
+            $this->assertEquals($expected, Converter::getPathByMethod($method));
+        } else {
+            $this->assertEquals($expected, Converter::getPathByMethod($method, $offset));
+        }
     }
 }
