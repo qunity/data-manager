@@ -25,12 +25,12 @@ interface ConfigurableInterface
     /**
      * Configure manager
      *
-     * @param array|DataManagerInterface $config
+     * @param array|DataManagerInterface|null $config
      * @return $this
      *
      * @see Recursive::configure
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function configure(array | DataManagerInterface $config): static;
+    public function configure(array | DataManagerInterface $config = null): static;
 }

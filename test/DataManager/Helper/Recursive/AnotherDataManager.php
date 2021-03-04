@@ -35,9 +35,11 @@ class AnotherDataManager extends DataManager implements ConfigurableInterface
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function configure(array | DataManagerInterface $config): static
+    public function configure(array | DataManagerInterface $config = null): static
     {
-        Recursive::configure([$this, 'setObjects'], $config);
+        if ($config !== null) {
+            Recursive::configure([$this, 'setObjects'], $config);
+        }
         return $this;
     }
 
