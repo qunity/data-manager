@@ -21,6 +21,8 @@ use Traversable;
 /**
  * Class AbstractDataManager
  * @package Qunity\Component
+ *
+ * TODO: implement disabling recursion
  */
 abstract class AbstractDataManager implements DataManagerInterface
 {
