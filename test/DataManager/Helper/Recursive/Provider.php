@@ -31,14 +31,14 @@ trait Provider
     {
         $expected = function (): object {
             /** @var AnotherDataManager $object */
-            $object = DataManagerFactory::create(['key' => 'value_1'], AnotherDataManager::class);
+            $object = DataManagerFactory::create(['key' => 'value'], AnotherDataManager::class);
             /** @var AnotherDataManager $object1 */
-            $object1 = DataManagerFactory::create(['key' => 'config_value_1'], AnotherDataManager::class);
+            $object1 = DataManagerFactory::create(['key' => 'config_value'], AnotherDataManager::class);
             /** @var AnotherDataManager $object2 */
-            $object2 = DataManagerFactory::create(['key' => 'config_value_2'], AnotherDataManager::class);
+            $object2 = DataManagerFactory::create(['key' => 'config_value'], AnotherDataManager::class);
             return $object->setObjects([
-                'config_1' => $object1->setObjects([DataManagerFactory::create(['key' => 'value_1'])]),
-                'config_2' => $object2->setObjects([DataManagerFactory::create(['key' => 'value_2'])])
+                'config_1' => $object1->setObjects([DataManagerFactory::create(['key' => 'config_value'])]),
+                'config_2' => $object2->setObjects([DataManagerFactory::create(['key' => 'config_value'])])
             ]);
         };
         return [
@@ -48,13 +48,13 @@ trait Provider
             ], [
                 [
                     DataManagerFactory::create(),
-                    DataManagerFactory::create(['key' => 'value_1']),
-                    DataManagerFactory::create(['key' => 'value_2'], AnotherDataManager::class)
+                    DataManagerFactory::create(['key' => 'value']),
+                    DataManagerFactory::create(['key' => 'value'], AnotherDataManager::class)
                 ],
                 [
                     [],
-                    ['data' => ['key' => 'value_1']],
-                    ['data' => ['key' => 'value_2'], 'class' => AnotherDataManager::class]
+                    ['data' => ['key' => 'value']],
+                    ['data' => ['key' => 'value'], 'class' => AnotherDataManager::class]
                 ]
             ], [
                 [
@@ -64,40 +64,40 @@ trait Provider
                 [
                     [
                         'class' => AnotherDataManager::class,
-                        'data' => ['key' => 'value_1'],
+                        'data' => ['key' => 'value'],
                         'config' => [
                             'config_1' => [
                                 'class' => AnotherDataManager::class,
-                                'data' => ['key' => 'config_value_1'],
+                                'data' => ['key' => 'config_value'],
                                 'config' => [
-                                    ['data' => ['key' => 'value_1']]
+                                    ['data' => ['key' => 'config_value']]
                                 ]
                             ],
                             'config_2' => [
                                 'class' => AnotherDataManager::class,
-                                'data' => ['key' => 'config_value_2'],
+                                'data' => ['key' => 'config_value'],
                                 'config' => [
-                                    ['data' => ['key' => 'value_2']]
+                                    ['data' => ['key' => 'config_value']]
                                 ]
                             ]
                         ]
                     ],
                     DataManagerFactory::create([
                         'class' => AnotherDataManager::class,
-                        'data' => ['key' => 'value_1'],
+                        'data' => ['key' => 'value'],
                         'config' => DataManagerFactory::create([
                             'config_1' => [
                                 'class' => AnotherDataManager::class,
-                                'data' => ['key' => 'config_value_1'],
+                                'data' => ['key' => 'config_value'],
                                 'config' => DataManagerFactory::create([
-                                    ['data' => ['key' => 'value_1']]
+                                    ['data' => ['key' => 'config_value']]
                                 ])
                             ],
                             'config_2' => [
                                 'class' => AnotherDataManager::class,
-                                'data' => ['key' => 'config_value_2'],
+                                'data' => ['key' => 'config_value'],
                                 'config' => DataManagerFactory::create([
-                                    ['data' => ['key' => 'value_2']]
+                                    ['data' => ['key' => 'config_value']]
                                 ])
                             ]
                         ])
@@ -116,9 +116,7 @@ trait Provider
             [
                 LogicException::class,
                 'Class ' . DataManager::class . ' does not implement the interface ' . ConfigurableInterface::class,
-                [
-                    ['config' => []]
-                ]
+                [['config' => []]]
             ],
         ];
     }
@@ -190,10 +188,10 @@ trait Provider
                 'value',
                 []
             ], [
-                ['key' => ['value'], 2 => 'value_2'],
+                ['key' => ['value'], 2 => 'value'],
                 [0, 'key'],
                 'value',
-                ['key' => ['value_error'], 2 => 'value_2']
+                ['key' => ['value_error'], 2 => 'value']
             ], [
                 ['key' => DataManagerFactory::create(['value'])],
                 [0, 'key'],
@@ -264,10 +262,15 @@ trait Provider
     public function providerGet(): array
     {
         return [
+            [null, [], ['value'], null],
             ['default', [], ['value'], 'default'],
-            ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
+            ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], null],
+            [null, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
             ['default', [5, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
+            ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], null],
+            ['value', ['key', 0, 'key'], ['key' => DataManagerFactory::create([['key' => 'value']])], null],
             ['value', ['key', 0, 'key'], ['key' => DataManagerFactory::create([['key' => 'value']])], 'default'],
+            [null, ['key', 5, 'key'], ['key' => DataManagerFactory::create([['key' => 'value']])], null],
             ['default', ['key', 5, 'key'], ['key' => DataManagerFactory::create([['key' => 'value']])], 'default'],
         ];
     }

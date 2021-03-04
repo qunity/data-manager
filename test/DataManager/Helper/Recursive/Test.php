@@ -102,7 +102,11 @@ class Test extends TestCase
      */
     public function testGet(mixed $expected, array $keys, array | DataManagerInterface $data, mixed $default)
     {
-        $this->assertEquals($expected, Recursive::get($keys, $data, $default));
+        if ($default === null) {
+            $this->assertEquals($expected, Recursive::get($keys, $data));
+        } else {
+            $this->assertEquals($expected, Recursive::get($keys, $data, $default));
+        }
     }
 
     /**
