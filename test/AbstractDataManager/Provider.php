@@ -32,8 +32,8 @@ trait Provider
                 new ArrayIterator([]),
                 DataManagerFactory::create()
             ], [
-                new ArrayIterator(['key_1' => 'value_1', 'key_2' => 'value_2', 'key_3' => 'value_3']),
-                DataManagerFactory::create(['key_1' => 'value_1', 'key_2' => 'value_2', 'key_3' => 'value_3'])
+                new ArrayIterator(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value']),
+                DataManagerFactory::create(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value'])
             ],
         ];
     }
@@ -47,9 +47,9 @@ trait Provider
             [0, 'value'],
             ['key', 'value'],
             ['0/0/0/0', 'value'],
-            ['key_1/key_2/0/0', 'value'],
-            ['_//key_1 / / / key_2/0/0//_', 'value'],
-            ['_//key_1 / / / KEY_2/0/0//_', 'value'],
+            ['key/key/0/0', 'value'],
+            ['_//key / / / key/0/0//_', 'value'],
+            [' _//KEY / / / KEY/0/0//_ ', 'value'],
         ];
     }
 
