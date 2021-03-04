@@ -28,12 +28,16 @@ class Test extends TestCase
      * @param mixed $expectedInstanceOf
      * @param mixed $expectedData
      * @param array $data
-     * @param string $class
+     * @param string|null $class
      * @dataProvider providerSuccessCreate
      */
-    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $data, string $class)
+    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $data, ?string $class)
     {
-        $object = DataManagerFactory::create($data, $class);
+        if ($class === null) {
+            $object = DataManagerFactory::create($data);
+        } else {
+            $object = DataManagerFactory::create($data, $class);
+        }
         $this->assertInstanceOf($expectedInstanceOf, $object);
         $this->assertEquals($expectedData, $object);
     }
@@ -42,13 +46,17 @@ class Test extends TestCase
      * @param mixed $expectedException
      * @param mixed $expectedMessage
      * @param array $data
-     * @param string $class
+     * @param string|null $class
      * @dataProvider providerErrorCreate
      */
-    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, array $data, string $class)
+    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, array $data, ?string $class)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        DataManagerFactory::create($data, $class);
+        if ($class === null) {
+            DataManagerFactory::create($data);
+        } else {
+            DataManagerFactory::create($data, $class);
+        }
     }
 }

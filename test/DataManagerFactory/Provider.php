@@ -37,6 +37,11 @@ trait Provider
                 DataManager::class
             ], [
                 DataManagerInterface::class,
+                new DataManager(),
+                [],
+                null
+            ], [
+                DataManagerInterface::class,
                 new AnotherDataManager(['another' => ['key' => ['value']]]),
                 ['another' => ['key' => ['value']]],
                 AnotherDataManager::class
