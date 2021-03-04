@@ -37,8 +37,8 @@ trait Provider
                 DataManager::class
             ], [
                 DataManagerInterface::class,
-                new DataManager(),
-                [],
+                new DataManager(['manager' => ['key' => ['value']]]),
+                ['manager' => ['key' => ['value']]],
                 null
             ], [
                 DataManagerInterface::class,
