@@ -33,7 +33,7 @@ class Converter
      * Get keys by path
      *
      * @param int|string $path
-     * @return array
+     * @return string[]
      */
     public static function getKeysByPath(int | string $path): array
     {
@@ -78,6 +78,7 @@ class Converter
 
     /**
      * Get value from software cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
      *
      * @param int|null $id
      * @param int|string $key
@@ -94,6 +95,7 @@ class Converter
 
     /**
      * Set value to software cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
      *
      * @param int|null $id
      * @param int|string $key
@@ -102,7 +104,7 @@ class Converter
     protected static function setCache(?int &$id, int | string $key, mixed $value): void
     {
         if ($id === null) {
-            $id = array_key_last(self::$cache) + 1;
+            $id = (int)array_key_last(self::$cache) + 1;
         }
         if (!isset(self::$cache[$id][$key])) {
             self::$cache[$id][$key] = $value;
@@ -112,7 +114,7 @@ class Converter
     /**
      * Get path by keys
      *
-     * @param array $keys
+     * @param int[]|string[] $keys
      * @return string
      */
     public static function getPathByKeys(array $keys): string
@@ -122,8 +124,9 @@ class Converter
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int | string &$key): void {
-                    $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $key));
+                    $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, (string)$key));
                 });
+                /** @var string[][] $keys */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
                 self::setCache($cacheId, $keysId, $result);
             }
@@ -134,8 +137,8 @@ class Converter
     /**
      * Clear the trash keys
      *
-     * @param array $keys
-     * @return array
+     * @param int[]|string[] $keys
+     * @return string[]
      */
     public static function clearKeys(array $keys): array
     {
@@ -156,7 +159,7 @@ class Converter
     /**
      * Get array identifier
      *
-     * @param array $array
+     * @param int[]|string[] $array
      * @return string
      */
     #[Pure] protected static function getArrayId(array $array): string
@@ -184,7 +187,7 @@ class Converter
                 $result = str_replace(
                     DataManagerInterface::DELIMITER_PATH,
                     DataManagerInterface::DELIMITER_KEY,
-                    preg_replace_callback(
+                    (string)preg_replace_callback(
                         '%' . DataManagerInterface::DELIMITER_KEY . '[a-z0-9]%',
                         function (array $matches): string {
                             return strtoupper(substr(reset($matches), 1));
@@ -215,9 +218,9 @@ class Converter
             }
             static $cacheId;
             if (($result = self::getCache($cacheId, $method)) === null) {
-                $result = self::clearPath(preg_replace(
+                $result = self::clearPath((string)preg_replace(
                     ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
-                    [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . "$1"],
+                    [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
                     $method
                 ));
                 self::setCache($cacheId, $method, $result);
