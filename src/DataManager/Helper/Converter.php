@@ -25,7 +25,7 @@ class Converter
 {
     /**
      * Software cache
-     * @var array[]
+     * @var array<int,array>
      */
     protected static array $cache = [];
 
@@ -33,7 +33,7 @@ class Converter
      * Get keys by path
      *
      * @param int|string $path
-     * @return string[]
+     * @return array<int,string>
      */
     public static function getKeysByPath(int | string $path): array
     {
@@ -114,7 +114,7 @@ class Converter
     /**
      * Get path by keys
      *
-     * @param int[]|string[] $keys
+     * @param array<int|string,int|string> $keys
      * @return string
      */
     public static function getPathByKeys(array $keys): string
@@ -137,8 +137,8 @@ class Converter
     /**
      * Clear the trash keys
      *
-     * @param int[]|string[] $keys
-     * @return string[]
+     * @param array<int|string,int|string> $keys
+     * @return array<int,string>
      */
     public static function clearKeys(array $keys): array
     {
@@ -159,7 +159,7 @@ class Converter
     /**
      * Get array identifier
      *
-     * @param int[]|string[] $array
+     * @param array<int|string,int|string> $array
      * @return string
      */
     #[Pure] protected static function getArrayId(array $array): string
