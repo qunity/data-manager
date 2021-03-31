@@ -28,6 +28,7 @@ class Test extends TestCase
      * @param mixed $expected
      * @param int|string $value
      * @param bool|null $throw
+     * @return void
      * @dataProvider providerIsPath
      */
     public function testIsPath(mixed $expected, int | string $value, ?bool $throw)
@@ -44,6 +45,7 @@ class Test extends TestCase
      * @param mixed $expectedMessage
      * @param int|string $value
      * @param bool $throw
+     * @return void
      * @dataProvider providerIsPathThrow
      */
     public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, int | string $value, bool $throw)
@@ -56,6 +58,7 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param int|string $path
+     * @return void
      * @dataProvider providerClearPath
      */
     public function testClearPath(mixed $expected, int | string $path)
@@ -65,7 +68,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
+     * @param array<int|string,int|string> $keys
+     * @return void
      * @dataProvider providerClearKeys
      */
     public function testClearKeys(mixed $expected, array $keys)
@@ -76,6 +80,7 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param int|string $path
+     * @return void
      * @dataProvider providerGetKeysByPath
      */
     public function testGetKeysByPath(mixed $expected, int | string $path)
@@ -85,7 +90,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
+     * @param array<int|string,int|string> $keys
+     * @return void
      * @dataProvider providerGetPathByKeys
      */
     public function testGetPathByKeys(mixed $expected, array $keys)
@@ -97,6 +103,7 @@ class Test extends TestCase
      * @param mixed $expected
      * @param int|string $path
      * @param string|null $prefix
+     * @return void
      * @dataProvider providerGetMethodByPath
      */
     public function testGetMethodByPath(mixed $expected, int | string $path, ?string $prefix)
@@ -112,6 +119,7 @@ class Test extends TestCase
      * @param mixed $expected
      * @param string $method
      * @param int|null $offset
+     * @return void
      * @dataProvider providerGetPathByMethod
      */
     public function testGetPathByMethod(mixed $expected, string $method, ?int $offset)
