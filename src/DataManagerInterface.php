@@ -21,7 +21,7 @@ use IteratorAggregate;
  * @package Qunity\Component
  *
  * @extends ArrayAccess<mixed,mixed>
- * @extends IteratorAggregate<mixed,mixed>
+ * @extends IteratorAggregate<mixed>
  */
 interface DataManagerInterface extends ArrayAccess, IteratorAggregate
 {
