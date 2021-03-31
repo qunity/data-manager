@@ -39,7 +39,7 @@ trait Provider
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function providerArrayAccess(): array
     {
@@ -54,7 +54,7 @@ trait Provider
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function providerSingleMethods(): array
     {
@@ -92,7 +92,7 @@ trait Provider
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function providerMassMethods(): array
     {
@@ -182,7 +182,7 @@ trait Provider
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     public function providerMagicMethods(): array
     {

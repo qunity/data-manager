@@ -30,6 +30,7 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param DataManagerInterface $dataManager
+     * @return void
      * @throws Exception
      * @dataProvider providerGetIterator
      */
@@ -41,6 +42,7 @@ class Test extends TestCase
     /**
      * @param int|string $path
      * @param mixed $value
+     * @return void
      * @dataProvider providerArrayAccess
      */
     public function testArrayAccess(int | string $path, mixed $value)
@@ -64,6 +66,7 @@ class Test extends TestCase
      * @param DataManagerInterface $dataManager
      * @param string $method
      * @param mixed ...$args
+     * @return void
      * @dataProvider providerMagicMethods
      */
     public function testMagicMethods(
@@ -71,14 +74,21 @@ class Test extends TestCase
         DataManagerInterface $dataManager,
         string $method,
         mixed ...$args
-    ) {
-        $this->assertEquals($expected, call_user_func_array([$dataManager, $method], $args));
+    )
+    {
+        $callback = [$dataManager, $method];
+        if (is_callable($callback)) {
+            $this->assertEquals($expected, call_user_func_array($callback, $args));
+        } else {
+            $this->fail();
+        }
     }
 
     /**
-     * @param array $step1
-     * @param array $step2
-     * @param array $step3
+     * @param array<mixed,mixed> $step1
+     * @param array<mixed,mixed> $step2
+     * @param array<mixed,mixed> $step3
+     * @return void
      * @dataProvider providerSingleMethods
      */
     public function testSingleMethods(array $step1, array $step2, array $step3)
@@ -115,9 +125,10 @@ class Test extends TestCase
     }
 
     /**
-     * @param array $step1
-     * @param array $step2
-     * @param array $step3
+     * @param array<mixed,mixed> $step1
+     * @param array<mixed,mixed> $step2
+     * @param array<mixed,mixed> $step3
+     * @return void
      * @dataProvider providerMassMethods
      */
     public function testMassMethods(array $step1, array $step2, array $step3)
