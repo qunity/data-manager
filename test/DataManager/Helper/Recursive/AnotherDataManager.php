@@ -26,7 +26,7 @@ class AnotherDataManager extends DataManager implements ConfigurableInterface
 {
     /**
      * Internal objects
-     * @var array
+     * @var array<mixed,object>
      */
     protected array $objects = [];
 
@@ -46,7 +46,7 @@ class AnotherDataManager extends DataManager implements ConfigurableInterface
     /**
      * Set internal objects
      *
-     * @param array $objects
+     * @param array<mixed,object> $objects
      * @return $this
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6

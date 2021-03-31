@@ -27,7 +27,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array|DataManagerInterface $config
+     * @param array<mixed,mixed>|DataManagerInterface $config
+     * @return void
      * @dataProvider providerSuccessConfigure
      */
     public function testSuccessConfigure(mixed $expected, array | DataManagerInterface $config)
@@ -42,7 +43,8 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array|DataManagerInterface $config
+     * @param array<mixed,mixed>|DataManagerInterface $config
+     * @return void
      * @dataProvider providerErrorConfigure
      */
     public function testErrorConfigure(
@@ -60,6 +62,7 @@ class Test extends TestCase
     /**
      * @param mixed $expected
      * @param mixed ...$items
+     * @return void
      * @dataProvider providerJoin
      */
     public function testJoin(mixed $expected, mixed ...$items)
@@ -69,9 +72,10 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
+     * @param array<int|string,int|string> $keys
      * @param mixed $value
-     * @param array|DataManagerInterface $data
+     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @return void
      * @dataProvider providerSet
      */
     public function testSet(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
@@ -82,9 +86,10 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
+     * @param array<int|string,int|string> $keys
      * @param mixed $value
-     * @param array|DataManagerInterface $data
+     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @return void
      * @dataProvider providerAdd
      */
     public function testAdd(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
@@ -95,9 +100,10 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
-     * @param array|DataManagerInterface $data
+     * @param array<int|string,int|string> $keys
+     * @param array<mixed,mixed>|DataManagerInterface $data
      * @param mixed $default
+     * @return void
      * @dataProvider providerGet
      */
     public function testGet(mixed $expected, array $keys, array | DataManagerInterface $data, mixed $default)
@@ -111,8 +117,9 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
-     * @param array|DataManagerInterface $data
+     * @param array<int|string,int|string> $keys
+     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @return void
      * @dataProvider providerHas
      */
     public function testHas(mixed $expected, array $keys, array | DataManagerInterface $data)
@@ -122,8 +129,9 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array $keys
-     * @param array|DataManagerInterface $data
+     * @param array<int|string,int|string> $keys
+     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @return void
      * @dataProvider providerDel
      */
     public function testDel(mixed $expected, array $keys, array | DataManagerInterface $data)
