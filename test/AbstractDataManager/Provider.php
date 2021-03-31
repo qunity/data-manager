@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
 use ArrayIterator;
+use BadMethodCallException;
+use Qunity\Component\DataManager;
 use Qunity\Component\DataManagerFactory;
 
 /**
@@ -184,7 +186,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerMagicMethods(): array
+    public function providerSuccessMagicMethods(): array
     {
         ($object11 = DataManagerFactory::create())->set(['key' => ['value']]);
         $object12 = DataManagerFactory::create();
@@ -235,6 +237,21 @@ trait Provider
             [false, $object6, 'hasKey_5'],
             [$object7, $object5, 'delKey'],
             [$object8, $object6, 'delKey'],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function providerErrorMagicMethods(): array
+    {
+        return [
+            [
+                BadMethodCallException::class,
+                'Call to invalid method ' . DataManager::class . '::nonExistent',
+                DataManagerFactory::create(),
+                'nonExistent'
+            ],
         ];
     }
 }

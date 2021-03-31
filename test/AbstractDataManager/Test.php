@@ -67,21 +67,35 @@ class Test extends TestCase
      * @param string $method
      * @param mixed ...$args
      * @return void
-     * @dataProvider providerMagicMethods
+     * @dataProvider providerSuccessMagicMethods
      */
-    public function testMagicMethods(
+    public function testSuccessMagicMethods(
         mixed $expected,
         DataManagerInterface $dataManager,
         string $method,
         mixed ...$args
-    )
-    {
-        $callback = [$dataManager, $method];
-        if (is_callable($callback)) {
-            $this->assertEquals($expected, call_user_func_array($callback, $args));
-        } else {
-            $this->fail();
-        }
+    ) {
+        // @phpstan-ignore-next-line
+        $this->assertEquals($expected, call_user_func_array([$dataManager, $method], $args));
+    }
+
+    /**
+     * @param mixed $expectedException
+     * @param mixed $expectedMessage
+     * @param DataManagerInterface $dataManager
+     * @param string $method
+     * @return void
+     * @dataProvider providerErrorMagicMethods
+     */
+    public function testErrorMagicMethods(
+        mixed $expectedException,
+        mixed $expectedMessage,
+        DataManagerInterface $dataManager,
+        string $method
+    ) {
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($expectedMessage);
+        call_user_func([$dataManager, $method]); // @phpstan-ignore-line
     }
 
     /**

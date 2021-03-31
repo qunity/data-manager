@@ -52,14 +52,10 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function __call(string $method, array $args): mixed
     {
-        $args = [Converter::getPathByMethod($method, 3), ...$args];
-        $method = substr($method, 0, 3);
-
-        $callback = [$this, $method];
-        if (is_callable($callback)) {
-            return call_user_func_array($callback, $args);
+        $callback = [$this, substr($method, 0, 3)];
+        if (is_callable($callback) && method_exists(...$callback)) {
+            return call_user_func($callback, Converter::getPathByMethod($method, 3), ...$args);
         }
-
         $class = $this::class;
         throw new BadMethodCallException("Call to invalid method {$class}::{$method}");
     }
