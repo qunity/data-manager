@@ -24,7 +24,7 @@ class DataManagerFactory
     /**
      * Create new manager object
      *
-     * @param array $data
+     * @param array<mixed,mixed> $data
      * @param string|null $class
      *
      * @return DataManagerInterface
