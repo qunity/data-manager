@@ -38,7 +38,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Set data into object
      *
-     * @param array<int|string,mixed>|int|string $path
+     * @param array<array|int|string,mixed>|int|string $path
      * @param mixed|null $value
      *
      * @return $this
@@ -50,7 +50,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Add data into object
      *
-     * @param array<int|string,mixed>|int|string $path
+     * @param array<array|int|string,mixed>|int|string $path
      * @param mixed|null $value
      *
      * @return $this
@@ -62,7 +62,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Get data from object
      *
-     * @param array<mixed,mixed>|int|string|null $path
+     * @param array<mixed,array|int|string>|int|string|null $path
      * @param mixed|null $default
      *
      * @return mixed
@@ -72,7 +72,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Check existence data in object
      *
-     * @param array<mixed,int|string>|int|string|null $path
+     * @param array<mixed,array|int|string>|int|string|null $path
      * @return bool
      */
     public function has(array | int | string $path = null): bool;
@@ -80,7 +80,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Remove data from object
      *
-     * @param array<mixed,int|string>|int|string|null $path
+     * @param array<mixed,array|int|string>|int|string|null $path
      * @return $this
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
