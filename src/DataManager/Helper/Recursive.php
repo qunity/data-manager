@@ -212,7 +212,7 @@ class Recursive
     }
 
     /**
-     * Configure manager
+     * Configure object
      * Works recursively only with classes implement the interface ConfigurableInterface
      *
      * @param callable $callback

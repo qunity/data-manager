@@ -23,7 +23,7 @@ use Qunity\Component\DataManagerInterface;
 interface ConfigurableInterface
 {
     /**
-     * Configure manager
+     * Configure object
      *
      * @param array<mixed>|DataManagerInterface|null $config
      * @return $this
