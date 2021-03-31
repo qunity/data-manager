@@ -27,7 +27,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<mixed,mixed>|DataManagerInterface $config
+     * @param array<mixed>|DataManagerInterface $config
      * @return void
      * @dataProvider providerSuccessConfigure
      */
@@ -43,7 +43,7 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array<mixed,mixed>|DataManagerInterface $config
+     * @param array<mixed>|DataManagerInterface $config
      * @return void
      * @dataProvider providerErrorConfigure
      */
@@ -72,9 +72,9 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<mixed>|DataManagerInterface $data
      * @return void
      * @dataProvider providerSet
      */
@@ -86,9 +86,9 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<mixed>|DataManagerInterface $data
      * @return void
      * @dataProvider providerAdd
      */
@@ -100,8 +100,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      * @param mixed $default
      * @return void
      * @dataProvider providerGet
@@ -117,8 +117,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      * @return void
      * @dataProvider providerHas
      */
@@ -129,8 +129,8 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      * @return void
      * @dataProvider providerDel
      */

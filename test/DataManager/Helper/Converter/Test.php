@@ -68,7 +68,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @return void
      * @dataProvider providerClearKeys
      */
@@ -90,7 +90,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @return void
      * @dataProvider providerGetPathByKeys
      */

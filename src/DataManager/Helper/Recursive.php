@@ -27,9 +27,9 @@ class Recursive
     /**
      * Set element recursively
      *
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<mixed>|DataManagerInterface $data
      */
     public static function set(array $keys, mixed $value, array | DataManagerInterface &$data): void
     {
@@ -52,9 +52,9 @@ class Recursive
     /**
      * Add element recursively
      *
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<mixed>|DataManagerInterface $data
      */
     public static function add(array $keys, mixed $value, array | DataManagerInterface &$data): void
     {
@@ -111,7 +111,7 @@ class Recursive
      * Join data (only arrays)
      *
      * @param array<mixed,array> ...$items
-     * @return array<mixed,mixed>
+     * @return array<mixed>
      */
     protected static function joinArrays(array ...$items): array
     {
@@ -138,8 +138,8 @@ class Recursive
     /**
      * Get element recursively
      *
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      * @param mixed|null $default
      *
      * @return mixed
@@ -165,8 +165,8 @@ class Recursive
     /**
      * Check existence element recursively
      *
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      *
      * @return bool
      */
@@ -191,8 +191,8 @@ class Recursive
     /**
      * Remove element recursively
      *
-     * @param array<int|string,int|string> $keys
-     * @param array<mixed,mixed>|DataManagerInterface $data
+     * @param array<int|string> $keys
+     * @param array<mixed>|DataManagerInterface $data
      */
     public static function del(array $keys, array | DataManagerInterface &$data): void
     {
@@ -216,7 +216,7 @@ class Recursive
      * Works recursively only with classes implement the interface ConfigurableInterface
      *
      * @param callable $callback
-     * @param array<mixed,mixed>|DataManagerInterface $config
+     * @param array<mixed>|DataManagerInterface $config
      *
      * @throws LogicException
      */

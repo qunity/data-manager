@@ -27,7 +27,7 @@ class Test extends TestCase
     /**
      * @param mixed $expectedInstanceOf
      * @param mixed $expectedData
-     * @param array<mixed,mixed> $data
+     * @param array<mixed> $data
      * @param string|null $class
      * @return void
      * @dataProvider providerSuccessCreate
@@ -46,7 +46,7 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array<mixed,mixed> $data
+     * @param array<mixed> $data
      * @param string|null $class
      * @return void
      * @dataProvider providerErrorCreate

@@ -38,7 +38,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Set data into object
      *
-     * @param array<array|int|string,mixed>|int|string $path
+     * @param array<int|string,mixed>|int|string $path
      * @param mixed|null $value
      *
      * @return $this
@@ -50,7 +50,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     /**
      * Add data into object
      *
-     * @param array<array|int|string,mixed>|int|string $path
+     * @param array<int|string,mixed>|int|string $path
      * @param mixed|null $value
      *
      * @return $this

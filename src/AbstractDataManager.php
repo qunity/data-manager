@@ -29,13 +29,13 @@ abstract class AbstractDataManager implements DataManagerInterface
 {
     /**
      * Object data
-     * @var array<int|string,mixed>
+     * @var array<mixed>
      */
     protected array $data = [];
 
     /**
      * AbstractDataManager constructor
-     * @param array<int|string,mixed> $data
+     * @param array<mixed> $data
      */
     public function __construct(array $data = [])
     {
@@ -46,7 +46,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      * Call not existing methods
      *
      * @param string $method
-     * @param array<mixed,mixed> $args
+     * @param array<mixed> $args
      *
      * @return mixed
      */

@@ -114,7 +114,7 @@ class Converter
     /**
      * Get path by keys
      *
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @return string
      */
     public static function getPathByKeys(array $keys): string
@@ -137,7 +137,7 @@ class Converter
     /**
      * Clear the trash keys
      *
-     * @param array<int|string,int|string> $keys
+     * @param array<int|string> $keys
      * @return array<int,string>
      */
     public static function clearKeys(array $keys): array
@@ -159,7 +159,7 @@ class Converter
     /**
      * Get array identifier
      *
-     * @param array<int|string,int|string> $array
+     * @param array<int|string> $array
      * @return string
      */
     #[Pure] protected static function getArrayId(array $array): string

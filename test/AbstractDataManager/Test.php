@@ -99,9 +99,9 @@ class Test extends TestCase
     }
 
     /**
-     * @param array<mixed,mixed> $step1
-     * @param array<mixed,mixed> $step2
-     * @param array<mixed,mixed> $step3
+     * @param array<mixed> $step1
+     * @param array<mixed> $step2
+     * @param array<mixed> $step3
      * @return void
      * @dataProvider providerSingleMethods
      */
@@ -139,9 +139,9 @@ class Test extends TestCase
     }
 
     /**
-     * @param array<mixed,mixed> $step1
-     * @param array<mixed,mixed> $step2
-     * @param array<mixed,mixed> $step3
+     * @param array<mixed> $step1
+     * @param array<mixed> $step2
+     * @param array<mixed> $step3
      * @return void
      * @dataProvider providerMassMethods
      */
