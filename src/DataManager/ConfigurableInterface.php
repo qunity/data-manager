@@ -25,7 +25,7 @@ interface ConfigurableInterface
     /**
      * Configure manager
      *
-     * @param array|DataManagerInterface|null $config
+     * @param array<mixed,mixed>|DataManagerInterface|null $config
      * @return $this
      *
      * @see Recursive::configure
