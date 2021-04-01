@@ -30,7 +30,7 @@ class DataManagerFactory
      * @return DataManagerInterface
      * @throws LogicException
      */
-    public static function create(array $data = [], string $class = null): DataManagerInterface
+    public static function create(array $data = [], ?string $class = null): DataManagerInterface
     {
         if (!$class) {
             $class = DataManager::class;
