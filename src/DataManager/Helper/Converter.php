@@ -237,7 +237,7 @@ class Converter
      *
      * @return bool
      */
-    public static function isPath(int | string $value, bool $throw = null): bool
+    public static function isPath(int|string $value, ?bool $throw = null): bool
     {
         $result = str_contains((string)$value, DataManagerInterface::DELIMITER_PATH);
         if ($throw !== null && $throw == $result) {
