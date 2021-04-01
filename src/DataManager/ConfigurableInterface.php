@@ -32,5 +32,5 @@ interface ConfigurableInterface
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function configure(array|DataManagerInterface|null $config = null): static;
+    public function configure(array | DataManagerInterface | null $config = null): static;
 }
