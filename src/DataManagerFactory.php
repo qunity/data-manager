@@ -30,9 +30,9 @@ class DataManagerFactory
      * @return DataManagerInterface
      * @throws LogicException
      */
-    public static function create(array $data = [], ?string $class = null): DataManagerInterface
+    public static function create(array $data = [], string $class = null): DataManagerInterface
     {
-        if (!$class) {
+        if ($class === null) {
             $class = DataManager::class;
         }
         $object = new $class($data); // TODO: fix for getting through object-manager
