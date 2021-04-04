@@ -15,7 +15,6 @@ namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
 
 use PHPUnit\Framework\TestCase;
 use Qunity\Component\DataManager\Helper\Recursive;
-use Qunity\Component\DataManagerInterface;
 
 /**
  * Class Test
@@ -27,11 +26,11 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<mixed>|DataManagerInterface $config
+     * @param mixed $config
      * @return void
      * @dataProvider providerSuccessConfigure
      */
-    public function testSuccessConfigure(mixed $expected, array | DataManagerInterface $config)
+    public function testSuccessConfigure(mixed $expected, mixed $config)
     {
         $actual = [];
         Recursive::configure(function (array $objects) use (&$actual): void {
@@ -43,15 +42,12 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array<mixed>|DataManagerInterface $config
+     * @param mixed $config
      * @return void
      * @dataProvider providerErrorConfigure
      */
-    public function testErrorConfigure(
-        mixed $expectedException,
-        mixed $expectedMessage,
-        array | DataManagerInterface $config
-    ) {
+    public function testErrorConfigure(mixed $expectedException, mixed $expectedMessage, mixed $config)
+    {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
         Recursive::configure(function (array $objects): void {
@@ -72,13 +68,13 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
+     * @param mixed $keys
      * @param mixed $value
-     * @param array<mixed>|DataManagerInterface $data
+     * @param mixed $data
      * @return void
      * @dataProvider providerSet
      */
-    public function testSet(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
+    public function testSet(mixed $expected, mixed $keys, mixed $value, mixed $data)
     {
         Recursive::set($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -86,13 +82,13 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
+     * @param mixed $keys
      * @param mixed $value
-     * @param array<mixed>|DataManagerInterface $data
+     * @param mixed $data
      * @return void
      * @dataProvider providerAdd
      */
-    public function testAdd(mixed $expected, array $keys, mixed $value, array | DataManagerInterface $data)
+    public function testAdd(mixed $expected, mixed $keys, mixed $value, mixed $data)
     {
         Recursive::add($keys, $value, $data);
         $this->assertEquals($expected, $data);
@@ -100,13 +96,13 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param mixed $keys
+     * @param mixed $data
      * @param mixed $default
      * @return void
      * @dataProvider providerGet
      */
-    public function testGet(mixed $expected, array $keys, array | DataManagerInterface $data, mixed $default)
+    public function testGet(mixed $expected, mixed $keys, mixed $data, mixed $default)
     {
         if ($default === null) {
             $this->assertEquals($expected, Recursive::get($keys, $data));
@@ -117,24 +113,24 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param mixed $keys
+     * @param mixed $data
      * @return void
      * @dataProvider providerHas
      */
-    public function testHas(mixed $expected, array $keys, array | DataManagerInterface $data)
+    public function testHas(mixed $expected, mixed $keys, mixed $data)
     {
         $this->assertEquals($expected, Recursive::has($keys, $data));
     }
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param mixed $keys
+     * @param mixed $data
      * @return void
      * @dataProvider providerDel
      */
-    public function testDel(mixed $expected, array $keys, array | DataManagerInterface $data)
+    public function testDel(mixed $expected, mixed $keys, mixed $data)
     {
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
