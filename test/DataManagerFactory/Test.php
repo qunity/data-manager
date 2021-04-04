@@ -27,12 +27,12 @@ class Test extends TestCase
     /**
      * @param mixed $expectedInstanceOf
      * @param mixed $expectedData
-     * @param array<mixed> $data
-     * @param string|null $class
+     * @param mixed $data
+     * @param mixed $class
      * @return void
      * @dataProvider providerSuccessCreate
      */
-    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, array $data, ?string $class)
+    public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, mixed $data, mixed $class)
     {
         if ($class === null) {
             $object = DataManagerFactory::create($data);
@@ -46,12 +46,12 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param array<mixed> $data
-     * @param string|null $class
+     * @param mixed $data
+     * @param mixed $class
      * @return void
      * @dataProvider providerErrorCreate
      */
-    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, array $data, ?string $class)
+    public function testErrorCreate(mixed $expectedException, mixed $expectedMessage, mixed $data, mixed $class)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
