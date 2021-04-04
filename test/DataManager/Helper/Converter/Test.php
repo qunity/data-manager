@@ -26,87 +26,87 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param int|string $value
-     * @param bool|null $throw
+     * @param mixed $path
+     * @param mixed $throw
      * @return void
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, int | string $value, ?bool $throw)
+    public function testIsPath(mixed $expected, mixed $path, mixed $throw)
     {
         if ($throw === null) {
-            $this->assertEquals($expected, Converter::isPath($value));
+            $this->assertEquals($expected, Converter::isPath($path));
         } else {
-            $this->assertEquals($expected, Converter::isPath($value, $throw));
+            $this->assertEquals($expected, Converter::isPath($path, $throw));
         }
     }
 
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param int|string $value
-     * @param bool $throw
+     * @param mixed $path
+     * @param mixed $throw
      * @return void
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, int | string $value, bool $throw)
+    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, mixed $path, mixed $throw)
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        Converter::isPath($value, $throw);
+        Converter::isPath($path, $throw);
     }
 
     /**
      * @param mixed $expected
-     * @param int|string $path
+     * @param mixed $path
      * @return void
      * @dataProvider providerClearPath
      */
-    public function testClearPath(mixed $expected, int | string $path)
+    public function testClearPath(mixed $expected, mixed $path)
     {
         $this->assertEquals($expected, Converter::clearPath($path));
     }
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
+     * @param mixed $keys
      * @return void
      * @dataProvider providerClearKeys
      */
-    public function testClearKeys(mixed $expected, array $keys)
+    public function testClearKeys(mixed $expected, mixed $keys)
     {
         $this->assertEquals($expected, Converter::clearKeys($keys));
     }
 
     /**
      * @param mixed $expected
-     * @param int|string $path
+     * @param mixed $path
      * @return void
      * @dataProvider providerGetKeysByPath
      */
-    public function testGetKeysByPath(mixed $expected, int | string $path)
+    public function testGetKeysByPath(mixed $expected, mixed $path)
     {
         $this->assertEquals($expected, Converter::getKeysByPath($path));
     }
 
     /**
      * @param mixed $expected
-     * @param array<int|string> $keys
+     * @param mixed $keys
      * @return void
      * @dataProvider providerGetPathByKeys
      */
-    public function testGetPathByKeys(mixed $expected, array $keys)
+    public function testGetPathByKeys(mixed $expected, mixed $keys)
     {
         $this->assertEquals($expected, Converter::getPathByKeys($keys));
     }
 
     /**
      * @param mixed $expected
-     * @param int|string $path
-     * @param string|null $prefix
+     * @param mixed $path
+     * @param mixed $prefix
      * @return void
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(mixed $expected, int | string $path, ?string $prefix)
+    public function testGetMethodByPath(mixed $expected, mixed $path, mixed $prefix)
     {
         if ($prefix === null) {
             $this->assertEquals($expected, Converter::getMethodByPath($path));
@@ -117,12 +117,12 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param string $method
-     * @param int|null $offset
+     * @param mixed $method
+     * @param mixed $offset
      * @return void
      * @dataProvider providerGetPathByMethod
      */
-    public function testGetPathByMethod(mixed $expected, string $method, ?int $offset)
+    public function testGetPathByMethod(mixed $expected, mixed $method, mixed $offset)
     {
         if ($offset === null) {
             $this->assertEquals($expected, Converter::getPathByMethod($method));
