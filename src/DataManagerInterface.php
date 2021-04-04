@@ -67,7 +67,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return mixed
      */
-    public function get(array | int | string | null $path = null, mixed $default = null): mixed;
+    public function get(array | int | string $path = null, mixed $default = null): mixed;
 
     /**
      * Check existence data in object
@@ -75,7 +75,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * @param array<mixed,array|int|string>|int|string|null $path
      * @return bool
      */
-    public function has(array | int | string | null $path = null): bool;
+    public function has(array | int | string $path = null): bool;
 
     /**
      * Remove data from object
@@ -85,5 +85,5 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function del(array | int | string | null $path = null): static;
+    public function del(array | int | string $path = null): static;
 }
