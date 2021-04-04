@@ -149,7 +149,7 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function get(array | int | string | null $path = null, mixed $default = null): mixed
+    public function get(array | int | string $path = null, mixed $default = null): mixed
     {
         if ($path === null) {
             return $this->data;
@@ -181,7 +181,7 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function has(array | int | string | null $path = null): bool
+    public function has(array | int | string $path = null): bool
     {
         if ($path === null) {
             return (bool)$this->data;
@@ -207,7 +207,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
     // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function del(array | int | string | null $path = null): static
+    public function del(array | int | string $path = null): static
     {
         if ($path === null) {
             $this->data = [];
