@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
-use Exception;
 use PHPUnit\Framework\TestCase;
 use Qunity\Component\DataManagerFactory;
 use Qunity\Component\DataManagerInterface;
@@ -29,23 +28,22 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @return void
-     * @throws Exception
      * @dataProvider providerGetIterator
      */
-    public function testGetIterator(mixed $expected, DataManagerInterface $dataManager)
+    public function testGetIterator(mixed $expected, mixed $dataManager)
     {
         $this->assertEquals($expected, $dataManager->getIterator());
     }
 
     /**
-     * @param int|string $path
+     * @param mixed $path
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
      */
-    public function testArrayAccess(int | string $path, mixed $value)
+    public function testArrayAccess(mixed $path, mixed $value)
     {
         $object = DataManagerFactory::create();
 
@@ -63,16 +61,16 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param DataManagerInterface $dataManager
-     * @param string $method
+     * @param mixed $dataManager
+     * @param mixed $method
      * @param mixed ...$args
      * @return void
      * @dataProvider providerSuccessMagicMethods
      */
     public function testSuccessMagicMethods(
         mixed $expected,
-        DataManagerInterface $dataManager,
-        string $method,
+        mixed $dataManager,
+        mixed $method,
         mixed ...$args
     ) {
         // @phpstan-ignore-next-line
@@ -82,16 +80,16 @@ class Test extends TestCase
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param DataManagerInterface $dataManager
-     * @param string $method
+     * @param mixed $dataManager
+     * @param mixed $method
      * @return void
      * @dataProvider providerErrorMagicMethods
      */
     public function testErrorMagicMethods(
         mixed $expectedException,
         mixed $expectedMessage,
-        DataManagerInterface $dataManager,
-        string $method
+        mixed $dataManager,
+        mixed $method
     ) {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
