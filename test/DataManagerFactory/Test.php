@@ -55,10 +55,6 @@ class Test extends TestCase
     {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        if ($class === null) {
-            DataManagerFactory::create($data);
-        } else {
-            DataManagerFactory::create($data, $class);
-        }
+        DataManagerFactory::create($data, $class);
     }
 }
