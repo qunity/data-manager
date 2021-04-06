@@ -30,15 +30,15 @@ trait Provider
     public function providerSuccessConfigure(): array
     {
         $expected = function (): object {
-            /** @var AnotherDataManager $object */
-            $object = DataManagerFactory::create(['key' => 'value'], AnotherDataManager::class);
             /** @var AnotherDataManager $object1 */
-            $object1 = DataManagerFactory::create(['key' => 'config_value'], AnotherDataManager::class);
+            $object1 = DataManagerFactory::create(['key' => 'value'], AnotherDataManager::class);
             /** @var AnotherDataManager $object2 */
             $object2 = DataManagerFactory::create(['key' => 'config_value'], AnotherDataManager::class);
-            return $object->setObjects([
-                'config_1' => $object1->setObjects([DataManagerFactory::create(['key' => 'config_value'])]),
-                'config_2' => $object2->setObjects([DataManagerFactory::create(['key' => 'config_value'])])
+            /** @var AnotherDataManager $object3 */
+            $object3 = DataManagerFactory::create(['key' => 'config_value'], AnotherDataManager::class);
+            return $object1->setObjects([
+                'config_1' => $object2->setObjects([DataManagerFactory::create(['key' => 'config_value'])]),
+                'config_2' => $object3->setObjects([DataManagerFactory::create(['key' => 'config_value'])])
             ]);
         };
         return [
