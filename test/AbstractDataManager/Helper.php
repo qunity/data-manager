@@ -22,9 +22,9 @@ use JetBrains\PhpStorm\ArrayShape;
 trait Helper
 {
     #[ArrayShape([
-        'data' => "array",
-        'flat' => "array",
-        'real' => "array",
+        'data' => "mixed",
+        'flat' => "mixed",
+        'real' => "mixed",
         'paths' => "array",
         'dataNull' => "array",
         'dataDefault' => "array",
