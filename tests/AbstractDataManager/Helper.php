@@ -13,23 +13,19 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
-use JetBrains\PhpStorm\ArrayShape;
-
 /**
  * Trait Helper
  * @package Qunity\UnitTest\Component\AbstractDataManager
  */
 trait Helper
 {
-    #[ArrayShape([
-        'data' => "mixed",
-        'flat' => "mixed",
-        'real' => "mixed",
-        'paths' => "array",
-        'dataNull' => "array",
-        'dataDefault' => "array",
-        'pathsDefault' => "array[]"
-    ])]
+    /**
+     * Prepare step data for mass methods
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+     *
+     * @param array $step
+     * @return array
+     */
     protected function stepMassMethods(array $step): array
     {
         list('data' => $data, 'flat' => $flat, 'real' => $real) = $step;
@@ -38,7 +34,7 @@ trait Helper
             'data' => $data, 'flat' => $flat, 'real' => $real, 'paths' => $paths,
             'dataNull' => array_fill_keys($paths, null),
             'dataDefault' => array_fill_keys($paths, 'default'),
-            'pathsDefault' => array_map(function (int | string $path): array {
+            'pathsDefault' => array_map(function (int|string $path): array {
                 return ['path' => $path, 'default' => 'default'];
             }, $paths)
         ];

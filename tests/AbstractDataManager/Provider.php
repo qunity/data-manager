@@ -191,8 +191,6 @@ trait Provider
         ($object11 = DataManagerFactory::create())->set(['key' => ['value']]);
         $object12 = DataManagerFactory::create();
 
-        // TODO: check without "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-        // phpcs:ignore Squiz.Classes.ValidClassName.MissingBrace, PSR2.Classes.ClassDeclaration.MissingBrace
         ($object21 = DataManagerFactory::create(class: AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2' => ['value']]);
         $object22 = DataManagerFactory::create(
@@ -203,23 +201,15 @@ trait Provider
         ($object31 = DataManagerFactory::create())->set(['key' => ['value_1', 'value_2']]);
         ($object32 = DataManagerFactory::create())->set('key/0', 'value_1');
 
-        // TODO: check without "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-        // phpcs:ignore Squiz.Classes.ValidClassName.MissingBrace, PSR2.Classes.ClassDeclaration.MissingBrace
         ($object41 = DataManagerFactory::create(class: AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]);
-        // TODO: check without "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-        // phpcs:ignore Squiz.Classes.ValidClassName.MissingBrace, PSR2.Classes.ClassDeclaration.MissingBrace
         ($object42 = DataManagerFactory::create(class: AnotherDataManager::class))
             ->set(['key_1' => 'value', 'key_2/0' => 'value_1']);
 
         ($object5 = DataManagerFactory::create())->set('key/0', 'value');
-        // TODO: check without "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-        // phpcs:ignore Squiz.Classes.ValidClassName.MissingBrace, PSR2.Classes.ClassDeclaration.MissingBrace
         ($object6 = DataManagerFactory::create(class: AnotherDataManager::class))->set('key/0', 'value');
 
         ($object7 = DataManagerFactory::create());
-        // TODO: check without "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-        // phpcs:ignore Squiz.Classes.ValidClassName.MissingBrace, PSR2.Classes.ClassDeclaration.MissingBrace
         ($object8 = DataManagerFactory::create(class: AnotherDataManager::class));
 
         return [
