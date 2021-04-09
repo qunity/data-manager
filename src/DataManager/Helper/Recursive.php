@@ -110,7 +110,7 @@ class Recursive
     /**
      * Join data (only arrays)
      *
-     * @param array<mixed,array> ...$items
+     * @param array<int|string,array> ...$items
      * @return array<int|string,mixed>
      */
     protected static function joinArrays(array ...$items): array
