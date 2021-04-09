@@ -29,13 +29,13 @@ abstract class AbstractDataManager implements DataManagerInterface
 {
     /**
      * Object data
-     * @var array<mixed>
+     * @var array<int|string,mixed>
      */
     protected array $data = [];
 
     /**
      * AbstractDataManager constructor
-     * @param array<mixed> $data
+     * @param array<int|string,mixed> $data
      */
     public function __construct(array $data = [])
     {
@@ -43,10 +43,30 @@ abstract class AbstractDataManager implements DataManagerInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function set(array|int|string $path, mixed $value = null): static
+    {
+        if (is_array($path)) {
+            $this->data = [];
+            foreach ($path as $itemPath => $itemValue) {
+                $this->set($itemPath, $itemValue);
+            }
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                Recursive::set(Converter::getKeysByPath($path), $value, $this->data);
+            } else {
+                $this->data[$path] = $value;
+            }
+        }
+        return $this;
+    }
+
+    /**
      * Call not existing methods
      *
      * @param string $method
-     * @param array<mixed> $args
+     * @param array<int,mixed> $args
      *
      * @return mixed
      */
@@ -57,7 +77,7 @@ abstract class AbstractDataManager implements DataManagerInterface
             return call_user_func($callback, Converter::getPathByMethod($method, 3), ...$args);
         }
         $class = $this::class;
-        throw new BadMethodCallException("Call to invalid method {$class}::{$method}");
+        throw new BadMethodCallException("Call to invalid method $class::$method");
     }
 
     /**
@@ -79,77 +99,7 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function offsetExists(mixed $offset): bool
-    {
-        return $this->has($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetUnset(mixed $offset): void
-    {
-        $this->del($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIterator(): Traversable
-    {
-        // TODO: make two variations of the result (flat and nested)
-        return new ArrayIterator($this->get());
-    }
-
-    /**
-     * @inheritDoc
-     */
-    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function set(array | int | string $path, mixed $value = null): static
-    {
-        if (is_array($path)) {
-            $this->data = [];
-            foreach ($path as $itemPath => $itemValue) {
-                $this->set($itemPath, $itemValue);
-            }
-        } elseif ($path != '') {
-            if (Converter::isPath($path)) {
-                Recursive::set(Converter::getKeysByPath($path), $value, $this->data);
-            } else {
-                $this->data[$path] = $value;
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function add(array | int | string $path, mixed $value = null): static
-    {
-        if (is_array($path)) {
-            foreach ($path as $itemPath => $itemValue) {
-                $this->add($itemPath, $itemValue);
-            }
-        } elseif ($path != '') {
-            if (Converter::isPath($path)) {
-                Recursive::add(Converter::getKeysByPath($path), $value, $this->data);
-            } elseif (isset($this->data[$path])) {
-                $this->data[$path] = Recursive::join($this->data[$path], $value);
-            } else {
-                $this->data[$path] = $value;
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function get(array | int | string $path = null, mixed $default = null): mixed
+    public function get(array|int|string $path = null, mixed $default = null): mixed
     {
         if ($path === null) {
             return $this->data;
@@ -181,7 +131,15 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function has(array | int | string $path = null): bool
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function has(array|int|string $path = null): bool
     {
         if ($path === null) {
             return (bool)$this->data;
@@ -205,9 +163,15 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function del(array | int | string $path = null): static
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->del($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function del(array|int|string $path = null): static
     {
         if ($path === null) {
             $this->data = [];
@@ -220,6 +184,36 @@ abstract class AbstractDataManager implements DataManagerInterface
                 Recursive::del(Converter::getKeysByPath($path), $this->data);
             } else {
                 unset($this->data[$path]);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIterator(): Traversable
+    {
+        // TODO: make two variations of the result (flat and nested)
+        return new ArrayIterator($this->get());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function add(array|int|string $path, mixed $value = null): static
+    {
+        if (is_array($path)) {
+            foreach ($path as $itemPath => $itemValue) {
+                $this->add($itemPath, $itemValue);
+            }
+        } elseif ($path != '') {
+            if (Converter::isPath($path)) {
+                Recursive::add(Converter::getKeysByPath($path), $value, $this->data);
+            } elseif (isset($this->data[$path])) {
+                $this->data[$path] = Recursive::join($this->data[$path], $value);
+            } else {
+                $this->data[$path] = $value;
             }
         }
         return $this;
