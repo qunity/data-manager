@@ -34,7 +34,9 @@ class Test extends TestCase
      */
     public function testSuccessCreate(mixed $expectedInstanceOf, mixed $expectedData, mixed $data, mixed $class)
     {
-        if ($class === null) {
+        if ($data === [] && $class === null) {
+            $object = DataManagerFactory::create();
+        } elseif ($class === null) {
             $object = DataManagerFactory::create($data);
         } else {
             $object = DataManagerFactory::create($data, $class);

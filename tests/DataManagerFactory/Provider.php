@@ -34,6 +34,11 @@ trait Provider
                 DataManagerInterface::class,
                 new DataManager(),
                 [],
+                null
+            ], [
+                DataManagerInterface::class,
+                new DataManager(),
+                [],
                 DataManager::class
             ], [
                 DataManagerInterface::class,
