@@ -26,16 +26,14 @@ class AnotherDataManager extends DataManager implements ConfigurableInterface
 {
     /**
      * Internal objects
-     * @var array<mixed,object>
+     * @var array<object>
      */
     protected array $objects = [];
 
     /**
      * @inheritDoc
      */
-    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
-    public function configure(array | DataManagerInterface $config = null): static
+    public function configure(array|DataManagerInterface $config = null): static
     {
         if ($config !== null) {
             Recursive::configure([$this, 'setObjects'], $config);
@@ -46,11 +44,9 @@ class AnotherDataManager extends DataManager implements ConfigurableInterface
     /**
      * Set internal objects
      *
-     * @param array<mixed,object> $objects
+     * @param array<object> $objects
      * @return $this
      */
-    // TODO: uninstall "phpcs:ignore" after updating squizlabs/php_codesniffer to v.3.6
-    // phpcs:ignore Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
     public function setObjects(array $objects): static
     {
         $this->objects = $objects;

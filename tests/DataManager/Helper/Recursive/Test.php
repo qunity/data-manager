@@ -32,11 +32,9 @@ class Test extends TestCase
      */
     public function testSuccessConfigure(mixed $expected, mixed $config)
     {
-        $actual = [];
-        Recursive::configure(function (array $objects) use (&$actual): void {
-            $actual = $objects;
+        Recursive::configure(function (array $objects) use ($expected): void {
+            $this->assertEquals($expected, $objects);
         }, $config);
-        $this->assertEquals($expected, $actual);
     }
 
     /**
