@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Qunity\Component\DataManager\Helper;
 
 use InvalidArgumentException;
-use JetBrains\PhpStorm\Pure;
 use Qunity\Component\DataManagerInterface;
 
 /**
@@ -35,7 +34,7 @@ class Converter
      * @param int|string $path
      * @return array<int,string>
      */
-    public static function getKeysByPath(int | string $path): array
+    public static function getKeysByPath(int|string $path): array
     {
         $result = [];
         if (($path = self::clearPath($path)) != '') {
@@ -54,7 +53,7 @@ class Converter
      * @param int|string $path
      * @return string
      */
-    public static function clearPath(int | string $path): string
+    public static function clearPath(int|string $path): string
     {
         $result = '';
         if ($path != '') {
@@ -85,7 +84,7 @@ class Converter
      *
      * @return mixed
      */
-    protected static function getCache(?int $id, int | string $key): mixed
+    protected static function getCache(?int $id, int|string $key): mixed
     {
         if ($id !== null && isset(self::$cache[$id][$key])) {
             return self::$cache[$id][$key];
@@ -101,10 +100,10 @@ class Converter
      * @param int|string $key
      * @param mixed $value
      */
-    protected static function setCache(?int &$id, int | string $key, mixed $value): void
+    protected static function setCache(?int &$id, int|string $key, mixed $value): void
     {
         if ($id === null) {
-            $id = (int)array_key_last(self::$cache) + 1;
+            $id = array_key_last(self::$cache) + 1;
         }
         if (!isset(self::$cache[$id][$key])) {
             self::$cache[$id][$key] = $value;
@@ -123,7 +122,7 @@ class Converter
         if (($keys = self::clearKeys($keys)) != []) {
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
-                array_walk($keys, function (int | string &$key): void {
+                array_walk($keys, function (int|string &$key): void {
                     $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, (string)$key));
                 });
                 /** @var string[][] $keys */
@@ -146,7 +145,7 @@ class Converter
         if ($keys != []) {
             static $cacheId;
             if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
-                array_walk($keys, function (int | string &$key): void {
+                array_walk($keys, function (int|string &$key): void {
                     $key = self::clearPath($key);
                 });
                 $result = array_values(array_diff($keys, ['']));
@@ -162,7 +161,7 @@ class Converter
      * @param array<int|string> $array
      * @return string
      */
-    #[Pure] protected static function getArrayId(array $array): string
+    protected static function getArrayId(array $array): string
     {
         return implode(chr(1), $array);
     }
@@ -175,7 +174,7 @@ class Converter
      *
      * @return string
      */
-    public static function getMethodByPath(int | string $path, string $prefix = ''): string
+    public static function getMethodByPath(int|string $path, string $prefix = ''): string
     {
         $result = '';
         if (($path = self::clearPath($path)) != '') {
@@ -237,7 +236,7 @@ class Converter
      *
      * @return bool
      */
-    public static function isPath(int | string $value, bool $throw = null): bool
+    public static function isPath(int|string $value, bool $throw = null): bool
     {
         $result = str_contains((string)$value, DataManagerInterface::DELIMITER_PATH);
         if ($throw !== null && $throw == $result) {
