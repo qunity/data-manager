@@ -24,11 +24,10 @@ class DataManagerFactory
     /**
      * Create new manager object
      *
-     * @param array<mixed> $data
+     * @param array<int|string,mixed> $data
      * @param string|null $class
      *
      * @return DataManagerInterface
-     * @throws LogicException
      */
     public static function create(array $data = [], string $class = null): DataManagerInterface
     {
@@ -39,7 +38,7 @@ class DataManagerFactory
         if (!($object instanceof DataManagerInterface)) {
             $class = $object::class;
             $interface = DataManagerInterface::class;
-            throw new LogicException("Class {$class} does not implement the interface {$interface}");
+            throw new LogicException("Class $class does not implement the interface $interface");
         }
         return $object;
     }
