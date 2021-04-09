@@ -29,9 +29,9 @@ class Recursive
      *
      * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed>|DataManagerInterface $data
      */
-    public static function set(array $keys, mixed $value, array | DataManagerInterface &$data): void
+    public static function set(array $keys, mixed $value, array|DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -54,9 +54,9 @@ class Recursive
      *
      * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed>|DataManagerInterface $data
      */
-    public static function add(array $keys, mixed $value, array | DataManagerInterface &$data): void
+    public static function add(array $keys, mixed $value, array|DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -111,7 +111,7 @@ class Recursive
      * Join data (only arrays)
      *
      * @param array<mixed,array> ...$items
-     * @return array<mixed>
+     * @return array<int|string,mixed>
      */
     protected static function joinArrays(array ...$items): array
     {
@@ -139,12 +139,12 @@ class Recursive
      * Get element recursively
      *
      * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed>|DataManagerInterface $data
      * @param mixed|null $default
      *
      * @return mixed
      */
-    public static function get(array $keys, array | DataManagerInterface $data, mixed $default = null): mixed
+    public static function get(array $keys, array|DataManagerInterface $data, mixed $default = null): mixed
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -166,11 +166,11 @@ class Recursive
      * Check existence element recursively
      *
      * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed>|DataManagerInterface $data
      *
      * @return bool
      */
-    public static function has(array $keys, array | DataManagerInterface $data): bool
+    public static function has(array $keys, array|DataManagerInterface $data): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -192,9 +192,9 @@ class Recursive
      * Remove element recursively
      *
      * @param array<int|string> $keys
-     * @param array<mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed>|DataManagerInterface $data
      */
-    public static function del(array $keys, array | DataManagerInterface &$data): void
+    public static function del(array $keys, array|DataManagerInterface &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
@@ -216,11 +216,9 @@ class Recursive
      * Works recursively only with classes implement the interface ConfigurableInterface
      *
      * @param callable $callback
-     * @param array<mixed>|DataManagerInterface $config
-     *
-     * @throws LogicException
+     * @param array<int|string,mixed>|DataManagerInterface $config
      */
-    public static function configure(callable $callback, array | DataManagerInterface $config): void
+    public static function configure(callable $callback, array|DataManagerInterface $config): void
     {
         $objects = [];
         foreach ($config as $name => $item) {
@@ -235,7 +233,7 @@ class Recursive
                 if (!($object instanceof ConfigurableInterface)) {
                     $class = $object::class;
                     $interface = ConfigurableInterface::class;
-                    throw new LogicException("Class {$class} does not implement the interface {$interface}");
+                    throw new LogicException("Class $class does not implement the interface $interface");
                 }
                 call_user_func([$object, 'configure'], $item['config']);
             }
