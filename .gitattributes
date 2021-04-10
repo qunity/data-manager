@@ -10,4 +10,4 @@
 # +----------------------------------------------------------------------------+
 
 .gitattributes export-ignore
-test export-ignore
+tests export-ignore
