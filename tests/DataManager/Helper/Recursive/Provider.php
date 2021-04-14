@@ -145,11 +145,6 @@ trait Provider
                 ['key', 0, 'key'],
                 'value_2',
                 ['key' => new DataManager([['key' => ['value_1']]])]
-            ], [
-                ['key' => new DataManager([['key' => null]])],
-                ['key', 0, 'key'],
-                null,
-                ['key' => new DataManager([['key' => 'value']])]
             ],
         ];
     }
