@@ -31,8 +31,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, mixed $path, mixed $throw)
-    {
+    public function testIsPath(
+        mixed $expected,
+        mixed $path,
+        mixed $throw
+    ) {
         if ($throw === null) {
             $this->assertEquals($expected, Converter::isPath($path));
         } else {
@@ -48,8 +51,12 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, mixed $path, mixed $throw)
-    {
+    public function testIsPathThrow(
+        mixed $expectedException,
+        mixed $expectedMessage,
+        mixed $path,
+        mixed $throw
+    ) {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
         Converter::isPath($path, $throw);
@@ -61,8 +68,10 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerClearPath
      */
-    public function testClearPath(mixed $expected, mixed $path)
-    {
+    public function testClearPath(
+        mixed $expected,
+        mixed $path
+    ) {
         $this->assertEquals($expected, Converter::clearPath($path));
     }
 
@@ -72,8 +81,10 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerClearKeys
      */
-    public function testClearKeys(mixed $expected, mixed $keys)
-    {
+    public function testClearKeys(
+        mixed $expected,
+        mixed $keys
+    ) {
         $this->assertEquals($expected, Converter::clearKeys($keys));
     }
 
@@ -83,8 +94,10 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetKeysByPath
      */
-    public function testGetKeysByPath(mixed $expected, mixed $path)
-    {
+    public function testGetKeysByPath(
+        mixed $expected,
+        mixed $path
+    ) {
         $this->assertEquals($expected, Converter::getKeysByPath($path));
     }
 
@@ -94,8 +107,10 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetPathByKeys
      */
-    public function testGetPathByKeys(mixed $expected, mixed $keys)
-    {
+    public function testGetPathByKeys(
+        mixed $expected,
+        mixed $keys
+    ) {
         $this->assertEquals($expected, Converter::getPathByKeys($keys));
     }
 
@@ -106,8 +121,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(mixed $expected, mixed $path, mixed $prefix)
-    {
+    public function testGetMethodByPath(
+        mixed $expected,
+        mixed $path,
+        mixed $prefix
+    ) {
         if ($prefix === null) {
             $this->assertEquals($expected, Converter::getMethodByPath($path));
         } else {
@@ -122,8 +140,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetPathByMethod
      */
-    public function testGetPathByMethod(mixed $expected, mixed $method, mixed $offset)
-    {
+    public function testGetPathByMethod(
+        mixed $expected,
+        mixed $method,
+        mixed $offset
+    ) {
         if ($offset === null) {
             $this->assertEquals($expected, Converter::getPathByMethod($method));
         } else {
