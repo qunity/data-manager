@@ -26,41 +26,14 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $config
-     * @return void
-     * @dataProvider providerSuccessConfigure
-     */
-    public function testSuccessConfigure(mixed $expected, mixed $config)
-    {
-        Recursive::configure(function (array $objects) use ($expected): void {
-            $this->assertEquals($expected, $objects);
-        }, $config);
-    }
-
-    /**
-     * @param mixed $expectedException
-     * @param mixed $expectedMessage
-     * @param mixed $config
-     * @return void
-     * @dataProvider providerErrorConfigure
-     */
-    public function testErrorConfigure(mixed $expectedException, mixed $expectedMessage, mixed $config)
-    {
-        $this->expectException($expectedException);
-        $this->expectExceptionMessage($expectedMessage);
-        Recursive::configure(function (array $objects): void {
-            unset($objects);
-        }, $config);
-    }
-
-    /**
-     * @param mixed $expected
      * @param mixed ...$items
      * @return void
      * @dataProvider providerJoin
      */
-    public function testJoin(mixed $expected, mixed ...$items)
-    {
+    public function testJoin(
+        mixed $expected,
+        mixed ...$items
+    ) {
         $this->assertEquals($expected, Recursive::join(...$items));
     }
 
@@ -72,8 +45,12 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerSet
      */
-    public function testSet(mixed $expected, mixed $keys, mixed $value, mixed $data)
-    {
+    public function testSet(
+        mixed $expected,
+        mixed $keys,
+        mixed $value,
+        mixed $data
+    ) {
         Recursive::set($keys, $value, $data);
         $this->assertEquals($expected, $data);
     }
@@ -86,8 +63,12 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerAdd
      */
-    public function testAdd(mixed $expected, mixed $keys, mixed $value, mixed $data)
-    {
+    public function testAdd(
+        mixed $expected,
+        mixed $keys,
+        mixed $value,
+        mixed $data
+    ) {
         Recursive::add($keys, $value, $data);
         $this->assertEquals($expected, $data);
     }
@@ -100,8 +81,12 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGet
      */
-    public function testGet(mixed $expected, mixed $keys, mixed $data, mixed $default)
-    {
+    public function testGet(
+        mixed $expected,
+        mixed $keys,
+        mixed $data,
+        mixed $default
+    ) {
         if ($default === null) {
             $this->assertEquals($expected, Recursive::get($keys, $data));
         } else {
@@ -116,8 +101,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerHas
      */
-    public function testHas(mixed $expected, mixed $keys, mixed $data)
-    {
+    public function testHas(
+        mixed $expected,
+        mixed $keys,
+        mixed $data
+    ) {
         $this->assertEquals($expected, Recursive::has($keys, $data));
     }
 
@@ -128,8 +116,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerDel
      */
-    public function testDel(mixed $expected, mixed $keys, mixed $data)
-    {
+    public function testDel(
+        mixed $expected,
+        mixed $keys,
+        mixed $data
+    ) {
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
     }
