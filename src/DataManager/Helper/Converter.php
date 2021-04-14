@@ -29,24 +29,6 @@ class Converter
     protected static array $cache = [];
 
     /**
-     * Get software cache
-     * @return array<int,array>
-     */
-    public static function getCache(): array
-    {
-        return self::$cache;
-    }
-
-    /**
-     * Set software cache
-     * @param array<int,array> $cache
-     */
-    public static function setCache(array $cache): void
-    {
-        self::$cache = $cache;
-    }
-
-    /**
      * Get keys by path
      *
      * @param int|string $path
@@ -57,9 +39,9 @@ class Converter
         $result = [];
         if (($path = self::clearPath($path)) != '') {
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $path)) === null) {
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $path));
-                self::setCacheValue($cacheId, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -76,7 +58,7 @@ class Converter
         $result = '';
         if ($path != '') {
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $path)) === null) {
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = preg_replace([
                     '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
                     '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
@@ -87,7 +69,7 @@ class Converter
                     (string)$path,
                     ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
                 )));
-                self::setCacheValue($cacheId, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -102,7 +84,7 @@ class Converter
      *
      * @return mixed
      */
-    protected static function getCacheValue(?int $id, int|string $key): mixed
+    protected static function getCache(?int $id, int|string $key): mixed
     {
         if ($id !== null && isset(self::$cache[$id][$key])) {
             return self::$cache[$id][$key];
@@ -118,7 +100,7 @@ class Converter
      * @param int|string $key
      * @param mixed $value
      */
-    protected static function setCacheValue(?int &$id, int|string $key, mixed $value): void
+    protected static function setCache(?int &$id, int|string $key, mixed $value): void
     {
         if ($id === null) {
             $id = array_key_last(self::$cache) + 1;
@@ -139,13 +121,13 @@ class Converter
         $result = '';
         if (($keys = self::clearKeys($keys)) != []) {
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $keysId = self::getArrayId($keys))) === null) {
+            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
                     $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, (string)$key));
                 });
                 /** @var string[][] $keys */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
-                self::setCacheValue($cacheId, $keysId, $result);
+                self::setCache($cacheId, $keysId, $result);
             }
         }
         return $result;
@@ -162,12 +144,12 @@ class Converter
         $result = [];
         if ($keys != []) {
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $keysId = self::getArrayId($keys))) === null) {
+            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
                     $key = self::clearPath($key);
                 });
                 $result = array_values(array_diff($keys, ['']));
-                self::setCacheValue($cacheId, $keysId, $result);
+                self::setCache($cacheId, $keysId, $result);
             }
         }
         return $result;
@@ -200,7 +182,7 @@ class Converter
                 $path = $prefix . DataManagerInterface::DELIMITER_KEY . $path;
             }
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $path)) === null) {
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = str_replace(
                     DataManagerInterface::DELIMITER_PATH,
                     DataManagerInterface::DELIMITER_KEY,
@@ -212,7 +194,7 @@ class Converter
                         $path
                     )
                 );
-                self::setCacheValue($cacheId, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -234,13 +216,13 @@ class Converter
                 $method = substr($method, $offset);
             }
             static $cacheId;
-            if (($result = self::getCacheValue($cacheId, $method)) === null) {
+            if (($result = self::getCache($cacheId, $method)) === null) {
                 $result = self::clearPath((string)preg_replace(
                     ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
                     [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
                     $method
                 ));
-                self::setCacheValue($cacheId, $method, $result);
+                self::setCache($cacheId, $method, $result);
             }
         }
         return $result;
