@@ -22,11 +22,14 @@ use Traversable;
 /**
  * Class AbstractDataManager
  * @package Qunity\Component
- *
- * TODO: implement disabling recursion
  */
 abstract class AbstractDataManager implements DataManagerInterface
 {
+    /**
+     * Object recursive status
+     */
+    public const RECURSIVE = true;
+
     /**
      * Object data
      * @var array<int|string,mixed>
@@ -53,7 +56,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->set($itemPath, $itemValue);
             }
         } elseif ($path != '') {
-            if (Converter::isPath($path)) {
+            if (self::RECURSIVE && Converter::isPath($path)) { // @phpstan-ignore-line
                 Recursive::set(Converter::getKeysByPath($path), $value, $this->data);
             } else {
                 $this->data[$path] = $value;
@@ -114,12 +117,16 @@ abstract class AbstractDataManager implements DataManagerInterface
                 } else {
                     list('path' => $itemPath, 'default' => $itemDefault) = ['path' => $item, 'default' => $default];
                 }
-                // TODO: make two variations of the result (flat and nested)
-                $data[$itemPath] = $this->get($itemPath, $itemDefault);
+                $value = $this->get($itemPath, $itemDefault);
+                if (self::RECURSIVE && Converter::isPath($itemPath)) { // @phpstan-ignore-line
+                    Recursive::set(Converter::getKeysByPath($itemPath), $value, $data);
+                } else {
+                    $data[$itemPath] = $value;
+                }
             }
             return $data;
         } elseif ($path != '') {
-            if (Converter::isPath($path)) {
+            if (self::RECURSIVE && Converter::isPath($path)) { // @phpstan-ignore-line
                 return Recursive::get(Converter::getKeysByPath($path), $this->data, $default);
             } elseif (isset($this->data[$path])) {
                 return $this->data[$path];
@@ -151,7 +158,7 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
             return (bool)$path;
         } elseif ($path != '') {
-            if (Converter::isPath($path)) {
+            if (self::RECURSIVE && Converter::isPath($path)) { // @phpstan-ignore-line
                 return Recursive::has(Converter::getKeysByPath($path), $this->data);
             } else {
                 return isset($this->data[$path]);
@@ -180,7 +187,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->del($itemPath);
             }
         } elseif ($path != '') {
-            if (Converter::isPath($path)) {
+            if (self::RECURSIVE && Converter::isPath($path)) { // @phpstan-ignore-line
                 Recursive::del(Converter::getKeysByPath($path), $this->data);
             } else {
                 unset($this->data[$path]);
@@ -194,7 +201,6 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function getIterator(): Traversable
     {
-        // TODO: make two variations of the result (flat and nested)
         return new ArrayIterator($this->get());
     }
 
@@ -208,10 +214,16 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->add($itemPath, $itemValue);
             }
         } elseif ($path != '') {
-            if (Converter::isPath($path)) {
+            if (self::RECURSIVE && Converter::isPath($path)) { // @phpstan-ignore-line
                 Recursive::add(Converter::getKeysByPath($path), $value, $this->data);
             } elseif (isset($this->data[$path])) {
-                $this->data[$path] = Recursive::join($this->data[$path], $value);
+                if (self::RECURSIVE) { // @phpstan-ignore-line
+                    $this->data[$path] = Recursive::join($this->data[$path], $value);
+                } elseif (is_numeric($path)) {
+                    $this->data = array_merge($this->data, (array)$value);
+                } else {
+                    $this->data[$path] = $value;
+                }
             } else {
                 $this->data[$path] = $value;
             }
