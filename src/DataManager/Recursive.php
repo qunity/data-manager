@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component\DataManager\Helper;
+namespace Qunity\Component\DataManager;
 
 use Qunity\Component\DataManagerInterface;
 
 /**
  * Class Recursive
- * @package Qunity\Component\DataManager\Helper
+ * @package Qunity\Component\DataManager
  */
 class Recursive
 {
@@ -38,7 +38,7 @@ class Recursive
                 if (is_array($data[$key])) {
                     self::set($keys, $value, $data[$key]);
                 } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->set(Converter::getPathByKeys($keys), $value);
+                    $data[$key]->set(Helper::getPathByKeys($keys), $value);
                 }
             } else {
                 $data[$key] = $value;
@@ -63,73 +63,14 @@ class Recursive
                 if (is_array($data[$key])) {
                     self::add($keys, $value, $data[$key]);
                 } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->add(Converter::getPathByKeys($keys), $value);
+                    $data[$key]->add(Helper::getPathByKeys($keys), $value);
                 }
             } elseif (isset($data[$key])) {
-                $data[$key] = self::join($data[$key], $value);
+                $data[$key] = Helper::join($data[$key], $value);
             } else {
                 $data[$key] = $value;
             }
         }
-    }
-
-    /**
-     * Join data (arrays, managers, etc.)
-     *
-     * @param mixed ...$items
-     * @return mixed
-     */
-    public static function join(mixed ...$items): mixed
-    {
-        return array_reduce($items, function (mixed $carry, mixed $item): mixed {
-            if (is_array($carry)) {
-                if (is_array($item)) {
-                    return self::joinArrays($carry, $item);
-                } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::joinArrays($carry, $item->get()));
-                } else {
-                    return array_merge($carry, (array)$item);
-                }
-            } elseif ($carry instanceof DataManagerInterface) {
-                if (is_array($item)) {
-                    return $carry->set(self::joinArrays($carry->get(), $item));
-                } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::joinArrays($carry->get(), $item->get()));
-                } else {
-                    return $item;
-                }
-            } else {
-                return $item;
-            }
-        });
-    }
-
-    /**
-     * Join data (only arrays)
-     *
-     * @param array<int|string,array> ...$items
-     * @return array<int|string,mixed>
-     */
-    protected static function joinArrays(array ...$items): array
-    {
-        return (array)array_reduce($items, function (?array $carry, array $item): array {
-            if ($carry !== null) {
-                foreach ($item as $key => $value) {
-                    if (isset($carry[$key]) && is_array($value)) {
-                        $carry[$key] = self::join($carry[$key], $value);
-                    } elseif (isset($carry[$key]) && $value instanceof DataManagerInterface) {
-                        $carry[$key] = $value->set(self::join($carry[$key], $value->get()));
-                    } elseif (is_numeric($key)) {
-                        $carry = array_merge($carry, (array)$value);
-                    } else {
-                        $carry[$key] = $value;
-                    }
-                }
-                return $carry;
-            } else {
-                return $item;
-            }
-        });
     }
 
     /**
@@ -149,7 +90,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         return self::get($keys, $data[$key], $default);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->get(Converter::getPathByKeys($keys), $default);
+                        return $data[$key]->get(Helper::getPathByKeys($keys), $default);
                     }
                 }
             } elseif (isset($data[$key])) {
@@ -175,7 +116,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         return self::has($keys, $data[$key]);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->has(Converter::getPathByKeys($keys));
+                        return $data[$key]->has(Helper::getPathByKeys($keys));
                     }
                 }
             } else {
@@ -199,7 +140,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         self::del($keys, $data[$key]);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        $data[$key]->del(Converter::getPathByKeys($keys));
+                        $data[$key]->del(Helper::getPathByKeys($keys));
                     }
                 }
             } else {

@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManagerFactory;
+namespace Qunity\UnitTest\Component\DataManager\Recursive;
 
-use Qunity\Component\DataManager;
+use Qunity\Component\AbstractDataManager;
 
 /**
- * Class AnotherDataManager
- * @package Qunity\UnitTest\Component\DataManagerFactory
+ * Class DataManager
+ * @package Qunity\UnitTest\Component\DataManager\Recursive
  */
-class AnotherDataManager extends DataManager
+class DataManager extends AbstractDataManager
 {
     // code...
 }

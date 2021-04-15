@@ -15,8 +15,6 @@ namespace Qunity\UnitTest\Component\AbstractDataManager;
 
 use ArrayIterator;
 use BadMethodCallException;
-use Qunity\Component\DataManager;
-use Qunity\Component\DataManagerFactory;
 
 /**
  * Trait Provider
@@ -32,10 +30,10 @@ trait Provider
         return [
             [
                 new ArrayIterator([]),
-                DataManagerFactory::create()
+                new DataManager()
             ], [
                 new ArrayIterator(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value']),
-                DataManagerFactory::create(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value'])
+                new DataManager(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value'])
             ],
         ];
     }
@@ -79,16 +77,16 @@ trait Provider
                 ['key/0/0', ['key' => 'value']]
             ], [
                 ['key/0/0/0', 'value_1'],
-                ['key/0/0', DataManagerFactory::create(['value_2'])],
-                ['key/0/0', DataManagerFactory::create(['value_1', 'value_2'])]
+                ['key/0/0', new DataManager(['value_2'])],
+                ['key/0/0', new DataManager(['value_1', 'value_2'])]
             ], [
                 ['key/0/0/key', 'value_error'],
-                ['key/0/0', DataManagerFactory::create(['key' => 'value'])],
-                ['key/0/0', DataManagerFactory::create(['key' => 'value'])]
+                ['key/0/0', new DataManager(['key' => 'value'])],
+                ['key/0/0', new DataManager(['key' => 'value'])]
             ], [
                 ['key/0/0', ['key' => 'value_error']],
-                ['key/0', [DataManagerFactory::create(['key' => 'value'])]],
-                ['key/0/0', DataManagerFactory::create(['key' => 'value'])]
+                ['key/0', [new DataManager(['key' => 'value'])]],
+                ['key/0/0', new DataManager(['key' => 'value'])]
             ],
         ];
     }
@@ -105,7 +103,7 @@ trait Provider
                         'key_1' => 'value',
                         'key_2/key_21/0/0' => 'value_2100',
                         'key_2/key_21/0/1' => 'value_2101',
-                        'key_3/key_31' => DataManagerFactory::create([
+                        'key_3/key_31' => new DataManager([
                             ['value_3100', 'value_3101'],
                             ['key_1' => 'value_3111', 'key_2' => 'value_3112']
                         ])
@@ -114,7 +112,7 @@ trait Provider
                         'key_1' => 'value',
                         'key_2/key_21/0/0' => 'value_2100',
                         'key_2/key_21/0/1' => 'value_2101',
-                        'key_3/key_31' => DataManagerFactory::create([
+                        'key_3/key_31' => new DataManager([
                             ['value_3100', 'value_3101'],
                             ['key_1' => 'value_3111', 'key_2' => 'value_3112']
                         ])
@@ -123,7 +121,7 @@ trait Provider
                         'key_1' => 'value',
                         'key_2' => ['key_21' => [['value_2100', 'value_2101']]],
                         'key_3' => [
-                            'key_31' => DataManagerFactory::create([
+                            'key_31' => new DataManager([
                                 ['value_3100', 'value_3101'],
                                 ['key_1' => 'value_3111', 'key_2' => 'value_3112']
                             ])
@@ -134,7 +132,7 @@ trait Provider
                     'data' => [
                         'key_1' => 'value_replace',
                         'key_2/key_21/0' => 'value_2102',
-                        'key_3/key_31' => DataManagerFactory::create([
+                        'key_3/key_31' => new DataManager([
                             ['value_3102'],
                             ['key_3' => 'value_3113']
                         ])
@@ -142,7 +140,7 @@ trait Provider
                     'flat' => [
                         'key_1' => 'value_replace',
                         'key_2/key_21/0' => ['value_2100', 'value_2101', 'value_2102'],
-                        'key_3/key_31' => DataManagerFactory::create([
+                        'key_3/key_31' => new DataManager([
                             ['value_3100', 'value_3101', 'value_3102'],
                             ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113']
                         ])
@@ -151,7 +149,7 @@ trait Provider
                         'key_1' => 'value_replace',
                         'key_2' => ['key_21' => [['value_2100', 'value_2101', 'value_2102']]],
                         'key_3' => [
-                            'key_31' => DataManagerFactory::create([
+                            'key_31' => new DataManager([
                                 ['value_3100', 'value_3101', 'value_3102'],
                                 ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113']
                             ])
@@ -172,7 +170,7 @@ trait Provider
                         'key_1' => 'value_replace',
                         'key_2' => ['key_21' => [[1 => 'value_2101']]],
                         'key_3' => [
-                            'key_31' => DataManagerFactory::create([
+                            'key_31' => new DataManager([
                                 [1 => 'value_3101'],
                                 ['key_1' => 'value_3111']
                             ])
@@ -188,29 +186,26 @@ trait Provider
      */
     public function providerSuccessMagicMethods(): array
     {
-        ($object11 = DataManagerFactory::create())->set(['key' => ['value']]);
-        $object12 = DataManagerFactory::create();
+        ($object11 = new DataManager())->set(['key' => ['value']]);
+        $object12 = new DataManager();
 
-        ($object21 = DataManagerFactory::create(class: AnotherDataManager::class))
+        ($object21 = new DataManager())
             ->set(['key_1' => 'value', 'key_2' => ['value']]);
-        $object22 = DataManagerFactory::create(
-            ['key_1' => 'value', 'key_2' => ['value_error']],
-            AnotherDataManager::class
-        );
+        $object22 = new DataManager(['key_1' => 'value', 'key_2' => ['value_error']]);
 
-        ($object31 = DataManagerFactory::create())->set(['key' => ['value_1', 'value_2']]);
-        ($object32 = DataManagerFactory::create())->set('key/0', 'value_1');
+        ($object31 = new DataManager())->set(['key' => ['value_1', 'value_2']]);
+        ($object32 = new DataManager())->set('key/0', 'value_1');
 
-        ($object41 = DataManagerFactory::create(class: AnotherDataManager::class))
+        ($object41 = new DataManager())
             ->set(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]);
-        ($object42 = DataManagerFactory::create(class: AnotherDataManager::class))
+        ($object42 = new DataManager())
             ->set(['key_1' => 'value', 'key_2/0' => 'value_1']);
 
-        ($object5 = DataManagerFactory::create())->set('key/0', 'value');
-        ($object6 = DataManagerFactory::create(class: AnotherDataManager::class))->set('key/0', 'value');
+        ($object5 = new DataManager())->set('key/0', 'value');
+        ($object6 = new DataManager())->set('key/0', 'value');
 
-        ($object7 = DataManagerFactory::create());
-        ($object8 = DataManagerFactory::create(class: AnotherDataManager::class));
+        ($object7 = new DataManager());
+        ($object8 = new DataManager());
 
         return [
             [$object11, $object12, 'setKey_0', 'value'],
@@ -239,7 +234,7 @@ trait Provider
             [
                 BadMethodCallException::class,
                 'Call to invalid method ' . DataManager::class . '::nonExistent',
-                DataManagerFactory::create(),
+                new DataManager(),
                 'nonExistent'
             ],
         ];

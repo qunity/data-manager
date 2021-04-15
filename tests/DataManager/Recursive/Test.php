@@ -11,31 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
+namespace Qunity\UnitTest\Component\DataManager\Recursive;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\Helper\Recursive;
+use Qunity\Component\DataManager\Recursive;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\DataManager\Helper\Recursive
+ * @package Qunity\UnitTest\Component\DataManager\Recursive
  */
 class Test extends TestCase
 {
     use Provider;
-
-    /**
-     * @param mixed $expected
-     * @param mixed ...$items
-     * @return void
-     * @dataProvider providerJoin
-     */
-    public function testJoin(
-        mixed $expected,
-        mixed ...$items
-    ) {
-        $this->assertEquals($expected, Recursive::join(...$items));
-    }
 
     /**
      * @param mixed $expected

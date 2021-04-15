@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManagerFactory;
 use Qunity\Component\DataManagerInterface;
 
 /**
@@ -24,7 +23,6 @@ use Qunity\Component\DataManagerInterface;
 class Test extends TestCase
 {
     use Provider;
-    use Helper;
 
     /**
      * @param mixed $expected
@@ -32,8 +30,10 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetIterator
      */
-    public function testGetIterator(mixed $expected, mixed $dataManager)
-    {
+    public function testGetIterator(
+        mixed $expected,
+        mixed $dataManager
+    ) {
         $this->assertEquals($expected, $dataManager->getIterator());
     }
 
@@ -43,9 +43,11 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerArrayAccess
      */
-    public function testArrayAccess(mixed $path, mixed $value)
-    {
-        $object = DataManagerFactory::create();
+    public function testArrayAccess(
+        mixed $path,
+        mixed $value
+    ) {
+        $object = new DataManager();
 
         $this->assertFalse(isset($object[$path]));
         $this->assertNull($object[$path]);
@@ -97,15 +99,18 @@ class Test extends TestCase
     }
 
     /**
-     * @param array<int|string,mixed> $step1
-     * @param array<int|string,mixed> $step2
-     * @param array<int|string,mixed> $step3
+     * @param array<string,array> $step1
+     * @param array<string,array> $step2
+     * @param array<string,array> $step3
      * @return void
      * @dataProvider providerSingleMethods
      */
-    public function testSingleMethods(array $step1, array $step2, array $step3)
-    {
-        $object = DataManagerFactory::create();
+    public function testSingleMethods(
+        array $step1,
+        array $step2,
+        array $step3
+    ) {
+        $object = new DataManager();
 
         list($path, $value) = $step1;
 
@@ -137,15 +142,18 @@ class Test extends TestCase
     }
 
     /**
-     * @param array<int|string,mixed> $step1
-     * @param array<int|string,mixed> $step2
-     * @param array<int|string,mixed> $step3
+     * @param array<string,array> $step1
+     * @param array<string,array> $step2
+     * @param array<string,array> $step3
      * @return void
      * @dataProvider providerMassMethods
      */
-    public function testMassMethods(array $step1, array $step2, array $step3)
-    {
-        $object = DataManagerFactory::create();
+    public function testMassMethods(
+        array $step1,
+        array $step2,
+        array $step3
+    ) {
+        $object = new DataManager();
 
         list(
             'data' => $data,
@@ -210,5 +218,33 @@ class Test extends TestCase
         $this->assertEquals([], $object->get());
         $this->assertEquals($dataNull, $object->get($paths));
         $this->assertEquals($dataDefault, $object->get($pathsDefault));
+    }
+
+    /**
+     * Prepare step data for mass methods
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+     *
+     * @param array<string,array> $step
+     * @return array<string,array>
+     */
+    protected function stepMassMethods(array $step): array
+    {
+        list('data' => $data, 'flat' => $flat, 'real' => $real) = $step;
+        $paths = array_keys($data);
+        $dataNull = array_fill_keys($paths, null);
+        $dataDefault = array_fill_keys($paths, 'default');
+        $pathsDefault = array_map(function (int|string $path): array {
+            return ['path' => $path, 'default' => 'default'];
+        }, $paths);
+
+        return [
+            'data' => $data,
+            'flat' => $flat,
+            'real' => $real,
+            'paths' => $paths,
+            'dataNull' => $dataNull,
+            'dataDefault' => $dataDefault,
+            'pathsDefault' => $pathsDefault
+        ];
     }
 }

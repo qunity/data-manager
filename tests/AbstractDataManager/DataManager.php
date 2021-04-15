@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
 
-use Qunity\Component\DataManager;
+use Qunity\Component\AbstractDataManager;
 
 /**
- * Class AnotherDataManager
+ * Class DataManager
  * @package Qunity\UnitTest\Component\AbstractDataManager
  */
-class AnotherDataManager extends DataManager
+class DataManager extends AbstractDataManager
 {
     // code...
 }
