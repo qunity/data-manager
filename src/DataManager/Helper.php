@@ -40,7 +40,7 @@ class Helper
         if (($keys = self::clearKeys($keys)) != []) {
             if (($result = self::getCache(__FUNCTION__, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
-                    $key = self::getKeysByPath((string)$key);
+                    $key = self::getKeysByPath($key);
                 });
                 /** @var string[][] $keys */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
