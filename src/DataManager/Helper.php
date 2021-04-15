@@ -125,7 +125,7 @@ class Helper
             if (($result = self::getCache(__FUNCTION__, $path)) === null) {
                 $result = preg_replace([
                     '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
-                    '%' . DataManagerInterface::DELIMITER_PATH . '{2,}%'
+                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
                 ], [
                     DataManagerInterface::DELIMITER_KEY,
                     DataManagerInterface::DELIMITER_PATH
