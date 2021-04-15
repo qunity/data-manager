@@ -92,7 +92,7 @@ class Recursive
                 }
             } elseif ($carry instanceof DataManagerInterface) {
                 if (is_array($item)) {
-                    return $carry->add($item);
+                    return $carry->set(self::joinArrays($carry->get(), $item));
                 } elseif ($item instanceof DataManagerInterface) {
                     return $item->set(self::joinArrays($carry->get(), $item->get()));
                 } else {
