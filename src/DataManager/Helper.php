@@ -24,91 +24,9 @@ class Helper
 {
     /**
      * Software cache
-     * @var array<int,array>
+     * @var array<int|string,array>
      */
     protected static array $cache = [];
-
-    /**
-     * Get keys by path
-     *
-     * @param int|string $path
-     * @return array<int,string>
-     */
-    public static function getKeysByPath(int|string $path): array
-    {
-        $result = [];
-        if (($path = self::clearPath($path)) != '') {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $path)) === null) {
-                $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $path));
-                self::setCache($cacheId, $path, $result);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Clear the trash path
-     *
-     * @param int|string $path
-     * @return string
-     */
-    public static function clearPath(int|string $path): string
-    {
-        $result = '';
-        if ($path != '') {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $path)) === null) {
-                $result = preg_replace([
-                    '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
-                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
-                ], [
-                    DataManagerInterface::DELIMITER_KEY,
-                    DataManagerInterface::DELIMITER_PATH
-                ], strtolower(trim(
-                    (string)$path,
-                    ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
-                )));
-                self::setCache($cacheId, $path, $result);
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Get value from software cache
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     *
-     * @param int|null $id
-     * @param int|string $key
-     *
-     * @return mixed
-     */
-    protected static function getCache(?int $id, int|string $key): mixed
-    {
-        if ($id !== null && isset(self::$cache[$id][$key])) {
-            return self::$cache[$id][$key];
-        }
-        return null;
-    }
-
-    /**
-     * Set value to software cache
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     *
-     * @param int|null $id
-     * @param int|string $key
-     * @param mixed $value
-     */
-    protected static function setCache(?int &$id, int|string $key, mixed $value): void
-    {
-        if ($id === null) {
-            $id = array_key_last(self::$cache) + 1;
-        }
-        if (!isset(self::$cache[$id][$key])) {
-            self::$cache[$id][$key] = $value;
-        }
-    }
 
     /**
      * Get path by keys
@@ -120,14 +38,13 @@ class Helper
     {
         $result = '';
         if (($keys = self::clearKeys($keys)) != []) {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
+            if (($result = self::getCache(__FUNCTION__, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
-                    $key = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, (string)$key));
+                    $key = self::getKeysByPath((string)$key);
                 });
                 /** @var string[][] $keys */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
-                self::setCache($cacheId, $keysId, $result);
+                self::setCache(__FUNCTION__, $keysId, $result);
             }
         }
         return $result;
@@ -143,16 +60,47 @@ class Helper
     {
         $result = [];
         if ($keys != []) {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
+            if (($result = self::getCache(__FUNCTION__, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
                     $key = self::clearPath($key);
                 });
                 $result = array_values(array_diff($keys, ['']));
-                self::setCache($cacheId, $keysId, $result);
+                self::setCache(__FUNCTION__, $keysId, $result);
             }
         }
         return $result;
+    }
+
+    /**
+     * Get value from software cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     *
+     * @param int|string $id
+     * @param int|string $key
+     *
+     * @return mixed
+     */
+    protected static function getCache(int|string $id, int|string $key): mixed
+    {
+        if (isset(self::$cache[$id][$key])) {
+            return self::$cache[$id][$key];
+        }
+        return null;
+    }
+
+    /**
+     * Set value to software cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     *
+     * @param int|string $id
+     * @param int|string $key
+     * @param mixed $value
+     */
+    protected static function setCache(int|string $id, int|string $key, mixed $value): void
+    {
+        if (!isset(self::$cache[$id][$key])) {
+            self::$cache[$id][$key] = $value;
+        }
     }
 
     /**
@@ -164,6 +112,51 @@ class Helper
     protected static function getArrayId(array $array): string
     {
         return implode(chr(1), $array);
+    }
+
+    /**
+     * Clear the trash path
+     *
+     * @param int|string $path
+     * @return string
+     */
+    public static function clearPath(int|string $path): string
+    {
+        $result = '';
+        if ($path != '') {
+            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
+                $result = preg_replace([
+                    '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
+                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
+                ], [
+                    DataManagerInterface::DELIMITER_KEY,
+                    DataManagerInterface::DELIMITER_PATH
+                ], strtolower(trim(
+                    (string)$path,
+                    ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
+                )));
+                self::setCache(__FUNCTION__, $path, $result);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Get keys by path
+     *
+     * @param int|string $path
+     * @return array<int,string>
+     */
+    public static function getKeysByPath(int|string $path): array
+    {
+        $result = [];
+        if (($path = self::clearPath($path)) != '') {
+            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
+                $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $path));
+                self::setCache(__FUNCTION__, $path, $result);
+            }
+        }
+        return $result;
     }
 
     /**
@@ -181,8 +174,7 @@ class Helper
             if ($prefix != '') {
                 $path = $prefix . DataManagerInterface::DELIMITER_KEY . $path;
             }
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $path)) === null) {
+            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
                 $result = str_replace(
                     DataManagerInterface::DELIMITER_PATH,
                     DataManagerInterface::DELIMITER_KEY,
@@ -194,7 +186,7 @@ class Helper
                         $path
                     )
                 );
-                self::setCache($cacheId, $path, $result);
+                self::setCache(__FUNCTION__, $path, $result);
             }
         }
         return $result;
@@ -215,14 +207,13 @@ class Helper
             if ($offset != 0) {
                 $method = substr($method, $offset);
             }
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $method)) === null) {
+            if (($result = self::getCache(__FUNCTION__, $method)) === null) {
                 $result = self::clearPath((string)preg_replace(
                     ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
                     [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
                     $method
                 ));
-                self::setCache($cacheId, $method, $result);
+                self::setCache(__FUNCTION__, $method, $result);
             }
         }
         return $result;
@@ -241,7 +232,7 @@ class Helper
         $result = str_contains((string)$value, DataManagerInterface::DELIMITER_PATH);
         if ($throw !== null && $throw == $result) {
             throw new InvalidArgumentException(sprintf(
-                'Argument must be of the form "%s", given argument is be "%s": %s',
+                "Argument must be of the form '%s', given argument is be '%s': %s",
                 ...($throw ? ['name', 'path', $value] : ['path', 'name', $value])
             ));
         }
