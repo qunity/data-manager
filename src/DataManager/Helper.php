@@ -73,33 +73,31 @@ class Helper
 
     /**
      * Get value from software cache
-     * @SuppressWarnings(PHPMD.ShortVariable)
      *
-     * @param int|string $id
+     * @param int|string $code
      * @param int|string $key
      *
      * @return mixed
      */
-    protected static function getCache(int|string $id, int|string $key): mixed
+    protected static function getCache(int|string $code, int|string $key): mixed
     {
-        if (isset(self::$cache[$id][$key])) {
-            return self::$cache[$id][$key];
+        if (isset(self::$cache[$code][$key])) {
+            return self::$cache[$code][$key];
         }
         return null;
     }
 
     /**
      * Set value to software cache
-     * @SuppressWarnings(PHPMD.ShortVariable)
      *
-     * @param int|string $id
+     * @param int|string $code
      * @param int|string $key
      * @param mixed $value
      */
-    protected static function setCache(int|string $id, int|string $key, mixed $value): void
+    protected static function setCache(int|string $code, int|string $key, mixed $value): void
     {
-        if (!isset(self::$cache[$id][$key])) {
-            self::$cache[$id][$key] = $value;
+        if (!isset(self::$cache[$code][$key])) {
+            self::$cache[$code][$key] = $value;
         }
     }
 
