@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
+namespace Qunity\UnitTest\Component\DataManager\Helper;
 
 use Qunity\Component\AbstractDataManager;
 
 /**
  * Class DataManager
- * @package Qunity\UnitTest\Component\DataManager\Helper\Recursive
+ * @package Qunity\UnitTest\Component\DataManager\Helper
  */
 class DataManager extends AbstractDataManager
 {
