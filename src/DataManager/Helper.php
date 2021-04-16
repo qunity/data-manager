@@ -282,7 +282,7 @@ class Helper
                     if (isset($carry[$key]) && is_array($value)) {
                         $carry[$key] = self::join($carry[$key], $value);
                     } elseif (isset($carry[$key]) && $value instanceof DataManagerInterface) {
-                        $carry[$key] = self::join($carry[$key], $value->get());
+                        $carry[$key] = $value->set(self::join($carry[$key], $value->get()));
                     } elseif (is_numeric($key)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {
