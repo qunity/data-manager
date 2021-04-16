@@ -48,12 +48,12 @@ trait Provider
         return [
             [
                 InvalidArgumentException::class,
-                'Argument must be of the form "name", given argument is be "path": key/0',
+                'Argument must be of the form \'name\', given argument is be \'path\': key/0',
                 'key/0',
                 true
             ], [
                 InvalidArgumentException::class,
-                'Argument must be of the form "path", given argument is be "name": 0',
+                'Argument must be of the form \'path\', given argument is be \'name\': 0',
                 0,
                 false
             ],
@@ -68,10 +68,8 @@ trait Provider
         return [
             ['', ''],
             ['0', 0],
-            ['key/key/0/0', 'key/key/0/0'],
-            ['key/key/0/0', '_//_key/key/ _/0/0_//_'],
-            ['key/key/0/0', '_//_key/key/_ /0/0_//_'],
-            ['key/key/0/0', ' _//_KEY/_KEY/_ _/0_/0_//_ '],
+            ['0/0/0/0', '0/0/0/0'],
+            ['key/key/0/0', ' _//_KEY//key//0//0_//_ '],
         ];
     }
 
@@ -83,9 +81,7 @@ trait Provider
         return [
             [[], []],
             [['key', 'key', '0', '0'], ['key', 'key', 0, 0]],
-            [['key', 'key/0', '0'], ['_//_key/', 'key/ _/0/', '0_//_']],
-            [['key', 'key', '0/0'], ['_//_key', '/key/_ /', '0/0_//_']],
-            [['key/key', '0/0'], ['', ' _//_KEY/KEY', '/_ _/', '0/0_//_ ', '']],
+            [['key/key', '0/0'], ['', ' _//_KEY/key', '/_ _/', '0/0_//_ ', '']],
         ];
     }
 
@@ -99,8 +95,7 @@ trait Provider
             [['0'], 0],
             [['0', '0', '0', '0'], '0/0/0/0'],
             [['0', '0', 'key', 'key'], 'key/key/0/0'],
-            [['0', '0', 'key', 'key'], '_//_key/key/ _/0/0_//_'],
-            [['0', '0', 'key', 'key'], ' _//_KEY/KEY/_ _/0/0_//_ '],
+            [['0', '0', 'key', 'key'], ' _//_KEY/key//0/0_//_ '],
         ];
     }
 
@@ -113,11 +108,8 @@ trait Provider
             ['', []],
             ['0', [0]],
             ['0/0/0/0', [0, 0, 0, 0]],
-            ['key/key/0/0', ['0', '0', 'key', 'key']],
-            ['key/key/0/0', ['', 0, 0, 'key', 'key', '']],
-            ['key/key/0/0', ['', '_0_', '0', '', '_key', 'key', '']],
-            ['key/key/0/0', ['', '', '_0_', '0', '', 'key_', 'key', '', '']],
-            ['key/key/0/0', ['', '', '_0_', '0', '', '/KEY/ _KEY ', '', '']],
+            ['key/key/0/0', [0, 0, 'key', 'key']],
+            ['key/key/0/0', ['', '_0_', '0', '', '/KEY/key/', '']],
         ];
     }
 
@@ -129,10 +121,8 @@ trait Provider
         return [
             ['', '', 'get'],
             ['getItemKeyValue', 'item_key_value', 'get'],
-            ['setLevelArray1_itemKeyValue', '/_/__/_level__array_1__//__item_key_value_/_/__/', 'set'],
-            ['levelArray1_levelArray2_itemKeyValue', '__/_level__array_1_/_level_array2_/_item_key_value_/__', null],
-            ['hasLevelArrayData_itemKeyValue', 'level_ARRAY_data/ / /item_KEY_value', 'has'],
-            ['levelArrayData_level_itemKeyValue', '__/_//_level_ARRAY_data_///_level_/item_KEY_value/_/__//_', null],
+            ['setLevelArray0_itemKeyValue', ' //_level_array_0_//_item_key_value_// ', 'set'],
+            ['levelArray0_levelArray0_itemKeyValue', ' //_level_ARRAY_0_//_level_ARRAY_0_//_item_key_value_// ', null],
         ];
     }
 
@@ -144,8 +134,8 @@ trait Provider
         return [
             ['', '', 3],
             ['item_key_value', 'getItemKeyValue', 3],
-            ['level_array_data/0/level/item_key_value', 'setLevelArrayData__0_level_itemKeyValue', 3],
-            ['level_array_data/0/level/item_key_value', ' __levelArrayData__0_level_itemKeyValue__ ', null],
+            ['level_array/0/0/item_key_value', 'setLevelArray__0_0__itemKeyValue', 3],
+            ['level_array/0/0/item_key_value', ' //_levelArray__0_0__itemKeyValue //_', null],
         ];
     }
 
@@ -188,13 +178,23 @@ trait Provider
                 ['key_2' => 'value_2'],
             ], [
                 new DataManager(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value']),
-                ['key_1' => 'value_1'],
-                new DataManager(['key_2' => 'value_2']),
+                ['key_1' => 'value_error'],
+                new DataManager(['key_2' => 'value_error']),
                 new DataManager(['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value']),
             ], [
                 'value',
                 new DataManager(['value_error']),
                 'value',
+            ], [
+                ['key' => ['value_1', 'value_2', 'value_3']],
+                ['key' => ['value_1']],
+                ['key' => ['value_2']],
+                ['key' => ['value_3']],
+            ], [
+                ['key' => new DataManager(['value_1', 'value_2', 'value_3'])],
+                ['key' => ['value_1']],
+                ['key' => new DataManager(['value_2'])],
+                ['key' => ['value_3']],
             ],
         ];
     }

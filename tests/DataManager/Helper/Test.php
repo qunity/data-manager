@@ -26,40 +26,33 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $path
+     * @param mixed $value
      * @param mixed $throw
      * @return void
      * @dataProvider providerIsPath
      */
-    public function testIsPath(
-        mixed $expected,
-        mixed $path,
-        mixed $throw
-    ) {
+    public function testIsPath(mixed $expected, mixed $value, mixed $throw)
+    {
         if ($throw === null) {
-            $this->assertEquals($expected, Helper::isPath($path));
+            $this->assertEquals($expected, Helper::isPath($value));
         } else {
-            $this->assertEquals($expected, Helper::isPath($path, $throw));
+            $this->assertEquals($expected, Helper::isPath($value, $throw));
         }
     }
 
     /**
      * @param mixed $expectedException
      * @param mixed $expectedMessage
-     * @param mixed $path
+     * @param mixed $value
      * @param mixed $throw
      * @return void
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(
-        mixed $expectedException,
-        mixed $expectedMessage,
-        mixed $path,
-        mixed $throw
-    ) {
+    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, mixed $value, mixed $throw)
+    {
         $this->expectException($expectedException);
         $this->expectExceptionMessage($expectedMessage);
-        Helper::isPath($path, $throw);
+        Helper::isPath($value, $throw);
     }
 
     /**
@@ -68,10 +61,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerClearPath
      */
-    public function testClearPath(
-        mixed $expected,
-        mixed $path
-    ) {
+    public function testClearPath(mixed $expected, mixed $path)
+    {
         $this->assertEquals($expected, Helper::clearPath($path));
     }
 
@@ -81,10 +72,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerClearKeys
      */
-    public function testClearKeys(
-        mixed $expected,
-        mixed $keys
-    ) {
+    public function testClearKeys(mixed $expected, mixed $keys)
+    {
         $this->assertEquals($expected, Helper::clearKeys($keys));
     }
 
@@ -94,10 +83,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetKeysByPath
      */
-    public function testGetKeysByPath(
-        mixed $expected,
-        mixed $path
-    ) {
+    public function testGetKeysByPath(mixed $expected, mixed $path)
+    {
         $this->assertEquals($expected, Helper::getKeysByPath($path));
     }
 
@@ -107,10 +94,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetPathByKeys
      */
-    public function testGetPathByKeys(
-        mixed $expected,
-        mixed $keys
-    ) {
+    public function testGetPathByKeys(mixed $expected, mixed $keys)
+    {
         $this->assertEquals($expected, Helper::getPathByKeys($keys));
     }
 
@@ -121,11 +106,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetMethodByPath
      */
-    public function testGetMethodByPath(
-        mixed $expected,
-        mixed $path,
-        mixed $prefix
-    ) {
+    public function testGetMethodByPath(mixed $expected, mixed $path, mixed $prefix)
+    {
         if ($prefix === null) {
             $this->assertEquals($expected, Helper::getMethodByPath($path));
         } else {
@@ -140,11 +122,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGetPathByMethod
      */
-    public function testGetPathByMethod(
-        mixed $expected,
-        mixed $method,
-        mixed $offset
-    ) {
+    public function testGetPathByMethod(mixed $expected, mixed $method, mixed $offset)
+    {
         if ($offset === null) {
             $this->assertEquals($expected, Helper::getPathByMethod($method));
         } else {
@@ -158,10 +137,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerJoin
      */
-    public function testJoin(
-        mixed $expected,
-        mixed ...$items
-    ) {
+    public function testJoin(mixed $expected, mixed ...$items)
+    {
         $this->assertEquals($expected, Helper::join(...$items));
     }
 }
