@@ -32,12 +32,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerSet
      */
-    public function testSet(
-        mixed $expected,
-        mixed $keys,
-        mixed $value,
-        mixed $data
-    ) {
+    public function testSet(mixed $expected, mixed $keys, mixed $value, mixed $data)
+    {
         Recursive::set($keys, $value, $data);
         $this->assertEquals($expected, $data);
     }
@@ -50,12 +46,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerAdd
      */
-    public function testAdd(
-        mixed $expected,
-        mixed $keys,
-        mixed $value,
-        mixed $data
-    ) {
+    public function testAdd(mixed $expected, mixed $keys, mixed $value, mixed $data)
+    {
         Recursive::add($keys, $value, $data);
         $this->assertEquals($expected, $data);
     }
@@ -68,12 +60,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerGet
      */
-    public function testGet(
-        mixed $expected,
-        mixed $keys,
-        mixed $data,
-        mixed $default
-    ) {
+    public function testGet(mixed $expected, mixed $keys, mixed $data, mixed $default)
+    {
         if ($default === null) {
             $this->assertEquals($expected, Recursive::get($keys, $data));
         } else {
@@ -88,11 +76,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerHas
      */
-    public function testHas(
-        mixed $expected,
-        mixed $keys,
-        mixed $data
-    ) {
+    public function testHas(mixed $expected, mixed $keys, mixed $data)
+    {
         $this->assertEquals($expected, Recursive::has($keys, $data));
     }
 
@@ -103,11 +88,8 @@ class Test extends TestCase
      * @return void
      * @dataProvider providerDel
      */
-    public function testDel(
-        mixed $expected,
-        mixed $keys,
-        mixed $data
-    ) {
+    public function testDel(mixed $expected, mixed $keys, mixed $data)
+    {
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
     }
