@@ -23,8 +23,8 @@ use Qunity\Component\DataManagerInterface;
 class Helper
 {
     /**
-     * Software cache
-     * @var array<int|string,array>
+     * Class cache
+     * @var array<int,array>
      */
     protected static array $cache = [];
 
@@ -38,13 +38,14 @@ class Helper
     {
         $result = '';
         if (($keys = self::clearKeys($keys)) != []) {
-            if (($result = self::getCache(__FUNCTION__, $keysId = self::getArrayId($keys))) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
                     $key = self::getKeysByPath($key);
                 });
                 /** @var string[][] $keys */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$keys)));
-                self::setCache(__FUNCTION__, $keysId, $result);
+                self::setCache($cacheId, $keysId, $result);
             }
         }
         return $result;
@@ -60,44 +61,50 @@ class Helper
     {
         $result = [];
         if ($keys != []) {
-            if (($result = self::getCache(__FUNCTION__, $keysId = self::getArrayId($keys))) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $keysId = self::getArrayId($keys))) === null) {
                 array_walk($keys, function (int|string &$key): void {
                     $key = self::clearPath($key);
                 });
                 $result = array_values(array_diff($keys, ['']));
-                self::setCache(__FUNCTION__, $keysId, $result);
+                self::setCache($cacheId, $keysId, $result);
             }
         }
         return $result;
     }
 
     /**
-     * Get value from software cache
+     * Get value from class cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
      *
-     * @param int|string $code
+     * @param int|null $id
      * @param int|string $key
      *
      * @return mixed
      */
-    protected static function getCache(int|string $code, int|string $key): mixed
+    protected static function getCache(?int $id, int|string $key): mixed
     {
-        if (isset(self::$cache[$code][$key])) {
-            return self::$cache[$code][$key];
+        if ($id !== null && isset(self::$cache[$id][$key])) {
+            return self::$cache[$id][$key];
         }
         return null;
     }
 
     /**
-     * Set value to software cache
+     * Set value to class cache
+     * @SuppressWarnings(PHPMD.ShortVariable)
      *
-     * @param int|string $code
+     * @param int|null $id
      * @param int|string $key
      * @param mixed $value
      */
-    protected static function setCache(int|string $code, int|string $key, mixed $value): void
+    protected static function setCache(?int &$id, int|string $key, mixed $value): void
     {
-        if (!isset(self::$cache[$code][$key])) {
-            self::$cache[$code][$key] = $value;
+        if ($id === null) {
+            $id = array_key_last(self::$cache) + 1;
+        }
+        if (!isset(self::$cache[$id][$key])) {
+            self::$cache[$id][$key] = $value;
         }
     }
 
@@ -122,7 +129,8 @@ class Helper
     {
         $result = '';
         if ($path != '') {
-            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = preg_replace([
                     '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
                     '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
@@ -133,7 +141,7 @@ class Helper
                     (string)$path,
                     ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
                 )));
-                self::setCache(__FUNCTION__, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -149,9 +157,10 @@ class Helper
     {
         $result = [];
         if (($path = self::clearPath($path)) != '') {
-            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $path));
-                self::setCache(__FUNCTION__, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -172,7 +181,8 @@ class Helper
             if ($prefix != '') {
                 $path = $prefix . DataManagerInterface::DELIMITER_KEY . $path;
             }
-            if (($result = self::getCache(__FUNCTION__, $path)) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $path)) === null) {
                 $result = str_replace(
                     DataManagerInterface::DELIMITER_PATH,
                     DataManagerInterface::DELIMITER_KEY,
@@ -184,7 +194,7 @@ class Helper
                         $path
                     )
                 );
-                self::setCache(__FUNCTION__, $path, $result);
+                self::setCache($cacheId, $path, $result);
             }
         }
         return $result;
@@ -205,13 +215,14 @@ class Helper
             if ($offset != 0) {
                 $method = substr($method, $offset);
             }
-            if (($result = self::getCache(__FUNCTION__, $method)) === null) {
+            static $cacheId;
+            if (($result = self::getCache($cacheId, $method)) === null) {
                 $result = self::clearPath((string)preg_replace(
                     ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
                     [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
                     $method
                 ));
-                self::setCache(__FUNCTION__, $method, $result);
+                self::setCache($cacheId, $method, $result);
             }
         }
         return $result;
@@ -219,6 +230,7 @@ class Helper
 
     /**
      * Check if value is path
+     * The cache is not used to prevent memory overflow
      *
      * @param int|string $value
      * @param bool|null $throw
