@@ -50,6 +50,11 @@ trait Provider
                 [0, 0, 'key'],
                 'value_1',
                 ['key' => new DataManager([['value_error', 'value_2']])]
+            ], [
+                ['key' => new DataManager(['key' => ['key' => 'value']])],
+                ['key', 'key', 'key'],
+                'value',
+                ['key' => new DataManager(['key' => 'value_error'])]
             ],
         ];
     }
