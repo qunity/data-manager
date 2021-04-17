@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\AbstractDataManager;
+namespace Qunity\UnitTest\Component\AbstractDataManager\NonRecursive;
 
-use Qunity\Component\AbstractDataManager;
+use Qunity\UnitTest\Component\AbstractDataManager\AbstractTest;
 
 /**
- * Class DataManager
- * @package Qunity\UnitTest\Component\AbstractDataManager
+ * Class Test
+ * @package Qunity\UnitTest\Component\AbstractDataManager\NonRecursive
  */
-class DataManager extends AbstractDataManager
+class Test extends AbstractTest
 {
-    // code...
+    use Provider;
 }

@@ -56,7 +56,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->set($itemPath, $itemValue);
             }
         } elseif ($path != '') {
-            if (self::RECURSIVE && Helper::isPath($path)) { // @phpstan-ignore-line
+            if (static::RECURSIVE && Helper::isPath($path)) {
                 Recursive::set(Helper::getKeysByPath($path), $value, $this->data);
             } else {
                 $this->data[$path] = $value;
@@ -118,7 +118,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                     list('path' => $itemPath, 'default' => $itemDefault) = ['path' => $item, 'default' => $default];
                 }
                 $value = $this->get($itemPath, $itemDefault);
-                if (self::RECURSIVE && Helper::isPath($itemPath)) { // @phpstan-ignore-line
+                if (static::RECURSIVE && Helper::isPath($itemPath)) {
                     Recursive::set(Helper::getKeysByPath($itemPath), $value, $data);
                 } else {
                     $data[$itemPath] = $value;
@@ -126,7 +126,7 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
             return $data;
         } elseif ($path != '') {
-            if (self::RECURSIVE && Helper::isPath($path)) { // @phpstan-ignore-line
+            if (static::RECURSIVE && Helper::isPath($path)) {
                 return Recursive::get(Helper::getKeysByPath($path), $this->data, $default);
             } elseif (isset($this->data[$path])) {
                 return $this->data[$path];
@@ -158,7 +158,7 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
             return (bool)$path;
         } elseif ($path != '') {
-            if (self::RECURSIVE && Helper::isPath($path)) { // @phpstan-ignore-line
+            if (static::RECURSIVE && Helper::isPath($path)) {
                 return Recursive::has(Helper::getKeysByPath($path), $this->data);
             } else {
                 return isset($this->data[$path]);
@@ -187,7 +187,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->del($itemPath);
             }
         } elseif ($path != '') {
-            if (self::RECURSIVE && Helper::isPath($path)) { // @phpstan-ignore-line
+            if (static::RECURSIVE && Helper::isPath($path)) {
                 Recursive::del(Helper::getKeysByPath($path), $this->data);
             } else {
                 unset($this->data[$path]);
@@ -214,7 +214,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 $this->add($itemPath, $itemValue);
             }
         } elseif ($path != '') {
-            if (self::RECURSIVE && Helper::isPath($path)) { // @phpstan-ignore-line
+            if (static::RECURSIVE && Helper::isPath($path)) {
                 Recursive::add(Helper::getKeysByPath($path), $value, $this->data);
             } elseif (isset($this->data[$path])) {
                 $this->data[$path] = Helper::join($this->data[$path], $value);
