@@ -4,4 +4,4 @@ CHANGELOG
 1.0.0
 =====
 
-* start releases
+* started releases
