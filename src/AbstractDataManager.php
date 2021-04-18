@@ -28,7 +28,7 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * Object recursive status
      */
-    public const RECURSIVE = true;
+    protected const RECURSIVE = true;
 
     /**
      * Object data
