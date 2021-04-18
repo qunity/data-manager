@@ -24,5 +24,5 @@ class DataManager extends AbstractDataManager
     /**
      * @inheritDoc
      */
-    public const RECURSIVE = true;
+    protected const RECURSIVE = true;
 }
