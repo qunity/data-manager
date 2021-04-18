@@ -41,17 +41,17 @@ class Test extends TestCase
     }
 
     /**
-     * @param mixed $expectedException
-     * @param mixed $expectedMessage
+     * @param mixed $eException
+     * @param mixed $eMessage
      * @param mixed $value
      * @param mixed $throw
      * @return void
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $expectedException, mixed $expectedMessage, mixed $value, mixed $throw)
+    public function testIsPathThrow(mixed $eException, mixed $eMessage, mixed $value, mixed $throw)
     {
-        $this->expectException($expectedException);
-        $this->expectExceptionMessage($expectedMessage);
+        $this->expectException($eException);
+        $this->expectExceptionMessage($eMessage);
         Helper::isPath($value, $throw);
     }
 
