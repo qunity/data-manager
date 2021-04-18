@@ -33,11 +33,11 @@ abstract class AbstractTest extends TestCase
      */
     public function testGetIterator(mixed $expected, mixed $dataManager)
     {
+        $this->assertEquals($expected, $dataManager->get());
         $this->assertEquals(new ArrayIterator($expected), $dataManager->getIterator());
         foreach ($dataManager as $key => $item) {
             $this->assertEquals($expected[$key], $item);
         }
-        $this->assertEquals($expected, $dataManager->get());
     }
 
     /**
@@ -76,21 +76,17 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
-     * @param mixed $expectedException
-     * @param mixed $expectedMessage
+     * @param mixed $eException
+     * @param mixed $eMessage
      * @param mixed $dataManager
      * @param mixed $method
      * @return void
      * @dataProvider providerErrorMagicMethods
      */
-    public function testErrorMagicMethods(
-        mixed $expectedException,
-        mixed $expectedMessage,
-        mixed $dataManager,
-        mixed $method
-    ) {
-        $this->expectException($expectedException);
-        $this->expectExceptionMessage($expectedMessage);
+    public function testErrorMagicMethods(mixed $eException, mixed $eMessage, mixed $dataManager, mixed $method)
+    {
+        $this->expectException($eException);
+        $this->expectExceptionMessage($eMessage);
         call_user_func([$dataManager, $method]); // @phpstan-ignore-line
     }
 
