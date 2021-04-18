@@ -230,7 +230,6 @@ class Helper
 
     /**
      * Check if value is path
-     * The cache is not used to prevent memory overflow
      *
      * @param int|string $value
      * @param bool|null $throw
