@@ -5,21 +5,21 @@ Data Manager makes it easy to work with data for objects.
 
 ---
 
-##### You can recursively work with data from objects using a delimited `/` key
+You can recursively work with data from objects using a delimited `/` key
 
 ```
 $this->set('key1/key2/key3', 'value');
 $this->get('key1/key2') == ['key3' => 'value']; // is true
 ```
 
-##### You can use magic methods to recursively work with data in to objects
+You can use magic methods to recursively work with data in to objects
 
 ```
 $this->setKey1_key2_key3('value');
 $this->getKey1_key2() == ['key3' => 'value']; // is true
 ```
 
-##### You can work with data in masses and iterate over object as array
+You can work with data in masses and iterate over object as array
 
 ```
 $this->set(['key/0' => 'value', 'key/1' => 'value']);
