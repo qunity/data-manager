@@ -22,7 +22,7 @@ use BadMethodCallException;
 trait Provider
 {
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerGetIterator(): array
     {
@@ -34,7 +34,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerArrayAccess(): array
     {
@@ -48,7 +48,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerSuccessMagicMethods(): array
     {
@@ -81,7 +81,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerErrorMagicMethods(): array
     {
@@ -96,7 +96,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerSingleMethods(): array
     {
@@ -142,7 +142,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function providerMassMethods(): array
@@ -218,7 +218,6 @@ trait Provider
                         'key_3/key_31/1/key_1',
                         'key_3/key_31/1/key_2',
                         'key_3/key_31/1/key_3'
-
                     ],
                     'null' => [
                         'key_1' => 'value_replace',

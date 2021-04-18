@@ -22,7 +22,7 @@ use BadMethodCallException;
 trait Provider
 {
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerGetIterator(): array
     {
@@ -34,7 +34,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerArrayAccess(): array
     {
@@ -48,7 +48,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerSuccessMagicMethods(): array
     {
@@ -81,7 +81,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerErrorMagicMethods(): array
     {
@@ -96,7 +96,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerSingleMethods(): array
     {
@@ -122,7 +122,7 @@ trait Provider
     }
 
     /**
-     * @return array[]
+     * @inheritDoc
      */
     public function providerMassMethods(): array
     {
@@ -171,13 +171,13 @@ trait Provider
                 [
                     'data' => [
                         'key_1' => 'value_replace',
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                         'key_3/key_31' => 'value_31'
                     ],
                     'real' => [
                         'key_1' => 'value_replace',
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                         'key_3/key_31' => 'value_31'
                     ],
@@ -189,24 +189,24 @@ trait Provider
                     ],
                     'null' => [
                         'key_1' => 'value_replace',
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                         'key_3/key_31' => 'value_31'
                     ],
                     'default' => [
                         'key_1' => 'value_replace',
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                         'key_3/key_31' => 'value_31'
                     ]
                 ],
                 [
                     'data' => [
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                     ],
                     'real' => [
-                        'key_2/key_21/0/0' => 'value_2102_replace',
+                        'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                     ],
                     'paths' => ['key_1', 'key_3/key_31'],
