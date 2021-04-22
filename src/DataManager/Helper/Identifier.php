@@ -31,12 +31,12 @@ class Identifier
     protected static array $cache = [];
 
     /**
-     * Get identifier by identifiers
+     * Get path by identifiers
      *
      * @param array<int|string> $ids
      * @return string
      */
-    public static function getIdByIds(array $ids): string
+    public static function getPathByIds(array $ids): string
     {
         $result = '';
         if (($ids = self::clearIds($ids)) != []) {
@@ -79,14 +79,14 @@ class Identifier
      * Get value from class cache
      *
      * @param int|null $cacheId
-     * @param int|string $itemId
+     * @param int|string $valueId
      *
      * @return mixed
      */
-    protected static function getCache(?int $cacheId, int|string $itemId): mixed
+    protected static function getCache(?int $cacheId, int|string $valueId): mixed
     {
-        if ($cacheId !== null && isset(self::$cache[$cacheId][$itemId])) {
-            return self::$cache[$cacheId][$itemId];
+        if ($cacheId !== null && isset(self::$cache[$cacheId][$valueId])) {
+            return self::$cache[$cacheId][$valueId];
         }
         return null;
     }
@@ -95,16 +95,16 @@ class Identifier
      * Set value to class cache
      *
      * @param int|null $cacheId
-     * @param int|string $itemId
+     * @param int|string $valueId
      * @param mixed $value
      */
-    protected static function setCache(?int &$cacheId, int|string $itemId, mixed $value): void
+    protected static function setCache(?int &$cacheId, int|string $valueId, mixed $value): void
     {
         if ($cacheId === null) {
             $cacheId = array_key_last(self::$cache) + 1;
         }
-        if (!isset(self::$cache[$cacheId][$itemId])) {
-            self::$cache[$cacheId][$itemId] = $value;
+        if (!isset(self::$cache[$cacheId][$valueId])) {
+            self::$cache[$cacheId][$valueId] = $value;
         }
     }
 
@@ -242,7 +242,7 @@ class Identifier
         if ($throw !== null && $throw == $result) {
             throw new InvalidArgumentException(sprintf(
                 "Argument must be of the form '%s', given argument is be '%s': %s",
-                ...($throw ? ['name', 'path', $id] : ['path', 'name', $id])
+                ...($throw ? ['key', 'path', $id] : ['path', 'key', $id])
             ));
         }
         return $result;
