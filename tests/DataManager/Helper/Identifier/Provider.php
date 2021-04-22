@@ -63,7 +63,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerClearPath(): array
+    public function providerClearId(): array
     {
         return [
             ['', ''],
@@ -76,7 +76,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerClearKeys(): array
+    public function providerClearIds(): array
     {
         return [
             [[], []],
@@ -88,7 +88,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerGetKeysByPath(): array
+    public function providerGetKeysById(): array
     {
         return [
             [[], ''],
@@ -102,7 +102,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerGetPathByKeys(): array
+    public function providerGetIdByIds(): array
     {
         return [
             ['', []],
@@ -116,7 +116,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerGetMethodByPath(): array
+    public function providerGetMethodById(): array
     {
         return [
             ['', '', 'get'],
@@ -129,7 +129,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerGetPathByMethod(): array
+    public function providerGetIdByMethod(): array
     {
         return [
             ['', '', 3],

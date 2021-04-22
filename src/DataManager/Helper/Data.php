@@ -55,22 +55,22 @@ class Data
     /**
      * Join data (only arrays)
      *
-     * @param array<int|string,array> ...$items
+     * @param array<int|string,mixed> ...$items
      * @return array<int|string,mixed>
      */
     protected static function joinArrays(array ...$items): array
     {
         return (array)array_reduce($items, function (?array $carry, array $item): array {
             if ($carry !== null) {
-                foreach ($item as $key => $value) {
-                    if (isset($carry[$key]) && is_array($value)) {
-                        $carry[$key] = self::join($carry[$key], $value);
-                    } elseif (isset($carry[$key]) && $value instanceof DataManagerInterface) {
-                        $carry[$key] = $value->set(self::join($carry[$key], $value->get()));
-                    } elseif (is_numeric($key)) {
+                foreach ($item as $id => $value) {
+                    if (isset($carry[$id]) && is_array($value)) {
+                        $carry[$id] = self::join($carry[$id], $value);
+                    } elseif (isset($carry[$id]) && $value instanceof DataManagerInterface) {
+                        $carry[$id] = $value->set(self::join($carry[$id], $value->get()));
+                    } elseif (is_numeric($id)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {
-                        $carry[$key] = $value;
+                        $carry[$id] = $value;
                     }
                 }
                 return $carry;

@@ -38,7 +38,7 @@ class Recursive
                 if (is_array($data[$key])) {
                     self::set($keys, $value, $data[$key]);
                 } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->set(Identifier::getPathByKeys($keys), $value);
+                    $data[$key]->set(Identifier::getIdByIds($keys), $value);
                 }
             } else {
                 $data[$key] = $value;
@@ -63,7 +63,7 @@ class Recursive
                 if (is_array($data[$key])) {
                     self::add($keys, $value, $data[$key]);
                 } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->add(Identifier::getPathByKeys($keys), $value);
+                    $data[$key]->add(Identifier::getIdByIds($keys), $value);
                 }
             } elseif (isset($data[$key])) {
                 $data[$key] = Data::join($data[$key], $value);
@@ -90,7 +90,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         return self::get($keys, $data[$key], $default);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->get(Identifier::getPathByKeys($keys), $default);
+                        return $data[$key]->get(Identifier::getIdByIds($keys), $default);
                     }
                 }
             } elseif (isset($data[$key])) {
@@ -116,7 +116,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         return self::has($keys, $data[$key]);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->has(Identifier::getPathByKeys($keys));
+                        return $data[$key]->has(Identifier::getIdByIds($keys));
                     }
                 }
             } else {
@@ -140,7 +140,7 @@ class Recursive
                     if (is_array($data[$key])) {
                         self::del($keys, $data[$key]);
                     } elseif ($data[$key] instanceof DataManagerInterface) {
-                        $data[$key]->del(Identifier::getPathByKeys($keys));
+                        $data[$key]->del(Identifier::getIdByIds($keys));
                     }
                 }
             } else {

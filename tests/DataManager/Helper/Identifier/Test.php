@@ -19,6 +19,8 @@ use Qunity\Component\DataManager\Helper\Identifier;
 /**
  * Class Test
  * @package Qunity\UnitTest\Component\DataManager\Helper\Identifier
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Test extends TestCase
 {
@@ -26,92 +28,92 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $value
+     * @param mixed $id
      * @param mixed $throw
      * @return void
      * @dataProvider providerIsPath
      */
-    public function testIsPath(mixed $expected, mixed $value, mixed $throw)
+    public function testIsPath(mixed $expected, mixed $id, mixed $throw)
     {
         if ($throw === null) {
-            $this->assertEquals($expected, Identifier::isPath($value));
+            $this->assertEquals($expected, Identifier::isPath($id));
         } else {
-            $this->assertEquals($expected, Identifier::isPath($value, $throw));
+            $this->assertEquals($expected, Identifier::isPath($id, $throw));
         }
     }
 
     /**
      * @param mixed $eException
      * @param mixed $eMessage
-     * @param mixed $value
+     * @param mixed $id
      * @param mixed $throw
      * @return void
      * @dataProvider providerIsPathThrow
      */
-    public function testIsPathThrow(mixed $eException, mixed $eMessage, mixed $value, mixed $throw)
+    public function testIsPathThrow(mixed $eException, mixed $eMessage, mixed $id, mixed $throw)
     {
         $this->expectException($eException);
         $this->expectExceptionMessage($eMessage);
-        Identifier::isPath($value, $throw);
+        Identifier::isPath($id, $throw);
     }
 
     /**
      * @param mixed $expected
-     * @param mixed $path
+     * @param mixed $id
      * @return void
-     * @dataProvider providerClearPath
+     * @dataProvider providerClearId
      */
-    public function testClearPath(mixed $expected, mixed $path)
+    public function testClearId(mixed $expected, mixed $id)
     {
-        $this->assertEquals($expected, Identifier::clearPath($path));
+        $this->assertEquals($expected, Identifier::clearId($id));
     }
 
     /**
      * @param mixed $expected
-     * @param mixed $keys
+     * @param mixed $ids
      * @return void
-     * @dataProvider providerClearKeys
+     * @dataProvider providerClearIds
      */
-    public function testClearKeys(mixed $expected, mixed $keys)
+    public function testClearIds(mixed $expected, mixed $ids)
     {
-        $this->assertEquals($expected, Identifier::clearKeys($keys));
+        $this->assertEquals($expected, Identifier::clearIds($ids));
     }
 
     /**
      * @param mixed $expected
-     * @param mixed $path
+     * @param mixed $id
      * @return void
-     * @dataProvider providerGetKeysByPath
+     * @dataProvider providerGetKeysById
      */
-    public function testGetKeysByPath(mixed $expected, mixed $path)
+    public function testGetKeysById(mixed $expected, mixed $id)
     {
-        $this->assertEquals($expected, Identifier::getKeysByPath($path));
+        $this->assertEquals($expected, Identifier::getKeysById($id));
     }
 
     /**
      * @param mixed $expected
-     * @param mixed $keys
+     * @param mixed $ids
      * @return void
-     * @dataProvider providerGetPathByKeys
+     * @dataProvider providerGetIdByIds
      */
-    public function testGetPathByKeys(mixed $expected, mixed $keys)
+    public function testGetIdByIds(mixed $expected, mixed $ids)
     {
-        $this->assertEquals($expected, Identifier::getPathByKeys($keys));
+        $this->assertEquals($expected, Identifier::getIdByIds($ids));
     }
 
     /**
      * @param mixed $expected
-     * @param mixed $path
+     * @param mixed $id
      * @param mixed $prefix
      * @return void
-     * @dataProvider providerGetMethodByPath
+     * @dataProvider providerGetMethodById
      */
-    public function testGetMethodByPath(mixed $expected, mixed $path, mixed $prefix)
+    public function testGetMethodById(mixed $expected, mixed $id, mixed $prefix)
     {
         if ($prefix === null) {
-            $this->assertEquals($expected, Identifier::getMethodByPath($path));
+            $this->assertEquals($expected, Identifier::getMethodById($id));
         } else {
-            $this->assertEquals($expected, Identifier::getMethodByPath($path, $prefix));
+            $this->assertEquals($expected, Identifier::getMethodById($id, $prefix));
         }
     }
 
@@ -120,14 +122,14 @@ class Test extends TestCase
      * @param mixed $method
      * @param mixed $offset
      * @return void
-     * @dataProvider providerGetPathByMethod
+     * @dataProvider providerGetIdByMethod
      */
-    public function testGetPathByMethod(mixed $expected, mixed $method, mixed $offset)
+    public function testGetIdByMethod(mixed $expected, mixed $method, mixed $offset)
     {
         if ($offset === null) {
-            $this->assertEquals($expected, Identifier::getPathByMethod($method));
+            $this->assertEquals($expected, Identifier::getIdByMethod($method));
         } else {
-            $this->assertEquals($expected, Identifier::getPathByMethod($method, $offset));
+            $this->assertEquals($expected, Identifier::getIdByMethod($method, $offset));
         }
     }
 }
