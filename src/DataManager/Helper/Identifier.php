@@ -41,13 +41,13 @@ class Identifier
         $result = '';
         if (($ids = self::clearIds($ids)) != []) {
             static $cacheId;
-            if (($result = self::getCache($cacheId, $itemId = self::getArrayId($ids))) === null) {
+            if (($result = self::getCache($cacheId, $arrayId = self::getArrayId($ids))) === null) {
                 array_walk($ids, function (int|string &$id): void {
                     $id = self::getKeysById($id);
                 });
                 /** @var string[][] $ids */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$ids)));
-                self::setCache($cacheId, $itemId, $result);
+                self::setCache($cacheId, $arrayId, $result);
             }
         }
         return $result;
@@ -64,12 +64,12 @@ class Identifier
         $result = [];
         if ($ids != []) {
             static $cacheId;
-            if (($result = self::getCache($cacheId, $itemId = self::getArrayId($ids))) === null) {
+            if (($result = self::getCache($cacheId, $arrayId = self::getArrayId($ids))) === null) {
                 array_walk($ids, function (int|string &$id): void {
                     $id = self::clearId($id);
                 });
                 $result = array_values(array_diff($ids, ['']));
-                self::setCache($cacheId, $itemId, $result);
+                self::setCache($cacheId, $arrayId, $result);
             }
         }
         return $result;
