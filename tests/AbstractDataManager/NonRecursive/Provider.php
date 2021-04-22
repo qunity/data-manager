@@ -104,19 +104,19 @@ trait Provider
         return [
             [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => 'value_error'],
-                ['path' => 'key/0/0/0', 'value' => 'value'],
-                ['path' => 'key/0/0/0', 'value' => 'value']
+                ['id' => 'key/0/0/0', 'value' => 'value_error'],
+                ['id' => 'key/0/0/0', 'value' => 'value'],
+                ['id' => 'key/0/0/0', 'value' => 'value']
             ], [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => ['value_1']],
-                ['path' => 'key/0/0/0', 'value' => ['value_2']],
-                ['path' => 'key/0/0/0', 'value' => ['value_1', 'value_2']]
+                ['id' => 'key/0/0/0', 'value' => ['value_1']],
+                ['id' => 'key/0/0/0', 'value' => ['value_2']],
+                ['id' => 'key/0/0/0', 'value' => ['value_1', 'value_2']]
             ], [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => ['key_1' => 'value_1', 'key_2' => 'value_error']],
-                ['path' => 'key/0/0/0', 'value' => ['key_2' => 'value_2']],
-                ['path' => 'key/0/0/0', 'value' => ['key_1' => 'value_1', 'key_2' => 'value_2']]
+                ['id' => 'key/0/0/0', 'value' => ['key_1' => 'value_1', 'key_2' => 'value_error']],
+                ['id' => 'key/0/0/0', 'value' => ['key_2' => 'value_2']],
+                ['id' => 'key/0/0/0', 'value' => ['key_1' => 'value_1', 'key_2' => 'value_2']]
             ],
         ];
     }
@@ -149,7 +149,7 @@ trait Provider
                             ['key_1' => 'value_3111', 'key_2' => 'value_3112']
                         ])
                     ],
-                    'paths' => [
+                    'ids' => [
                         'key_1',
                         'key_2/key_21/0/0',
                         'key_2/key_21/0/1',
@@ -181,7 +181,7 @@ trait Provider
                         'key_2/key_21/0/1' => 'value_2101_replace',
                         'key_3/key_31' => 'value_31'
                     ],
-                    'paths' => [
+                    'ids' => [
                         'key_1',
                         'key_2/key_21/0/0',
                         'key_2/key_21/0/1',
@@ -209,7 +209,7 @@ trait Provider
                         'key_2/key_21/0/0' => 'value_2100_replace',
                         'key_2/key_21/0/1' => 'value_2101_replace',
                     ],
-                    'paths' => ['key_1', 'key_3/key_31'],
+                    'ids' => ['key_1', 'key_3/key_31'],
                     'null' => ['key_1' => null, 'key_3/key_31' => null],
                     'default' => ['key_1' => 'default', 'key_3/key_31' => 'default']
                 ]

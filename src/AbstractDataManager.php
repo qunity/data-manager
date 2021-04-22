@@ -15,8 +15,9 @@ namespace Qunity\Component;
 
 use ArrayIterator;
 use BadMethodCallException;
-use Qunity\Component\DataManager\Helper;
-use Qunity\Component\DataManager\Recursive;
+use Qunity\Component\DataManager\Helper\Data;
+use Qunity\Component\DataManager\Helper\Identifier;
+use Qunity\Component\DataManager\Helper\Recursive;
 use Traversable;
 
 /**
@@ -48,18 +49,18 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function set(array|int|string $path, mixed $value = null): static
+    public function set(array|int|string $id, mixed $value = null): static
     {
-        if (is_array($path)) {
+        if (is_array($id)) {
             $this->data = [];
-            foreach ($path as $itemPath => $itemValue) {
-                $this->set($itemPath, $itemValue);
+            foreach ($id as $itemId => $itemValue) {
+                $this->set($itemId, $itemValue);
             }
-        } elseif ($path != '') {
-            if (static::RECURSIVE && Helper::isPath($path)) {
-                Recursive::set(Helper::getKeysByPath($path), $value, $this->data);
+        } elseif ($id != '') {
+            if (static::RECURSIVE && Identifier::isPath($id)) {
+                Recursive::set(Identifier::getKeysByPath($id), $value, $this->data);
             } else {
-                $this->data[$path] = $value;
+                $this->data[$id] = $value;
             }
         }
         return $this;
@@ -77,7 +78,7 @@ abstract class AbstractDataManager implements DataManagerInterface
     {
         $callback = [$this, substr($method, 0, 3)];
         if (is_callable($callback) && method_exists(...$callback)) {
-            return call_user_func($callback, Helper::getPathByMethod($method, 3), ...$args);
+            return call_user_func($callback, Identifier::getPathByMethod($method, 3), ...$args);
         }
         $class = $this::class;
         throw new BadMethodCallException("Call to invalid method: $class::$method");
@@ -102,34 +103,34 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function get(array|int|string $path = null, mixed $default = null): mixed
+    public function get(array|int|string $id = null, mixed $default = null): mixed
     {
-        if ($path === null) {
+        if ($id === null) {
             return $this->data;
-        } elseif (is_array($path)) {
+        } elseif (is_array($id)) {
             $data = [];
-            foreach ($path as $item) {
+            foreach ($id as $item) {
                 if (is_array($item)) {
                     if (!isset($item['default'])) {
                         $item['default'] = $default;
                     }
-                    list('path' => $itemPath, 'default' => $itemDefault) = $item;
+                    list('id' => $itemId, 'default' => $itemDefault) = $item;
                 } else {
-                    list('path' => $itemPath, 'default' => $itemDefault) = ['path' => $item, 'default' => $default];
+                    list('id' => $itemId, 'default' => $itemDefault) = ['id' => $item, 'default' => $default];
                 }
-                $value = $this->get($itemPath, $itemDefault);
-                if (static::RECURSIVE && Helper::isPath($itemPath)) {
-                    Recursive::set(Helper::getKeysByPath($itemPath), $value, $data);
+                $value = $this->get($itemId, $itemDefault);
+                if (static::RECURSIVE && Identifier::isPath($itemId)) {
+                    Recursive::set(Identifier::getKeysByPath($itemId), $value, $data);
                 } else {
-                    $data[$itemPath] = $value;
+                    $data[$itemId] = $value;
                 }
             }
             return $data;
-        } elseif ($path != '') {
-            if (static::RECURSIVE && Helper::isPath($path)) {
-                return Recursive::get(Helper::getKeysByPath($path), $this->data, $default);
-            } elseif (isset($this->data[$path])) {
-                return $this->data[$path];
+        } elseif ($id != '') {
+            if (static::RECURSIVE && Identifier::isPath($id)) {
+                return Recursive::get(Identifier::getKeysByPath($id), $this->data, $default);
+            } elseif (isset($this->data[$id])) {
+                return $this->data[$id];
             }
         }
         return $default;
@@ -146,22 +147,22 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function has(array|int|string $path = null): bool
+    public function has(array|int|string $id = null): bool
     {
-        if ($path === null) {
+        if ($id === null) {
             return (bool)$this->data;
-        } elseif (is_array($path)) {
-            foreach ($path as $itemPath) {
-                if (!$this->has($itemPath)) {
+        } elseif (is_array($id)) {
+            foreach ($id as $itemId) {
+                if (!$this->has($itemId)) {
                     return false;
                 }
             }
-            return (bool)$path;
-        } elseif ($path != '') {
-            if (static::RECURSIVE && Helper::isPath($path)) {
-                return Recursive::has(Helper::getKeysByPath($path), $this->data);
+            return (bool)$id;
+        } elseif ($id != '') {
+            if (static::RECURSIVE && Identifier::isPath($id)) {
+                return Recursive::has(Identifier::getKeysByPath($id), $this->data);
             } else {
-                return isset($this->data[$path]);
+                return isset($this->data[$id]);
             }
         }
         return false;
@@ -178,19 +179,19 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function del(array|int|string $path = null): static
+    public function del(array|int|string $id = null): static
     {
-        if ($path === null) {
+        if ($id === null) {
             $this->data = [];
-        } elseif (is_array($path)) {
-            foreach ($path as $itemPath) {
-                $this->del($itemPath);
+        } elseif (is_array($id)) {
+            foreach ($id as $itemId) {
+                $this->del($itemId);
             }
-        } elseif ($path != '') {
-            if (static::RECURSIVE && Helper::isPath($path)) {
-                Recursive::del(Helper::getKeysByPath($path), $this->data);
+        } elseif ($id != '') {
+            if (static::RECURSIVE && Identifier::isPath($id)) {
+                Recursive::del(Identifier::getKeysByPath($id), $this->data);
             } else {
-                unset($this->data[$path]);
+                unset($this->data[$id]);
             }
         }
         return $this;
@@ -207,19 +208,19 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function add(array|int|string $path, mixed $value = null): static
+    public function add(array|int|string $id, mixed $value = null): static
     {
-        if (is_array($path)) {
-            foreach ($path as $itemPath => $itemValue) {
-                $this->add($itemPath, $itemValue);
+        if (is_array($id)) {
+            foreach ($id as $itemId => $itemValue) {
+                $this->add($itemId, $itemValue);
             }
-        } elseif ($path != '') {
-            if (static::RECURSIVE && Helper::isPath($path)) {
-                Recursive::add(Helper::getKeysByPath($path), $value, $this->data);
-            } elseif (isset($this->data[$path])) {
-                $this->data[$path] = Helper::join($this->data[$path], $value);
+        } elseif ($id != '') {
+            if (static::RECURSIVE && Identifier::isPath($id)) {
+                Recursive::add(Identifier::getKeysByPath($id), $value, $this->data);
+            } elseif (isset($this->data[$id])) {
+                $this->data[$id] = Data::join($this->data[$id], $value);
             } else {
-                $this->data[$path] = $value;
+                $this->data[$id] = $value;
             }
         }
         return $this;

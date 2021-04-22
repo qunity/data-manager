@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper;
+namespace Qunity\UnitTest\Component\DataManager\Helper\Identifier;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\Helper;
+use Qunity\Component\DataManager\Helper\Identifier;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\DataManager\Helper
+ * @package Qunity\UnitTest\Component\DataManager\Helper\Identifier
  */
 class Test extends TestCase
 {
@@ -34,9 +34,9 @@ class Test extends TestCase
     public function testIsPath(mixed $expected, mixed $value, mixed $throw)
     {
         if ($throw === null) {
-            $this->assertEquals($expected, Helper::isPath($value));
+            $this->assertEquals($expected, Identifier::isPath($value));
         } else {
-            $this->assertEquals($expected, Helper::isPath($value, $throw));
+            $this->assertEquals($expected, Identifier::isPath($value, $throw));
         }
     }
 
@@ -52,7 +52,7 @@ class Test extends TestCase
     {
         $this->expectException($eException);
         $this->expectExceptionMessage($eMessage);
-        Helper::isPath($value, $throw);
+        Identifier::isPath($value, $throw);
     }
 
     /**
@@ -63,7 +63,7 @@ class Test extends TestCase
      */
     public function testClearPath(mixed $expected, mixed $path)
     {
-        $this->assertEquals($expected, Helper::clearPath($path));
+        $this->assertEquals($expected, Identifier::clearPath($path));
     }
 
     /**
@@ -74,7 +74,7 @@ class Test extends TestCase
      */
     public function testClearKeys(mixed $expected, mixed $keys)
     {
-        $this->assertEquals($expected, Helper::clearKeys($keys));
+        $this->assertEquals($expected, Identifier::clearKeys($keys));
     }
 
     /**
@@ -85,7 +85,7 @@ class Test extends TestCase
      */
     public function testGetKeysByPath(mixed $expected, mixed $path)
     {
-        $this->assertEquals($expected, Helper::getKeysByPath($path));
+        $this->assertEquals($expected, Identifier::getKeysByPath($path));
     }
 
     /**
@@ -96,7 +96,7 @@ class Test extends TestCase
      */
     public function testGetPathByKeys(mixed $expected, mixed $keys)
     {
-        $this->assertEquals($expected, Helper::getPathByKeys($keys));
+        $this->assertEquals($expected, Identifier::getPathByKeys($keys));
     }
 
     /**
@@ -109,9 +109,9 @@ class Test extends TestCase
     public function testGetMethodByPath(mixed $expected, mixed $path, mixed $prefix)
     {
         if ($prefix === null) {
-            $this->assertEquals($expected, Helper::getMethodByPath($path));
+            $this->assertEquals($expected, Identifier::getMethodByPath($path));
         } else {
-            $this->assertEquals($expected, Helper::getMethodByPath($path, $prefix));
+            $this->assertEquals($expected, Identifier::getMethodByPath($path, $prefix));
         }
     }
 
@@ -125,20 +125,9 @@ class Test extends TestCase
     public function testGetPathByMethod(mixed $expected, mixed $method, mixed $offset)
     {
         if ($offset === null) {
-            $this->assertEquals($expected, Helper::getPathByMethod($method));
+            $this->assertEquals($expected, Identifier::getPathByMethod($method));
         } else {
-            $this->assertEquals($expected, Helper::getPathByMethod($method, $offset));
+            $this->assertEquals($expected, Identifier::getPathByMethod($method, $offset));
         }
-    }
-
-    /**
-     * @param mixed $expected
-     * @param mixed ...$items
-     * @return void
-     * @dataProvider providerJoin
-     */
-    public function testJoin(mixed $expected, mixed ...$items)
-    {
-        $this->assertEquals($expected, Helper::join(...$items));
     }
 }

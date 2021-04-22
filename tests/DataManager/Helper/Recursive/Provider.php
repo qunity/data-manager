@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Recursive;
+namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
 
 /**
  * Trait Provider
- * @package Qunity\UnitTest\Component\DataManager\Recursive
+ * @package Qunity\UnitTest\Component\DataManager\Helper\Recursive
  */
 trait Provider
 {

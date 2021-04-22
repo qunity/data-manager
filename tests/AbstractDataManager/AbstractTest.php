@@ -35,30 +35,31 @@ abstract class AbstractTest extends TestCase
     {
         $this->assertEquals($expected, $dataManager->get());
         $this->assertEquals(new ArrayIterator($expected), $dataManager->getIterator());
-        foreach ($dataManager as $key => $item) {
-            $this->assertEquals($expected[$key], $item);
+        foreach ($dataManager as $id => $value) {
+            $this->assertEquals($expected[$id], $value);
         }
     }
 
     /**
-     * @param mixed $path
+     * @param mixed $id
      * @param mixed $dataManager
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
-    public function testArrayAccess(mixed $path, mixed $dataManager, mixed $value)
+    public function testArrayAccess(mixed $id, mixed $dataManager, mixed $value)
     {
-        $this->assertFalse(isset($dataManager[$path]));
-        $this->assertNull($dataManager[$path]);
-        $dataManager[$path] = $value;
+        $this->assertFalse(isset($dataManager[$id]));
+        $this->assertNull($dataManager[$id]);
+        $dataManager[$id] = $value;
 
-        $this->assertTrue(isset($dataManager[$path]));
-        $this->assertEquals($value, $dataManager[$path]);
+        $this->assertTrue(isset($dataManager[$id]));
+        $this->assertEquals($value, $dataManager[$id]);
 
-        unset($dataManager[$path]);
-        $this->assertFalse(isset($dataManager[$path]));
-        $this->assertNull($dataManager[$path]);
+        unset($dataManager[$id]);
+        $this->assertFalse(isset($dataManager[$id]));
+        $this->assertNull($dataManager[$id]);
     }
 
     /**
@@ -97,36 +98,37 @@ abstract class AbstractTest extends TestCase
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerSingleMethods
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     public function testSingleMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
-        list('path' => $path, 'value' => $value) = $step1;
+        list('id' => $id, 'value' => $value) = $step1;
 
-        $this->assertFalse($dataManager->has($path));
-        $this->assertNull($dataManager->get($path));
-        $this->assertEquals('default', $dataManager->get($path, 'default'));
+        $this->assertFalse($dataManager->has($id));
+        $this->assertNull($dataManager->get($id));
+        $this->assertEquals('default', $dataManager->get($id, 'default'));
 
-        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($path, $value));
+        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($id, $value));
 
-        $this->assertTrue($dataManager->has($path));
-        $this->assertEquals($value, $dataManager->get($path));
-        $this->assertEquals($value, $dataManager->get($path, 'default'));
+        $this->assertTrue($dataManager->has($id));
+        $this->assertEquals($value, $dataManager->get($id));
+        $this->assertEquals($value, $dataManager->get($id, 'default'));
 
-        list('path' => $path, 'value' => $value) = $step2;
+        list('id' => $id, 'value' => $value) = $step2;
 
-        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->add($path, $value));
+        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->add($id, $value));
 
-        list('path' => $path, 'value' => $value) = $step3;
+        list('id' => $id, 'value' => $value) = $step3;
 
-        $this->assertTrue($dataManager->has($path));
-        $this->assertEquals($value, $dataManager->get($path));
-        $this->assertEquals($value, $dataManager->get($path, 'default'));
+        $this->assertTrue($dataManager->has($id));
+        $this->assertEquals($value, $dataManager->get($id));
+        $this->assertEquals($value, $dataManager->get($id, 'default'));
 
-        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($path));
+        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($id));
 
-        $this->assertFalse($dataManager->has($path));
-        $this->assertNull($dataManager->get($path));
-        $this->assertEquals('default', $dataManager->get($path, 'default'));
+        $this->assertFalse($dataManager->has($id));
+        $this->assertNull($dataManager->get($id));
+        $this->assertEquals('default', $dataManager->get($id, 'default'));
     }
 
     /**
@@ -140,52 +142,52 @@ abstract class AbstractTest extends TestCase
      */
     public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
-        list('data' => $data, 'real' => $real, 'paths' => $paths, 'null' => $null, 'default' => $default) = $step1;
+        list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step1;
 
         $this->assertFalse($dataManager->has());
-        $this->assertFalse($dataManager->has($paths));
+        $this->assertFalse($dataManager->has($ids));
         $this->assertEquals([], $dataManager->get());
-        $this->assertEquals($null, $dataManager->get($paths));
-        $this->assertEquals($default, $dataManager->get($paths, 'default'));
+        $this->assertEquals($null, $dataManager->get($ids));
+        $this->assertEquals($default, $dataManager->get($ids, 'default'));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($data));
 
         $this->assertTrue($dataManager->has());
-        $this->assertTrue($dataManager->has($paths));
+        $this->assertTrue($dataManager->has($ids));
         $this->assertEquals($real, $dataManager->get());
-        $this->assertEquals($real, $dataManager->get($paths));
-        $this->assertEquals($real, $dataManager->get($paths, 'default'));
+        $this->assertEquals($real, $dataManager->get($ids));
+        $this->assertEquals($real, $dataManager->get($ids, 'default'));
 
-        list('data' => $data, 'real' => $real, 'paths' => $paths, 'null' => $null, 'default' => $default) = $step2;
+        list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step2;
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->add($data));
 
         $this->assertTrue($dataManager->has());
-        $this->assertTrue($dataManager->has($paths));
+        $this->assertTrue($dataManager->has($ids));
         $this->assertEquals($real, $dataManager->get());
-        $this->assertEquals($null, $dataManager->get($paths));
-        $this->assertEquals($default, $dataManager->get($paths, 'default'));
+        $this->assertEquals($null, $dataManager->get($ids));
+        $this->assertEquals($default, $dataManager->get($ids, 'default'));
 
-        list('data' => $data, 'real' => $real, 'paths' => $paths, 'null' => $null, 'default' => $default) = $step3;
+        list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step3;
         unset($data);
 
-        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($paths));
+        $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($ids));
 
         $this->assertTrue($dataManager->has());
-        $this->assertFalse($dataManager->has($paths));
+        $this->assertFalse($dataManager->has($ids));
         $this->assertEquals($real, $dataManager->get());
-        $this->assertEquals($null, $dataManager->get($paths));
-        $this->assertEquals($default, $dataManager->get($paths, 'default'));
+        $this->assertEquals($null, $dataManager->get($ids));
+        $this->assertEquals($default, $dataManager->get($ids, 'default'));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del());
 
-        list('data' => $data, 'real' => $real, 'paths' => $paths, 'null' => $null, 'default' => $default) = $step1;
+        list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step1;
         unset($data, $real);
 
         $this->assertFalse($dataManager->has());
-        $this->assertFalse($dataManager->has($paths));
+        $this->assertFalse($dataManager->has($ids));
         $this->assertEquals([], $dataManager->get());
-        $this->assertEquals($null, $dataManager->get($paths));
-        $this->assertEquals($default, $dataManager->get($paths, 'default'));
+        $this->assertEquals($null, $dataManager->get($ids));
+        $this->assertEquals($default, $dataManager->get($ids, 'default'));
     }
 }

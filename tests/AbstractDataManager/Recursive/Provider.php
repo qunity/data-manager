@@ -104,39 +104,39 @@ trait Provider
         return [
             [
                 $object,
-                ['path' => '0/0', 'value' => 'value_1'],
-                ['path' => 0, 'value' => 'value_2'],
-                ['path' => '0', 'value' => ['value_1', 'value_2']]
+                ['id' => '0/0', 'value' => 'value_1'],
+                ['id' => 0, 'value' => 'value_2'],
+                ['id' => '0', 'value' => ['value_1', 'value_2']]
             ], [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => 'value_1'],
-                ['path' => 'key/0/0', 'value' => 'value_2'],
-                ['path' => 'key/0/0', 'value' => ['value_1', 'value_2']]
+                ['id' => 'key/0/0/0', 'value' => 'value_1'],
+                ['id' => 'key/0/0', 'value' => 'value_2'],
+                ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']]
             ], [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => 'value_error'],
-                ['path' => 'key/0/0/0', 'value' => 'value'],
-                ['path' => 'key/0/0', 'value' => ['value']]
+                ['id' => 'key/0/0/0', 'value' => 'value_error'],
+                ['id' => 'key/0/0/0', 'value' => 'value'],
+                ['id' => 'key/0/0', 'value' => ['value']]
             ], [
                 $object,
-                ['path' => 'key/0/0', 'value' => ['key' => 'value_error']],
-                ['path' => 'key/0', 'value' => [['key' => 'value']]],
-                ['path' => 'key/0/0', 'value' => ['key' => 'value']]
+                ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
+                ['id' => 'key/0', 'value' => [['key' => 'value']]],
+                ['id' => 'key/0/0', 'value' => ['key' => 'value']]
             ], [
                 $object,
-                ['path' => 'key/0/0/0', 'value' => 'value_1'],
-                ['path' => 'key/0/0', 'value' => new DataManager(['value_2'])],
-                ['path' => 'key/0/0', 'value' => new DataManager(['value_1', 'value_2'])]
+                ['id' => 'key/0/0/0', 'value' => 'value_1'],
+                ['id' => 'key/0/0', 'value' => new DataManager(['value_2'])],
+                ['id' => 'key/0/0', 'value' => new DataManager(['value_1', 'value_2'])]
             ], [
                 $object,
-                ['path' => 'key/0/0/key', 'value' => 'value_error'],
-                ['path' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])],
-                ['path' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
+                ['id' => 'key/0/0/key', 'value' => 'value_error'],
+                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])],
+                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
             ], [
                 $object,
-                ['path' => 'key/0/0', 'value' => ['key' => 'value_error']],
-                ['path' => 'key/0', 'value' => [new DataManager(['key' => 'value'])]],
-                ['path' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
+                ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
+                ['id' => 'key/0', 'value' => [new DataManager(['key' => 'value'])]],
+                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
             ],
         ];
     }
@@ -170,7 +170,7 @@ trait Provider
                                 ['key_1' => 'value_3111', 'key_2' => 'value_3112']
                             ])]
                     ],
-                    'paths' => [
+                    'ids' => [
                         'key_1',
                         'key_2/key_21/0/0',
                         'key_2/key_21/0/1',
@@ -207,7 +207,7 @@ trait Provider
                             ])
                         ]
                     ],
-                    'paths' => [
+                    'ids' => [
                         'key_1',
                         'key_2/key_21/0/0',
                         'key_2/key_21/0/1',
@@ -254,7 +254,7 @@ trait Provider
                         'key_2' => ['key_21' => [[1 => 'value_2101']]],
                         'key_3' => ['key_31' => new DataManager([[1 => 'value_3101'], ['key_1' => 'value_3111']])]
                     ],
-                    'paths' => [
+                    'ids' => [
                         'key_2/key_21/0/0',
                         'key_2/key_21/0/2',
                         'key_3/key_31/0/0',
