@@ -18,6 +18,8 @@ use BadMethodCallException;
 /**
  * Trait Provider
  * @package Qunity\UnitTest\Component\AbstractDataManager\Recursive
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 trait Provider
 {
@@ -143,7 +145,6 @@ trait Provider
 
     /**
      * @inheritDoc
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function providerMassMethods(): array
     {

@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+/** @noinspection DuplicatedCode */
 declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
@@ -20,6 +21,8 @@ use Qunity\Component\DataManagerInterface;
 /**
  * Class AbstractTest
  * @package Qunity\UnitTest\Component\AbstractDataManager
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 abstract class AbstractTest extends TestCase
 {
@@ -46,7 +49,6 @@ abstract class AbstractTest extends TestCase
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
-     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     public function testArrayAccess(mixed $id, mixed $dataManager, mixed $value)
     {
@@ -98,7 +100,6 @@ abstract class AbstractTest extends TestCase
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerSingleMethods
-     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     public function testSingleMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
@@ -138,7 +139,6 @@ abstract class AbstractTest extends TestCase
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerMassMethods
-     * @noinspection DuplicatedCode
      */
     public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
