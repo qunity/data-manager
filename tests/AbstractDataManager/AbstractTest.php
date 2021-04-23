@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-/** @noinspection DuplicatedCode */
 declare(strict_types=1);
 
 namespace Qunity\UnitTest\Component\AbstractDataManager;
@@ -139,6 +138,7 @@ abstract class AbstractTest extends TestCase
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerMassMethods
+     * @noinspection DuplicatedCode
      */
     public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
