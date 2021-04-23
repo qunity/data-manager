@@ -94,11 +94,11 @@ class Test extends TestCase
      * @param mixed $expected
      * @param mixed $ids
      * @return void
-     * @dataProvider providerGetIdByIds
+     * @dataProvider providerGetPathByIds
      */
-    public function testGetIdByIds(mixed $expected, mixed $ids)
+    public function testGetPathByIds(mixed $expected, mixed $ids)
     {
-        $this->assertEquals($expected, Identifier::getIdByIds($ids));
+        $this->assertEquals($expected, Identifier::getPathByIds($ids));
     }
 
     /**
