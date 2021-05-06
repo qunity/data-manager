@@ -31,12 +31,10 @@ class Data
             if (is_array($carry)) {
                 if (is_array($item)) {
                     return self::joinArrays($carry, $item);
-                } else {
-                    return array_merge($carry, (array)$item);
                 }
-            } else {
-                return $item;
+                return array_merge($carry, (array)$item);
             }
+            return $item;
         });
     }
 
@@ -60,9 +58,8 @@ class Data
                     }
                 }
                 return $carry;
-            } else {
-                return $item;
             }
+            return $item;
         });
     }
 }
