@@ -15,6 +15,7 @@ namespace Qunity\Component;
 
 use ArrayAccess;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * Interface DataManagerInterface
@@ -34,6 +35,14 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * Key delimiter for item
      */
     public const DELIMITER_KEY = '_';
+
+    /**
+     * Get external iterator
+     *
+     * @param array<array|int|string>|int|string|null $id
+     * @return Traversable<int|string,mixed>
+     */
+    public function getIterator(array|int|string|null $id = null): Traversable;
 
     /**
      * Set data into object
@@ -63,7 +72,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      *
      * @return mixed
      */
-    public function get(array|int|string $id = null, mixed $default = null): mixed;
+    public function get(array|int|string|null $id = null, mixed $default = null): mixed;
 
     /**
      * Check existence data in object
@@ -71,7 +80,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * @param array<array|int|string>|int|string|null $id
      * @return bool
      */
-    public function has(array|int|string $id = null): bool;
+    public function has(array|int|string|null $id = null): bool;
 
     /**
      * Remove data from object
@@ -79,5 +88,5 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * @param array<array|int|string>|int|string|null $id
      * @return $this
      */
-    public function del(array|int|string $id = null): static;
+    public function del(array|int|string|null $id = null): static;
 }
