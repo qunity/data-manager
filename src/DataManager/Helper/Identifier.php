@@ -23,7 +23,7 @@ use Qunity\Component\DataManagerInterface;
 class Identifier
 {
     /**
-     * Underscore format
+     * Underscore form
      * @var array<string>
      */
     protected static array $underscore = [];
