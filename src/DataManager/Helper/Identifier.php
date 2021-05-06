@@ -26,7 +26,7 @@ class Identifier
 {
     /**
      * Class cache
-     * @var array<int,array>
+     * @var array<int|string,array>
      */
     protected static array $cache = [];
 
@@ -40,14 +40,13 @@ class Identifier
     {
         $result = '';
         if (($ids = self::clearIds($ids)) != []) {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $arrayId = self::getArrayId($ids))) === null) {
+            if (($result = self::getCache(__FUNCTION__, $arrayId = self::getArrayId($ids))) === null) {
                 array_walk($ids, function (int|string &$id): void {
                     $id = self::getKeysById($id);
                 });
                 /** @var string[][] $ids */
                 $result = implode(DataManagerInterface::DELIMITER_PATH, array_reverse(array_merge(...$ids)));
-                self::setCache($cacheId, $arrayId, $result);
+                self::setCache(__FUNCTION__, $arrayId, $result);
             }
         }
         return $result;
@@ -63,13 +62,12 @@ class Identifier
     {
         $result = [];
         if ($ids != []) {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $arrayId = self::getArrayId($ids))) === null) {
+            if (($result = self::getCache(__FUNCTION__, $arrayId = self::getArrayId($ids))) === null) {
                 array_walk($ids, function (int|string &$id): void {
                     $id = self::clearId($id);
                 });
                 $result = array_values(array_diff($ids, ['']));
-                self::setCache($cacheId, $arrayId, $result);
+                self::setCache(__FUNCTION__, $arrayId, $result);
             }
         }
         return $result;
@@ -78,14 +76,14 @@ class Identifier
     /**
      * Get value from class cache
      *
-     * @param int|null $cacheId
+     * @param int|string $cacheId
      * @param int|string $valueId
      *
      * @return mixed
      */
-    protected static function getCache(?int $cacheId, int|string $valueId): mixed
+    protected static function getCache(int|string $cacheId, int|string $valueId): mixed
     {
-        if ($cacheId !== null && isset(self::$cache[$cacheId][$valueId])) {
+        if (isset(self::$cache[$cacheId][$valueId])) {
             return self::$cache[$cacheId][$valueId];
         }
         return null;
@@ -94,15 +92,12 @@ class Identifier
     /**
      * Set value to class cache
      *
-     * @param int|null $cacheId
+     * @param int|string $cacheId
      * @param int|string $valueId
      * @param mixed $value
      */
-    protected static function setCache(?int &$cacheId, int|string $valueId, mixed $value): void
+    protected static function setCache(int|string $cacheId, int|string $valueId, mixed $value): void
     {
-        if ($cacheId === null) {
-            $cacheId = array_key_last(self::$cache) + 1;
-        }
         if (!isset(self::$cache[$cacheId][$valueId])) {
             self::$cache[$cacheId][$valueId] = $value;
         }
@@ -129,19 +124,12 @@ class Identifier
     {
         $result = '';
         if ($id != '') {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $id)) === null) {
-                $result = preg_replace([
-                    '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
-                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
-                ], [
-                    DataManagerInterface::DELIMITER_KEY,
-                    DataManagerInterface::DELIMITER_PATH
-                ], strtolower(trim(
+            if (($result = self::getCache(__FUNCTION__, $id)) === null) {
+                $result = trim(
                     (string)$id,
                     ' ' . DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
-                )));
-                self::setCache($cacheId, $id, $result);
+                );
+                self::setCache(__FUNCTION__, $id, $result);
             }
         }
         return $result;
@@ -157,10 +145,9 @@ class Identifier
     {
         $result = [];
         if (($id = self::clearId($id)) != '') {
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $id)) === null) {
+            if (($result = self::getCache(__FUNCTION__, $id)) === null) {
                 $result = array_reverse(explode(DataManagerInterface::DELIMITER_PATH, $id));
-                self::setCache($cacheId, $id, $result);
+                self::setCache(__FUNCTION__, $id, $result);
             }
         }
         return $result;
@@ -181,8 +168,7 @@ class Identifier
             if ($prefix != '') {
                 $id = $prefix . DataManagerInterface::DELIMITER_KEY . $id;
             }
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $id)) === null) {
+            if (($result = self::getCache(__FUNCTION__, $id)) === null) {
                 $result = str_replace(
                     DataManagerInterface::DELIMITER_PATH,
                     DataManagerInterface::DELIMITER_KEY,
@@ -194,7 +180,7 @@ class Identifier
                         $id
                     )
                 );
-                self::setCache($cacheId, $id, $result);
+                self::setCache(__FUNCTION__, $id, $result);
             }
         }
         return $result;
@@ -215,14 +201,13 @@ class Identifier
             if ($offset != 0) {
                 $method = substr($method, $offset);
             }
-            static $cacheId;
-            if (($result = self::getCache($cacheId, $method)) === null) {
+            if (($result = self::getCache(__FUNCTION__, $method)) === null) {
                 $result = self::clearId((string)preg_replace(
                     ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
                     [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
                     $method
                 ));
-                self::setCache($cacheId, $method, $result);
+                self::setCache(__FUNCTION__, $method, $result);
             }
         }
         return $result;
@@ -236,7 +221,7 @@ class Identifier
      *
      * @return bool
      */
-    public static function isPath(int|string $id, bool $throw = null): bool
+    public static function isPath(int|string $id, bool|null $throw = null): bool
     {
         $result = str_contains((string)$id, DataManagerInterface::DELIMITER_PATH);
         if ($throw !== null && $throw == $result) {
