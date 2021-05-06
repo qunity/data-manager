@@ -30,7 +30,7 @@ class Recursive
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!isset($data[$key]) || !is_array($data[$key])) {
+                if (!(isset($data[$key]) && is_array($data[$key]))) {
                     $data[$key] = [];
                 }
                 self::set($keys, $value, $data[$key]);
@@ -51,7 +51,7 @@ class Recursive
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!isset($data[$key]) || !is_array($data[$key])) {
+                if (!(isset($data[$key]) && is_array($data[$key]))) {
                     $data[$key] = [];
                 }
                 self::add($keys, $value, $data[$key]);
