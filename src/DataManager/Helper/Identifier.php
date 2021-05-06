@@ -29,6 +29,12 @@ class Identifier
     protected static array $underscore = [];
 
     /**
+     * Identifier keys
+     * @var array<int|string,array>
+     */
+    protected static array $keys = [];
+
+    /**
      * Get keys by identifier
      * @SuppressWarnings(PHPMD.ShortVariable)
      *
@@ -37,7 +43,12 @@ class Identifier
      */
     public static function getKeys(int|string $id): array
     {
-        return array_reverse(explode(DataManagerInterface::DELIMITER_PATH, (string)$id));
+        if (isset(self::$keys[$id])) {
+            return self::$keys[$id];
+        }
+        return self::$keys[$id] = array_reverse(
+            explode(DataManagerInterface::DELIMITER_PATH, (string)$id)
+        );
     }
 
     /**
