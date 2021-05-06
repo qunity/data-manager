@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
-use Qunity\Component\DataManagerInterface;
-
 /**
  * Class Data
  * @package Qunity\Component\DataManager\Helper
@@ -22,7 +20,7 @@ use Qunity\Component\DataManagerInterface;
 class Data
 {
     /**
-     * Join data (arrays, managers, etc.)
+     * Join data (mixed types)
      *
      * @param mixed ...$items
      * @return mixed
@@ -33,18 +31,8 @@ class Data
             if (is_array($carry)) {
                 if (is_array($item)) {
                     return self::joinArrays($carry, $item);
-                } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::joinArrays($carry, $item->get()));
                 } else {
                     return array_merge($carry, (array)$item);
-                }
-            } elseif ($carry instanceof DataManagerInterface) {
-                if (is_array($item)) {
-                    return $carry->set(self::joinArrays($carry->get(), $item));
-                } elseif ($item instanceof DataManagerInterface) {
-                    return $item->set(self::joinArrays($carry->get(), $item->get()));
-                } else {
-                    return $item;
                 }
             } else {
                 return $item;
@@ -54,9 +42,10 @@ class Data
 
     /**
      * Join data (only arrays)
+     * @noinspection PhpPluralMixedCanBeReplacedWithArrayInspection
      *
-     * @param array<int|string,mixed> ...$items
-     * @return array<int|string,mixed>
+     * @param array<mixed> ...$items
+     * @return array<mixed>
      */
     protected static function joinArrays(array ...$items): array
     {
@@ -65,8 +54,6 @@ class Data
                 foreach ($item as $id => $value) {
                     if (isset($carry[$id]) && is_array($value)) {
                         $carry[$id] = self::join($carry[$id], $value);
-                    } elseif (isset($carry[$id]) && $value instanceof DataManagerInterface) {
-                        $carry[$id] = $value->set(self::join($carry[$id], $value->get()));
                     } elseif (is_numeric($id)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {
