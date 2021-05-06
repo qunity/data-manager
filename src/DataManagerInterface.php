@@ -40,7 +40,7 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
      * Get external iterator
      *
      * @param array<array|int|string>|int|string|null $id
-     * @return Traversable<int|string,mixed>
+     * @return Traversable<mixed>
      */
     public function getIterator(array|int|string|null $id = null): Traversable;
 
