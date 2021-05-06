@@ -50,13 +50,13 @@ class Data
     {
         return (array)array_reduce($items, function (?array $carry, array $item): array {
             if ($carry !== null) {
-                foreach ($item as $id => $value) {
-                    if (isset($carry[$id]) && is_array($value)) {
-                        $carry[$id] = self::join($carry[$id], $value);
-                    } elseif (is_numeric($id)) {
+                foreach ($item as $key => $value) {
+                    if (isset($carry[$key]) && is_array($value)) {
+                        $carry[$key] = self::join($carry[$key], $value);
+                    } elseif (is_numeric($key)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {
-                        $carry[$id] = $value;
+                        $carry[$key] = $value;
                     }
                 }
                 return $carry;
