@@ -52,7 +52,7 @@ class Identifier
     }
 
     /**
-     * Get underscore format by method name
+     * Get underscore form by method name
      *
      * @param string $method
      * @param int $offset
