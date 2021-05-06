@@ -42,10 +42,9 @@ class Data
 
     /**
      * Join data (only arrays)
-     * @noinspection PhpPluralMixedCanBeReplacedWithArrayInspection
      *
-     * @param array<mixed> ...$items
-     * @return array<mixed>
+     * @param array<int|string,mixed> ...$items
+     * @return array<int|string,mixed>
      */
     protected static function joinArrays(array ...$items): array
     {

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Qunity\Component\DataManager\Helper;
 
-use Qunity\Component\DataManagerInterface;
-
 /**
  * Class Recursive
  * @package Qunity\Component\DataManager\Helper
@@ -26,20 +24,16 @@ class Recursive
      *
      * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<int|string,mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed> $data
      */
-    public static function set(array $keys, mixed $value, array|DataManagerInterface &$data): void
+    public static function set(array $keys, mixed $value, array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof DataManagerInterface))) {
+                if (!isset($data[$key]) || !is_array($data[$key])) {
                     $data[$key] = [];
                 }
-                if (is_array($data[$key])) {
-                    self::set($keys, $value, $data[$key]);
-                } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->set(Identifier::getPathByIds($keys), $value);
-                }
+                self::set($keys, $value, $data[$key]);
             } else {
                 $data[$key] = $value;
             }
@@ -51,20 +45,16 @@ class Recursive
      *
      * @param array<int|string> $keys
      * @param mixed $value
-     * @param array<int|string,mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed> $data
      */
-    public static function add(array $keys, mixed $value, array|DataManagerInterface &$data): void
+    public static function add(array $keys, mixed $value, array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
-                if (!(isset($data[$key]) && (is_array($data[$key]) || $data[$key] instanceof DataManagerInterface))) {
+                if (!isset($data[$key]) || !is_array($data[$key])) {
                     $data[$key] = [];
                 }
-                if (is_array($data[$key])) {
-                    self::add($keys, $value, $data[$key]);
-                } elseif ($data[$key] instanceof DataManagerInterface) {
-                    $data[$key]->add(Identifier::getPathByIds($keys), $value);
-                }
+                self::add($keys, $value, $data[$key]);
             } elseif (isset($data[$key])) {
                 $data[$key] = Data::join($data[$key], $value);
             } else {
@@ -77,21 +67,17 @@ class Recursive
      * Get element recursively
      *
      * @param array<int|string> $keys
-     * @param array<int|string,mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed> $data
      * @param mixed|null $default
      *
      * @return mixed
      */
-    public static function get(array $keys, array|DataManagerInterface $data, mixed $default = null): mixed
+    public static function get(array $keys, array $data, mixed $default = null): mixed
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
-                    if (is_array($data[$key])) {
-                        return self::get($keys, $data[$key], $default);
-                    } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->get(Identifier::getPathByIds($keys), $default);
-                    }
+                    return self::get($keys, $data[$key], $default);
                 }
             } elseif (isset($data[$key])) {
                 return $data[$key];
@@ -104,20 +90,16 @@ class Recursive
      * Check existence element recursively
      *
      * @param array<int|string> $keys
-     * @param array<int|string,mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed> $data
      *
      * @return bool
      */
-    public static function has(array $keys, array|DataManagerInterface $data): bool
+    public static function has(array $keys, array $data): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
-                    if (is_array($data[$key])) {
-                        return self::has($keys, $data[$key]);
-                    } elseif ($data[$key] instanceof DataManagerInterface) {
-                        return $data[$key]->has(Identifier::getPathByIds($keys));
-                    }
+                    return self::has($keys, $data[$key]);
                 }
             } else {
                 return isset($data[$key]);
@@ -130,18 +112,14 @@ class Recursive
      * Remove element recursively
      *
      * @param array<int|string> $keys
-     * @param array<int|string,mixed>|DataManagerInterface $data
+     * @param array<int|string,mixed> $data
      */
-    public static function del(array $keys, array|DataManagerInterface &$data): void
+    public static function del(array $keys, array &$data): void
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key])) {
-                    if (is_array($data[$key])) {
-                        self::del($keys, $data[$key]);
-                    } elseif ($data[$key] instanceof DataManagerInterface) {
-                        $data[$key]->del(Identifier::getPathByIds($keys));
-                    }
+                    self::del($keys, $data[$key]);
                 }
             } else {
                 unset($data[$key]);
