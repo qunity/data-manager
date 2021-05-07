@@ -70,7 +70,7 @@ trait Provider
                 new DataManager(['key' => ['value_1', 'value_2']]),
                 new DataManager(['key' => ['value_1']]),
                 'addKey',
-                'value_2'
+                'value_2',
             ], [
                 new DataManager(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]),
                 new DataManager(['key_1' => 'value', 'key_2' => ['value_1']]),
@@ -92,7 +92,7 @@ trait Provider
             ], [
                 false,
                 new DataManager(['key' => ['value']]),
-                'hasKey_5'
+                'hasKey_5',
             ], [
                 new DataManager(),
                 new DataManager(['key' => ['value']]),
@@ -187,7 +187,8 @@ trait Provider
                             'key_31' => [
                                 ['value_3100', 'value_3101'],
                                 ['key_1' => 'value_3111', 'key_2' => 'value_3112'],
-                            ]],
+                            ],
+                        ],
                     ],
                     'ids' => [
                         'key_1',
@@ -207,8 +208,11 @@ trait Provider
                     'default' => [
                         'key_1' => 'default',
                         'key_2' => ['key_21' => [['default', 'default']]],
-                        'key_3' => ['key_31' => [
-                            ['default', 'default'], ['key_1' => 'default', 'key_2' => 'default']]
+                        'key_3' => [
+                            'key_31' => [
+                                ['default', 'default'],
+                                ['key_1' => 'default', 'key_2' => 'default'],
+                            ],
                         ],
                     ],
                 ],
