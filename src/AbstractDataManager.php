@@ -109,10 +109,10 @@ abstract class AbstractDataManager implements DataManagerInterface
                     if (!isset($item['default'])) {
                         $item['default'] = $default;
                     }
-                    list('id' => $itemId, 'default' => $itemDefault) = $item;
                 } else {
-                    list('id' => $itemId, 'default' => $itemDefault) = ['id' => $item, 'default' => $default];
+                    $item = ['id' => $item, 'default' => $default];
                 }
+                list('id' => $itemId, 'default' => $itemDefault) = $item;
                 if ($itemId != '') {
                     $value = $this->get($itemId, $itemDefault);
                     if (Identifier::isPath($itemId)) {
