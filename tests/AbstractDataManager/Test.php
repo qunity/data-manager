@@ -37,6 +37,7 @@ class Test extends TestCase
         $this->assertEquals(new ArrayIterator($expected), $dataManager->getIterator());
         foreach ($dataManager as $id => $value) {
             $this->assertEquals($expected[$id], $value);
+            $this->assertEquals(new ArrayIterator($value), $dataManager->getIterator($id));
         }
     }
 

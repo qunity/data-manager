@@ -27,10 +27,14 @@ trait Provider
      */
     public function providerGetIterator(): array
     {
-        $data = ['key_1' => [1 => 'value'], 'key_2' => [2 => 'value'], 'key_3' => [3 => 'value']];
         return [
-            [[], new DataManager()],
-            [$data, new DataManager($data)],
+            [
+                [],
+                new DataManager(),
+            ], [
+                ['key_1' => [1 => 'value'], 'key_2' => [2 => 'value'], 'key_3' => [3 => 'value']],
+                new DataManager(['key_1' => [1 => 'value'], 'key_2' => [2 => 'value'], 'key_3' => [3 => 'value']]),
+            ],
         ];
     }
 
@@ -44,7 +48,6 @@ trait Provider
             ['key', new DataManager(['key_error' => 'value_error']), 'value'],
             ['0/0/0/0', new DataManager([[[[1 => 'value_error']]]]), 'value'],
             ['key/key/0/0', new DataManager(['key' => ['key' => [[1 => 'value_error']]]]), 'value'],
-            [' _//_KEY//key//0//0_//_ ', new DataManager(['key' => ['key' => [[1 => 'value_error']]]]), 'value'],
         ];
     }
 
@@ -53,31 +56,48 @@ trait Provider
      */
     public function providerSuccessMagicMethods(): array
     {
-        $object11 = new DataManager(['key' => ['value']]);
-        $object12 = new DataManager();
-
-        $object21 = new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value']]]);
-        $object22 = new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value_error']]]);
-
-        $object31 = new DataManager(['key' => ['value_1', 'value_2']]);
-        $object32 = new DataManager(['key' => ['value_1']]);
-
-        $object41 = new DataManager(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]);
-        $object42 = new DataManager(['key_1' => 'value', 'key_2' => ['value_1']]);
-
-        $object51 = new DataManager();
-        $object52 = new DataManager(['key' => ['value']]);
-
         return [
-            [$object11, $object12, 'setKey_0', 'value'],
-            [$object21, $object22, 'setKey_Key2_0', 'value'],
-            [$object31, $object32, 'addKey', 'value_2'],
-            [$object41, $object42, 'addKey2', 'value_2'],
-            ['value', $object52, 'getKey_0'],
-            ['default', $object52, 'getKey_5', 'default'],
-            [true, $object52, 'hasKey_0'],
-            [false, $object52, 'hasKey_5'],
-            [$object51, $object52, 'delKey'],
+            [
+                new DataManager(['key' => ['value']]),
+                new DataManager(), 'setKey_0',
+                'value',
+            ], [
+                new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value']]]),
+                new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value_error']]]),
+                'setKey_Key2_0',
+                'value',
+            ], [
+                new DataManager(['key' => ['value_1', 'value_2']]),
+                new DataManager(['key' => ['value_1']]),
+                'addKey',
+                'value_2'
+            ], [
+                new DataManager(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]),
+                new DataManager(['key_1' => 'value', 'key_2' => ['value_1']]),
+                'addKey2',
+                'value_2',
+            ], [
+                'value',
+                new DataManager(['key' => ['value']]),
+                'getKey_0',
+            ], [
+                'default',
+                new DataManager(['key' => ['value']]),
+                'getKey_5',
+                'default',
+            ], [
+                true,
+                new DataManager(['key' => ['value']]),
+                'hasKey_0',
+            ], [
+                false,
+                new DataManager(['key' => ['value']]),
+                'hasKey_5'
+            ], [
+                new DataManager(),
+                new DataManager(['key' => ['value']]),
+                'delKey',
+            ],
         ];
     }
 
@@ -101,40 +121,39 @@ trait Provider
      */
     public function providerSingleMethods(): array
     {
-        $object = new DataManager();
         return [
             [
-                $object,
+                new DataManager(),
                 ['id' => '0/0', 'value' => 'value_1'],
                 ['id' => 0, 'value' => 'value_2'],
                 ['id' => '0', 'value' => ['value_1', 'value_2']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
                 ['id' => 'key/0/0', 'value' => 'value_2'],
                 ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_error'],
                 ['id' => 'key/0/0/0', 'value' => 'value'],
                 ['id' => 'key/0/0', 'value' => ['value']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
                 ['id' => 'key/0', 'value' => [['key' => 'value']]],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
                 ['id' => 'key/0/0', 'value' => ['value_2']],
                 ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0/key', 'value' => 'value_error'],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
             ], [
-                $object,
+                new DataManager(),
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
                 ['id' => 'key/0', 'value' => [['key' => 'value']]],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
@@ -148,10 +167,9 @@ trait Provider
      */
     public function providerMassMethods(): array
     {
-        $object = new DataManager();
         return [
             [
-                $object,
+                new DataManager(),
                 [
                     'data' => [
                         'key_1' => 'value',

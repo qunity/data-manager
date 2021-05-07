@@ -113,9 +113,9 @@ trait Provider
             [null, [], ['value'], null],
             ['default', [], ['value'], 'default'],
             ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], null],
+            ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
             [null, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
             ['default', [5, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
-            ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], null],
         ];
     }
 
