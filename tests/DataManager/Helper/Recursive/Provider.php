@@ -29,32 +29,32 @@ trait Provider
                 ['value'],
                 [],
                 'value_error',
-                ['value']
+                ['value'],
             ], [
                 ['key' => 'value'],
                 ['key'],
                 'value',
-                []
+                [],
             ], [
                 ['key' => ['value'], 2 => 'value'],
                 [0, 'key'],
                 'value',
-                ['key' => ['value_error'], 2 => 'value']
+                ['key' => ['value_error'], 2 => 'value'],
             ], [
-                ['key' => new DataManager(['value'])],
+                ['key' => ['value']],
                 [0, 'key'],
                 'value',
-                ['key' => new DataManager([['value_error']])]
+                ['key' => ['value_error']],
             ], [
-                ['key' => new DataManager([['value_1', 'value_2']])],
-                [0, 0, 'key'],
+                ['key' => ['value_1', 'value_2']],
+                [0, 'key'],
                 'value_1',
-                ['key' => new DataManager([['value_error', 'value_2']])]
+                ['key' => ['value_error', 'value_2']],
             ], [
-                ['key' => new DataManager(['key' => ['key' => 'value']])],
+                ['key' => ['key' => ['key' => 'value']]],
                 ['key', 'key', 'key'],
                 'value',
-                ['key' => new DataManager(['key' => 'value_error'])]
+                ['key' => ['key' => 'value_error']],
             ],
         ];
     }
@@ -69,37 +69,37 @@ trait Provider
                 ['value'],
                 [],
                 'value_error',
-                ['value']
+                ['value'],
             ], [
                 ['key' => [1 => 'value']],
                 [1, 'key'],
                 'value',
-                []
+                [],
             ], [
                 ['key' => ['value'], 2 => 'value_2'],
                 ['key'],
                 ['value'],
-                ['key' => [], 2 => 'value_2']
+                ['key' => [], 2 => 'value_2'],
             ], [
                 ['key' => 'value', 2 => 'value_2'],
                 ['key'],
                 'value',
-                ['key' => 'value_error', 2 => 'value_2']
+                ['key' => 'value_error', 2 => 'value_2'],
             ], [
                 ['key' => ['value_1', 'value_2'], 2 => 'value_2'],
                 ['key'],
                 'value_2',
-                ['key' => ['value_1'], 2 => 'value_2']
+                ['key' => ['value_1'], 2 => 'value_2'],
             ], [
-                ['key' => new DataManager([['key' => 'value']])],
+                ['key' => [['key' => 'value']]],
                 ['key', 0, 'key'],
                 'value',
-                ['key' => new DataManager([['key' => 'value_error']])]
+                ['key' => [['key' => 'value_error']]],
             ], [
-                ['key' => new DataManager([['key' => ['value_1', 'value_2']]])],
+                ['key' => [['key' => ['value_1', 'value_2']]]],
                 ['key', 0, 'key'],
                 'value_2',
-                ['key' => new DataManager([['key' => ['value_1']]])]
+                ['key' => [['key' => ['value_1']]]],
             ],
         ];
     }
@@ -116,10 +116,6 @@ trait Provider
             [null, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
             ['default', [5, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
             ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], null],
-            ['value', ['key', 0, 'key'], ['key' => new DataManager([['key' => 'value']])], null],
-            ['value', ['key', 0, 'key'], ['key' => new DataManager([['key' => 'value']])], 'default'],
-            [null, ['key', 5, 'key'], ['key' => new DataManager([['key' => 'value']])], null],
-            ['default', ['key', 5, 'key'], ['key' => new DataManager([['key' => 'value']])], 'default'],
         ];
     }
 
@@ -132,8 +128,6 @@ trait Provider
             [false, [], ['value']],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']]],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']]],
-            [true, ['key', 0, 'key'], ['key' => new DataManager([['key' => 'value']])]],
-            [false, ['key', 5, 'key'], ['key' => new DataManager([['key' => 'value']])]],
         ];
     }
 
@@ -146,23 +140,23 @@ trait Provider
             [
                 ['value'],
                 [],
-                ['value']
+                ['value'],
             ], [
                 [],
                 [0],
-                ['value']
+                ['value'],
             ], [
                 ['key' => ['value']],
                 [1, 'key'],
-                ['key' => ['value', 'value_error']]
+                ['key' => ['value', 'value_error']],
             ], [
-                ['key' => new DataManager(['value'])],
+                ['key' => ['value']],
                 [1, 'key'],
-                ['key' => new DataManager(['value', 'value_error'])]
+                ['key' => ['value', 'value_error']],
             ], [
-                ['key' => new DataManager(['value_1', 'value_2'])],
+                ['key' => ['value_1', 'value_2']],
                 [5, 'key'],
-                ['key' => new DataManager(['value_1', 'value_2'])]
+                ['key' => ['value_1', 'value_2']],
             ],
         ];
     }

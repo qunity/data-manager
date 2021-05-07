@@ -50,12 +50,12 @@ trait Provider
                 InvalidArgumentException::class,
                 'Argument must be of the form \'key\', given argument is be \'path\': key/0',
                 'key/0',
-                true
+                true,
             ], [
                 InvalidArgumentException::class,
                 'Argument must be of the form \'path\', given argument is be \'key\': 0',
                 0,
-                false
+                false,
             ],
         ];
     }
@@ -63,79 +63,26 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerClearId(): array
-    {
-        return [
-            ['', ''],
-            ['0', 0],
-            ['0/0/0/0', '0/0/0/0'],
-            ['key/key/0/0', ' _//_KEY//key//0//0_//_ '],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public function providerClearIds(): array
-    {
-        return [
-            [[], []],
-            [['key', 'key', '0', '0'], ['key', 'key', 0, 0]],
-            [['key/key', '0/0'], ['', ' _//_KEY/key', '/_ _/', '0/0_//_ ', '']],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public function providerGetKeysById(): array
+    public function providerGetKeys(): array
     {
         return [
             [[], ''],
             [['0'], 0],
             [['0', '0', '0', '0'], '0/0/0/0'],
             [['0', '0', 'key', 'key'], 'key/key/0/0'],
-            [['0', '0', 'key', 'key'], ' _//_KEY/key//0/0_//_ '],
         ];
     }
 
     /**
      * @return array[]
      */
-    public function providerGetPathByIds(): array
-    {
-        return [
-            ['', []],
-            ['0', [0]],
-            ['0/0/0/0', [0, 0, 0, 0]],
-            ['key/key/0/0', [0, 0, 'key', 'key']],
-            ['key/key/0/0', ['', ' _0_ ', ' _0_ ', '', '/KEY/key/', '']],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public function providerGetMethodById(): array
-    {
-        return [
-            ['', '', 'get'],
-            ['getItemKeyValue', 'item_key_value', 'get'],
-            ['setLevelArray0_itemKeyValue', ' //_level_array_0_//_item_key_value_// ', 'set'],
-            ['levelArray0_levelArray0_itemKeyValue', ' //_level_ARRAY_0_//_level_ARRAY_0_//_item_key_value_// ', null],
-        ];
-    }
-
-    /**
-     * @return array[]
-     */
-    public function providerGetIdByMethod(): array
+    public function providerGetUnderscore(): array
     {
         return [
             ['', '', 3],
             ['item_key_value', 'getItemKeyValue', 3],
-            ['level_array/0/0/item_key_value', 'setLevelArray__0_0__itemKeyValue', 3],
-            ['level_array/0/0/item_key_value', ' //_levelArray__0_0__itemKeyValue //_', null],
+            ['level_array/0/0/item_key_value', 'setLevelArray_0_0_itemKeyValue', 3],
+            ['level_array/0/0/item_key_value', 'LevelArray_0_0_itemKeyValue', null],
         ];
     }
 }

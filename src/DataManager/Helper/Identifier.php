@@ -74,10 +74,10 @@ class Identifier
             } else {
                 return self::$underscore[$method] = (string)preg_replace([
                     '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
-                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
+                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%',
                 ], [
                     DataManagerInterface::DELIMITER_KEY,
-                    DataManagerInterface::DELIMITER_PATH
+                    DataManagerInterface::DELIMITER_PATH,
                 ], strtolower(trim(
                     (string)preg_replace(
                         ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],

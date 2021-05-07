@@ -2,7 +2,7 @@
   "name": "qunity/data-manager",
   "description": "Qunity DataManager",
   "type": "library",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
   "authors": [
     {

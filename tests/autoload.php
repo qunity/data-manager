@@ -9,15 +9,7 @@
  * file that was distributed with this source code.
  */
 
-require __DIR__ . '/AbstractDataManager/AbstractProvider.php';
-require __DIR__ . '/AbstractDataManager/AbstractTest.php';
-require __DIR__ . '/AbstractDataManager/NonRecursive/DataManager.php';
-require __DIR__ . '/AbstractDataManager/NonRecursive/Provider.php';
-require __DIR__ . '/AbstractDataManager/Recursive/DataManager.php';
-require __DIR__ . '/AbstractDataManager/Recursive/Provider.php';
-require __DIR__ . '/DataManager/Helper/Data/DataManager.php';
+require __DIR__ . '/AbstractDataManager/Provider.php';
 require __DIR__ . '/DataManager/Helper/Data/Provider.php';
-require __DIR__ . '/DataManager/Helper/Identifier/DataManager.php';
 require __DIR__ . '/DataManager/Helper/Identifier/Provider.php';
-require __DIR__ . '/DataManager/Helper/Recursive/DataManager.php';
 require __DIR__ . '/DataManager/Helper/Recursive/Provider.php';

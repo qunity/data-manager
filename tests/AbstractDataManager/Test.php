@@ -18,14 +18,12 @@ use PHPUnit\Framework\TestCase;
 use Qunity\Component\DataManagerInterface;
 
 /**
- * Class AbstractTest
+ * Class Test
  * @package Qunity\UnitTest\Component\AbstractDataManager
- *
- * @SuppressWarnings(PHPMD.ShortVariable)
  */
-abstract class AbstractTest extends TestCase
+class Test extends TestCase
 {
-    use AbstractProvider;
+    use Provider;
 
     /**
      * @param mixed $expected
@@ -43,6 +41,7 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $id
      * @param mixed $dataManager
      * @param mixed $value
@@ -93,6 +92,7 @@ abstract class AbstractTest extends TestCase
     }
 
     /**
+     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2

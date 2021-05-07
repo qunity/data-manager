@@ -11,18 +11,19 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\AbstractDataManager\Recursive;
+namespace Qunity\UnitTest\Component\AbstractDataManager;
 
 use BadMethodCallException;
+use Qunity\Component\DataManager;
 
 /**
  * Trait Provider
- * @package Qunity\UnitTest\Component\AbstractDataManager\Recursive
+ * @package Qunity\UnitTest\Component\AbstractDataManager
  */
 trait Provider
 {
     /**
-     * @inheritDoc
+     * @return array[]
      */
     public function providerGetIterator(): array
     {
@@ -34,7 +35,7 @@ trait Provider
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
     public function providerArrayAccess(): array
     {
@@ -48,7 +49,7 @@ trait Provider
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
     public function providerSuccessMagicMethods(): array
     {
@@ -81,7 +82,7 @@ trait Provider
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
     public function providerErrorMagicMethods(): array
     {
@@ -90,13 +91,13 @@ trait Provider
                 BadMethodCallException::class,
                 'Call to invalid method: ' . DataManager::class . '::nonExistent',
                 new DataManager(),
-                'nonExistent'
+                'nonExistent',
             ],
         ];
     }
 
     /**
-     * @inheritDoc
+     * @return array[]
      */
     public function providerSingleMethods(): array
     {
@@ -106,44 +107,44 @@ trait Provider
                 $object,
                 ['id' => '0/0', 'value' => 'value_1'],
                 ['id' => 0, 'value' => 'value_2'],
-                ['id' => '0', 'value' => ['value_1', 'value_2']]
+                ['id' => '0', 'value' => ['value_1', 'value_2']],
             ], [
                 $object,
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
                 ['id' => 'key/0/0', 'value' => 'value_2'],
-                ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']]
+                ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
             ], [
                 $object,
                 ['id' => 'key/0/0/0', 'value' => 'value_error'],
                 ['id' => 'key/0/0/0', 'value' => 'value'],
-                ['id' => 'key/0/0', 'value' => ['value']]
+                ['id' => 'key/0/0', 'value' => ['value']],
             ], [
                 $object,
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
                 ['id' => 'key/0', 'value' => [['key' => 'value']]],
-                ['id' => 'key/0/0', 'value' => ['key' => 'value']]
+                ['id' => 'key/0/0', 'value' => ['key' => 'value']],
             ], [
                 $object,
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
-                ['id' => 'key/0/0', 'value' => new DataManager(['value_2'])],
-                ['id' => 'key/0/0', 'value' => new DataManager(['value_1', 'value_2'])]
+                ['id' => 'key/0/0', 'value' => ['value_2']],
+                ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
             ], [
                 $object,
                 ['id' => 'key/0/0/key', 'value' => 'value_error'],
-                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])],
-                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
+                ['id' => 'key/0/0', 'value' => ['key' => 'value']],
+                ['id' => 'key/0/0', 'value' => ['key' => 'value']],
             ], [
                 $object,
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
-                ['id' => 'key/0', 'value' => [new DataManager(['key' => 'value'])]],
-                ['id' => 'key/0/0', 'value' => new DataManager(['key' => 'value'])]
+                ['id' => 'key/0', 'value' => [['key' => 'value']]],
+                ['id' => 'key/0/0', 'value' => ['key' => 'value']],
             ],
         ];
     }
 
     /**
-     * @inheritDoc
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     * @return array[]
      */
     public function providerMassMethods(): array
     {
@@ -156,19 +157,19 @@ trait Provider
                         'key_1' => 'value',
                         'key_2/key_21/0/0' => 'value_2100',
                         'key_2/key_21/0/1' => 'value_2101',
-                        'key_3/key_31' => new DataManager([
+                        'key_3/key_31' => [
                             ['value_3100', 'value_3101'],
-                            ['key_1' => 'value_3111', 'key_2' => 'value_3112']
-                        ])
+                            ['key_1' => 'value_3111', 'key_2' => 'value_3112'],
+                        ],
                     ],
                     'real' => [
                         'key_1' => 'value',
                         'key_2' => ['key_21' => [['value_2100', 'value_2101']]],
                         'key_3' => [
-                            'key_31' => new DataManager([
+                            'key_31' => [
                                 ['value_3100', 'value_3101'],
-                                ['key_1' => 'value_3111', 'key_2' => 'value_3112']
-                            ])]
+                                ['key_1' => 'value_3111', 'key_2' => 'value_3112'],
+                            ]],
                     ],
                     'ids' => [
                         'key_1',
@@ -178,34 +179,36 @@ trait Provider
                         'key_3/key_31/0/0',
                         'key_3/key_31/0/1',
                         'key_3/key_31/1/key_1',
-                        'key_3/key_31/1/key_2'
+                        'key_3/key_31/1/key_2',
                     ],
                     'null' => [
                         'key_1' => null,
                         'key_2' => ['key_21' => [[null, null]]],
-                        'key_3' => ['key_31' => [[null, null], ['key_1' => null, 'key_2' => null]]]
+                        'key_3' => ['key_31' => [[null, null], ['key_1' => null, 'key_2' => null]]],
                     ],
                     'default' => [
                         'key_1' => 'default',
                         'key_2' => ['key_21' => [['default', 'default']]],
-                        'key_3' => ['key_31' => [['default', 'default'], ['key_1' => 'default', 'key_2' => 'default']]]
-                    ]
+                        'key_3' => ['key_31' => [
+                            ['default', 'default'], ['key_1' => 'default', 'key_2' => 'default']]
+                        ],
+                    ],
                 ],
                 [
                     'data' => [
                         'key_1' => 'value_replace',
                         'key_2/key_21/0' => 'value_2102',
-                        'key_3/key_31' => new DataManager([['value_3102'], ['key_3' => 'value_3113']])
+                        'key_3/key_31' => [['value_3102'], ['key_3' => 'value_3113']],
                     ],
                     'real' => [
                         'key_1' => 'value_replace',
                         'key_2' => ['key_21' => [['value_2100', 'value_2101', 'value_2102']]],
                         'key_3' => [
-                            'key_31' => new DataManager([
+                            'key_31' => [
                                 ['value_3100', 'value_3101', 'value_3102'],
-                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113']
-                            ])
-                        ]
+                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113'],
+                            ],
+                        ],
                     ],
                     'ids' => [
                         'key_1',
@@ -217,7 +220,7 @@ trait Provider
                         'key_3/key_31/0/2',
                         'key_3/key_31/1/key_1',
                         'key_3/key_31/1/key_2',
-                        'key_3/key_31/1/key_3'
+                        'key_3/key_31/1/key_3',
                     ],
                     'null' => [
                         'key_1' => 'value_replace',
@@ -225,9 +228,9 @@ trait Provider
                         'key_3' => [
                             'key_31' => [
                                 ['value_3100', 'value_3101', 'value_3102'],
-                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113']
-                            ]
-                        ]
+                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113'],
+                            ],
+                        ],
                     ],
                     'default' => [
                         'key_1' => 'value_replace',
@@ -235,10 +238,10 @@ trait Provider
                         'key_3' => [
                             'key_31' => [
                                 ['value_3100', 'value_3101', 'value_3102'],
-                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113']
-                            ]
-                        ]
-                    ]
+                                ['key_1' => 'value_3111', 'key_2' => 'value_3112', 'key_3' => 'value_3113'],
+                            ],
+                        ],
+                    ],
                 ],
                 [
                     'data' => [
@@ -247,12 +250,12 @@ trait Provider
                         'key_3/key_31/0/0' => 'value_3100',
                         'key_3/key_31/0/2' => 'value_3102',
                         'key_3/key_31/1/key_2' => 'value_3112',
-                        'key_3/key_31/1/key_3' => 'value_3113'
+                        'key_3/key_31/1/key_3' => 'value_3113',
                     ],
                     'real' => [
                         'key_1' => 'value_replace',
                         'key_2' => ['key_21' => [[1 => 'value_2101']]],
-                        'key_3' => ['key_31' => new DataManager([[1 => 'value_3101'], ['key_1' => 'value_3111']])]
+                        'key_3' => ['key_31' => [[1 => 'value_3101'], ['key_1' => 'value_3111']]],
                     ],
                     'ids' => [
                         'key_2/key_21/0/0',
@@ -260,20 +263,20 @@ trait Provider
                         'key_3/key_31/0/0',
                         'key_3/key_31/0/2',
                         'key_3/key_31/1/key_2',
-                        'key_3/key_31/1/key_3'
+                        'key_3/key_31/1/key_3',
                     ],
                     'null' => [
                         'key_2' => ['key_21' => [[0 => null, 2 => null]]],
-                        'key_3' => ['key_31' => [[0 => null, 2 => null], ['key_2' => null, 'key_3' => null]]]
+                        'key_3' => ['key_31' => [[0 => null, 2 => null], ['key_2' => null, 'key_3' => null]]],
                     ],
                     'default' => [
                         'key_2' => ['key_21' => [[0 => 'default', 2 => 'default']]],
                         'key_3' => ['key_31' => [
                             [0 => 'default', 2 => 'default'],
-                            ['key_2' => 'default', 'key_3' => 'default']]
-                        ]
-                    ]
-                ]
+                            ['key_2' => 'default', 'key_3' => 'default']],
+                        ],
+                    ],
+                ],
             ],
         ];
     }
