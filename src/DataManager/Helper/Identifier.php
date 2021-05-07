@@ -43,12 +43,16 @@ class Identifier
      */
     public static function getKeys(int|string $id): array
     {
-        if (isset(self::$keys[$id])) {
-            return self::$keys[$id];
+        if ($id !== '') {
+            if (isset(self::$keys[$id])) {
+                return self::$keys[$id];
+            } else {
+                return self::$keys[$id] = array_reverse(
+                    explode(DataManagerInterface::DELIMITER_PATH, (string)$id)
+                );
+            }
         }
-        return self::$keys[$id] = array_reverse(
-            explode(DataManagerInterface::DELIMITER_PATH, (string)$id)
-        );
+        return [];
     }
 
     /**
@@ -61,17 +65,30 @@ class Identifier
      */
     public static function getUnderscore(string $method, int $offset = 0): string
     {
-        if ($offset != 0) {
-            $method = substr($method, $offset);
+        if ($method !== '') {
+            if ($offset != 0) {
+                $method = substr($method, $offset);
+            }
+            if (isset(self::$underscore[$method])) {
+                return self::$underscore[$method];
+            } else {
+                return self::$underscore[$method] = (string)preg_replace([
+                    '%' . DataManagerInterface::DELIMITER_KEY . '{2,}%',
+                    '%[^a-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^a-z0-9]*%'
+                ], [
+                    DataManagerInterface::DELIMITER_KEY,
+                    DataManagerInterface::DELIMITER_PATH
+                ], strtolower(trim(
+                    (string)preg_replace(
+                        ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
+                        [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
+                        $method
+                    ),
+                    DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
+                )));
+            }
         }
-        if (isset(self::$underscore[$method])) {
-            return self::$underscore[$method];
-        }
-        return self::$underscore[$method] = (string)preg_replace(
-            ['%' . DataManagerInterface::DELIMITER_KEY . '+%', '%([A-Z]|[0-9]+)%'],
-            [DataManagerInterface::DELIMITER_PATH, DataManagerInterface::DELIMITER_KEY . '\\1'],
-            $method
-        );
+        return '';
     }
 
     /**
