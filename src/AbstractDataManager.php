@@ -108,8 +108,7 @@ abstract class AbstractDataManager implements DataManagerInterface
                 if (is_array($item)) {
                     if (!isset($item['id'])) {
                         continue;
-                    }
-                    if (!isset($item['default'])) {
+                    } elseif (!isset($item['default'])) {
                         $item['default'] = $default;
                     }
                 } else {
