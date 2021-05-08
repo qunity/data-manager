@@ -133,13 +133,13 @@ class Test extends TestCase
     }
 
     /**
+     * @noinspection DuplicatedCode
      * @param mixed $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerMassMethods
-     * @noinspection DuplicatedCode
      */
     public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
