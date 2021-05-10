@@ -109,7 +109,7 @@ trait Provider
         return [
             [
                 BadMethodCallException::class,
-                'Call to invalid method: ' . DataManager::class . '::nonExistent',
+                'Call to invalid method ' . DataManager::class . '::nonExistent',
                 new DataManager(),
                 'nonExistent',
             ],

@@ -76,7 +76,7 @@ abstract class AbstractDataManager implements DataManagerInterface
             return call_user_func($callback, Identifier::getUnderscore($method, 3), ...$args);
         }
         $class = $this::class;
-        throw new BadMethodCallException("Call to invalid method: $class::$method");
+        throw new BadMethodCallException("Call to invalid method $class::$method");
     }
 
     /**
