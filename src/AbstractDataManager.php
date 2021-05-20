@@ -63,6 +63,7 @@ abstract class AbstractDataManager implements DataManagerInterface
 
     /**
      * Call not existing methods
+     * TODO: add support "check" method
      *
      * @param string $method
      * @param array<int,mixed> $args
@@ -223,5 +224,32 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
         }
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function check(array|int|string|null $id = null, callable|null $check = null): bool
+    {
+        if ($id === null) {
+            return (bool)$this->data;
+        } elseif (is_array($id)) {
+            foreach ($id as $itemId) {
+                if (!$this->check($itemId, $check)) {
+                    return false;
+                }
+            }
+            return (bool)$id;
+        } elseif ($id != '') {
+            if (Identifier::isPath($id)) {
+                return Recursive::check(Identifier::getKeys($id), $this->data, $check);
+            } elseif (key_exists($id, $this->data)) {
+                if ($check !== null) {
+                    return call_user_func($check, $this->data[$id]);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 }

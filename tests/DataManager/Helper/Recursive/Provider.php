@@ -160,4 +160,20 @@ trait Provider
             ],
         ];
     }
+
+    /**
+     * @return array[]
+     */
+    public function providerCheck(): array
+    {
+        return [
+            [false, [], ['value'], null],
+            [true, [0, 'key'], ['key' => ['value_1', 'value_2']], null],
+            [false, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => is_int($value)],
+            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
+            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => !empty($value)],
+            [true, [0, 'key'], ['key' => [null, 'value_2']], null],
+            [false, [0, 'key'], ['key' => [null, 'value_2']], fn($value) => !empty($value)],
+        ];
+    }
 }

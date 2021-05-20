@@ -108,12 +108,16 @@ class Test extends TestCase
         $this->assertFalse($dataManager->has($id));
         $this->assertNull($dataManager->get($id));
         $this->assertEquals('default', $dataManager->get($id, 'default'));
+        $this->assertFalse($dataManager->check($id));
+        $this->assertFalse($dataManager->check($id, fn($value) => empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($id, $value));
 
         $this->assertTrue($dataManager->has($id));
         $this->assertEquals($value, $dataManager->get($id));
         $this->assertEquals($value, $dataManager->get($id, 'default'));
+        $this->assertTrue($dataManager->check($id));
+        $this->assertTrue($dataManager->check($id, fn($value) => !empty($value)));
 
         list('id' => $id, 'value' => $value) = $step2;
 
@@ -124,12 +128,16 @@ class Test extends TestCase
         $this->assertTrue($dataManager->has($id));
         $this->assertEquals($value, $dataManager->get($id));
         $this->assertEquals($value, $dataManager->get($id, 'default'));
+        $this->assertTrue($dataManager->check($id));
+        $this->assertTrue($dataManager->check($id, fn($value) => !empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($id));
 
         $this->assertFalse($dataManager->has($id));
         $this->assertNull($dataManager->get($id));
         $this->assertEquals('default', $dataManager->get($id, 'default'));
+        $this->assertFalse($dataManager->check($id));
+        $this->assertFalse($dataManager->check($id, fn($value) => empty($value)));
     }
 
     /**
@@ -150,6 +158,9 @@ class Test extends TestCase
         $this->assertEquals([], $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
+        $this->assertFalse($dataManager->check());
+        $this->assertFalse($dataManager->check($ids));
+        $this->assertFalse($dataManager->check($ids, fn($value) => empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($data));
 
@@ -158,6 +169,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($real, $dataManager->get($ids));
         $this->assertEquals($real, $dataManager->get($ids, 'default'));
+        $this->assertTrue($dataManager->check());
+        $this->assertTrue($dataManager->check($ids));
+        $this->assertTrue($dataManager->check($ids, fn($value) => !empty($value)));
 
         list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step2;
 
@@ -168,6 +182,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
+        $this->assertTrue($dataManager->check());
+        $this->assertTrue($dataManager->check($ids));
+        $this->assertTrue($dataManager->check($ids, fn($value) => !empty($value)));
 
         list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step3;
         unset($data);
@@ -179,6 +196,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
+        $this->assertTrue($dataManager->check());
+        $this->assertFalse($dataManager->check($ids));
+        $this->assertFalse($dataManager->check($ids, fn($value) => !empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del());
 
@@ -190,5 +210,8 @@ class Test extends TestCase
         $this->assertEquals([], $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
+        $this->assertFalse($dataManager->check());
+        $this->assertFalse($dataManager->check($ids));
+        $this->assertFalse($dataManager->check($ids, fn($value) => empty($value)));
     }
 }

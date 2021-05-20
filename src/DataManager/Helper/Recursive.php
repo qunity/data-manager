@@ -126,4 +126,30 @@ class Recursive
             }
         }
     }
+
+    /**
+     * Check element recursively
+     *
+     * @param array<int|string> $keys
+     * @param array<int|string,mixed> $data
+     * @param callable|null $check
+     *
+     * @return bool
+     */
+    public static function check(array $keys, array $data, callable|null $check = null): bool
+    {
+        if (($key = array_pop($keys)) !== null) {
+            if ($keys != []) {
+                if (isset($data[$key])) {
+                    return self::check($keys, $data[$key], $check);
+                }
+            } elseif (key_exists($key, $data)) {
+                if ($check !== null) {
+                    return call_user_func($check, $data[$key]);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }

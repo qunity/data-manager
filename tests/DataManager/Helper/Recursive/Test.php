@@ -93,4 +93,21 @@ class Test extends TestCase
         Recursive::del($keys, $data);
         $this->assertEquals($expected, $data);
     }
+
+    /**
+     * @param mixed $expected
+     * @param mixed $keys
+     * @param mixed $data
+     * @param mixed $check
+     * @return void
+     * @dataProvider providerCheck
+     */
+    public function testCheck(mixed $expected, mixed $keys, mixed $data, mixed $check)
+    {
+        if ($check === null) {
+            $this->assertEquals($expected, Recursive::check($keys, $data));
+        } else {
+            $this->assertEquals($expected, Recursive::check($keys, $data, $check));
+        }
+    }
 }
