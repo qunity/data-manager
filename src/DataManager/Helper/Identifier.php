@@ -72,18 +72,24 @@ class Identifier
             if (isset(static::$underscore[$method])) {
                 return static::$underscore[$method];
             }
-            return static::$underscore[$method] = strtolower(trim(
-                (string)preg_replace([
-                    '%' . DataManagerInterface::DELIMITER_KEY . '+%',
-                    '%([A-Z]|[0-9]+)%',
-                    '%[^A-Za-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^A-Za-z0-9]*%',
-                ], [
-                    DataManagerInterface::DELIMITER_PATH,
-                    DataManagerInterface::DELIMITER_KEY . '\\1',
-                    DataManagerInterface::DELIMITER_PATH,
-                ], $method),
-                DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
-            ));
+            return static::$underscore[$method] = strtolower(
+                trim(
+                    (string)preg_replace(
+                        [
+                            '%' . DataManagerInterface::DELIMITER_KEY . '+%',
+                            '%([A-Z]|[0-9]+)%',
+                            '%[^A-Za-z0-9]*' . DataManagerInterface::DELIMITER_PATH . '+[^A-Za-z0-9]*%',
+                        ],
+                        [
+                            DataManagerInterface::DELIMITER_PATH,
+                            DataManagerInterface::DELIMITER_KEY . '\\1',
+                            DataManagerInterface::DELIMITER_PATH,
+                        ],
+                        $method
+                    ),
+                    DataManagerInterface::DELIMITER_KEY . DataManagerInterface::DELIMITER_PATH
+                )
+            );
         }
         return '';
     }
@@ -100,10 +106,12 @@ class Identifier
     {
         $result = str_contains((string)$id, DataManagerInterface::DELIMITER_PATH);
         if ($throw !== null && $throw == $result) {
-            throw new InvalidArgumentException(sprintf(
-                "Argument must be of the form '%s', given argument is be '%s' (%s)",
-                ...($throw ? ['key', 'path', $id] : ['path', 'key', $id])
-            ));
+            throw new InvalidArgumentException(
+                sprintf(
+                    "Argument must be of the form '%s', given argument is be '%s' (%s)",
+                    ...($throw ? ['key', 'path', $id] : ['path', 'key', $id])
+                )
+            );
         }
         return $result;
     }

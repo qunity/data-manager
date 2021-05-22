@@ -33,7 +33,8 @@ trait Provider
             [
                 [],
                 new DataManager(),
-            ], [
+            ],
+            [
                 ['key_1' => [1 => 'value'], 'key_2' => [2 => 'value'], 'key_3' => [3 => 'value']],
                 new DataManager(['key_1' => [1 => 'value'], 'key_2' => [2 => 'value'], 'key_3' => [3 => 'value']]),
             ],
@@ -64,48 +65,58 @@ trait Provider
                 new DataManager(),
                 'setKey_0',
                 'value',
-            ], [
+            ],
+            [
                 new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value']]]),
                 new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value_error']]]),
                 'setKey_Key2_0',
                 'value',
-            ], [
+            ],
+            [
                 new DataManager(['key' => ['value_1', 'value_2']]),
                 new DataManager(['key' => ['value_1']]),
                 'addKey',
                 'value_2',
-            ], [
+            ],
+            [
                 new DataManager(['key_1' => 'value', 'key_2' => ['value_1', 'value_2']]),
                 new DataManager(['key_1' => 'value', 'key_2' => ['value_1']]),
                 'addKey2',
                 'value_2',
-            ], [
+            ],
+            [
                 'value',
                 new DataManager(['key' => ['value']]),
                 'getKey_0',
-            ], [
+            ],
+            [
                 'default',
                 new DataManager(['key' => ['value']]),
                 'getKey_5',
                 'default',
-            ], [
+            ],
+            [
                 true,
                 new DataManager(['key' => ['value']]),
                 'hasKey_0',
-            ], [
+            ],
+            [
                 false,
                 new DataManager(['key' => ['value']]),
                 'hasKey_5',
-            ], [
+            ],
+            [
                 new DataManager(),
                 new DataManager(['key' => ['value']]),
                 'delKey',
-            ], [
+            ],
+            [
                 true,
                 new DataManager(['key' => ['key' => ['value']]]),
                 'tryKey_key_0',
                 fn($value) => $value === 'value',
-            ], [
+            ],
+            [
                 false,
                 new DataManager(['key' => ['key' => []]]),
                 'tryKey_key_0',
@@ -139,32 +150,38 @@ trait Provider
                 ['id' => '0/0', 'value' => 'value_1'],
                 ['id' => 0, 'value' => 'value_2'],
                 ['id' => '0', 'value' => ['value_1', 'value_2']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
                 ['id' => 'key/0/0', 'value' => 'value_2'],
                 ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_error'],
                 ['id' => 'key/0/0/0', 'value' => 'value'],
                 ['id' => 'key/0/0', 'value' => ['value']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
                 ['id' => 'key/0', 'value' => [['key' => 'value']]],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0/0', 'value' => 'value_1'],
                 ['id' => 'key/0/0', 'value' => ['value_2']],
                 ['id' => 'key/0/0', 'value' => ['value_1', 'value_2']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0/key', 'value' => 'value_error'],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
                 ['id' => 'key/0/0', 'value' => ['key' => 'value']],
-            ], [
+            ],
+            [
                 new DataManager(),
                 ['id' => 'key/0/0', 'value' => ['key' => 'value_error']],
                 ['id' => 'key/0', 'value' => [['key' => 'value']]],
@@ -304,9 +321,11 @@ trait Provider
                     ],
                     'default' => [
                         'key_2' => ['key_21' => [[0 => 'default', 2 => 'default']]],
-                        'key_3' => ['key_31' => [
-                            [0 => 'default', 2 => 'default'],
-                            ['key_2' => 'default', 'key_3' => 'default']],
+                        'key_3' => [
+                            'key_31' => [
+                                [0 => 'default', 2 => 'default'],
+                                ['key_2' => 'default', 'key_3' => 'default'],
+                            ],
                         ],
                     ],
                 ],

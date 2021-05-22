@@ -27,24 +27,29 @@ trait Provider
         return [
             [
                 null,
-            ], [
+            ],
+            [
                 ['key' => 'value'],
                 ['key' => 'value'],
                 ['key' => 'value'],
-            ], [
+            ],
+            [
                 ['key_1' => 'value_1', 'key_2' => 'value_2'],
                 ['key_1' => 'value_1'],
                 ['key_2' => 'value_2'],
-            ], [
+            ],
+            [
                 ['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value'],
                 ['key_1' => 'value_error'],
                 ['key_2' => 'value_error'],
                 ['key_1' => 'value', 'key_2' => 'value', 'key_3' => 'value'],
-            ], [
+            ],
+            [
                 ['value_1', 'value_2'],
                 ['value_1'],
                 'value_2',
-            ], [
+            ],
+            [
                 ['key' => ['value_1', 'value_2', 'value_3']],
                 ['key' => ['value_1']],
                 ['key' => ['value_2']],

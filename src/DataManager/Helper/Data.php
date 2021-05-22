@@ -27,15 +27,18 @@ class Data
      */
     public static function join(mixed ...$items): mixed
     {
-        return array_reduce($items, function (mixed $carry, mixed $item): mixed {
-            if (is_array($carry)) {
-                if (is_array($item)) {
-                    return static::joinArrays($carry, $item);
+        return array_reduce(
+            $items,
+            function (mixed $carry, mixed $item): mixed {
+                if (is_array($carry)) {
+                    if (is_array($item)) {
+                        return static::joinArrays($carry, $item);
+                    }
+                    return array_merge($carry, (array)$item);
                 }
-                return array_merge($carry, (array)$item);
+                return $item;
             }
-            return $item;
-        });
+        );
     }
 
     /**
@@ -46,20 +49,23 @@ class Data
      */
     protected static function joinArrays(array ...$items): array
     {
-        return (array)array_reduce($items, function (?array $carry, array $item): array {
-            if ($carry !== null) {
-                foreach ($item as $key => $value) {
-                    if (isset($carry[$key]) && is_array($value)) {
-                        $carry[$key] = static::join($carry[$key], $value);
-                    } elseif (is_numeric($key)) {
-                        $carry = array_merge($carry, (array)$value);
-                    } else {
-                        $carry[$key] = $value;
+        return (array)array_reduce(
+            $items,
+            function (?array $carry, array $item): array {
+                if ($carry !== null) {
+                    foreach ($item as $key => $value) {
+                        if (isset($carry[$key]) && is_array($value)) {
+                            $carry[$key] = static::join($carry[$key], $value);
+                        } elseif (is_numeric($key)) {
+                            $carry = array_merge($carry, (array)$value);
+                        } else {
+                            $carry[$key] = $value;
+                        }
                     }
+                    return $carry;
                 }
-                return $carry;
+                return $item;
             }
-            return $item;
-        });
+        );
     }
 }
