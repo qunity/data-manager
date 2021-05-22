@@ -48,12 +48,12 @@ trait Provider
         return [
             [
                 InvalidArgumentException::class,
-                'Argument must be of the form \'key\', given argument is be \'path\': key/0',
+                'Argument must be of the form \'key\', given argument is be \'path\' (key/0)',
                 'key/0',
                 true,
             ], [
                 InvalidArgumentException::class,
-                'Argument must be of the form \'path\', given argument is be \'key\': 0',
+                'Argument must be of the form \'path\', given argument is be \'key\' (0)',
                 0,
                 false,
             ],
