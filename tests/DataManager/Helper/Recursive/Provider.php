@@ -41,11 +41,6 @@ trait Provider
                 'value',
                 ['key' => ['value_error'], 2 => 'value'],
             ], [
-                ['key' => ['value']],
-                [0, 'key'],
-                'value',
-                ['key' => ['value_error']],
-            ], [
                 ['key' => ['value_1', 'value_2']],
                 [0, 'key'],
                 'value_1',
@@ -116,6 +111,8 @@ trait Provider
             ['value_1', [0, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
             [null, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
             ['default', [5, 'key'], ['key' => ['value_1', 'value_2']], 'default'],
+            [null, ['key', 'key', 'key'], ['key' => 'value'], null],
+            ['default', ['key', 'key', 'key'], ['key' => 'value'], 'default'],
         ];
     }
 
@@ -128,6 +125,7 @@ trait Provider
             [false, [], ['value']],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']]],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']]],
+            [false, ['key', 'key', 'key'], ['key' => 'value']],
         ];
     }
 
@@ -150,13 +148,13 @@ trait Provider
                 [1, 'key'],
                 ['key' => ['value', 'value_error']],
             ], [
-                ['key' => ['value']],
-                [1, 'key'],
-                ['key' => ['value', 'value_error']],
-            ], [
                 ['key' => ['value_1', 'value_2']],
                 [5, 'key'],
                 ['key' => ['value_1', 'value_2']],
+            ], [
+                ['key' => 'value'],
+                ['key', 'key', 'key'],
+                ['key' => 'value'],
             ],
         ];
     }
@@ -169,11 +167,14 @@ trait Provider
         return [
             [false, [], ['value'], null],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], null],
-            [false, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => is_int($value)],
+            [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value === 'value_1'],
+            [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value !== 'value_error'],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
-            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => !empty($value)],
+            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => !is_scalar($value)],
             [true, [0, 'key'], ['key' => [null, 'value_2']], null],
             [false, [0, 'key'], ['key' => [null, 'value_2']], fn($value) => !empty($value)],
+            [false, ['key', 'key', 'key'], ['key' => 'value'], null],
+            [false, ['key', 'key', 'key'], ['key' => 'value'], fn($value) => !is_scalar($value)],
         ];
     }
 }
