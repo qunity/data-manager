@@ -42,6 +42,28 @@ abstract class AbstractDataManager implements DataManagerInterface
     }
 
     /**
+     * Call not existing methods
+     *
+     * @param string $method
+     * @param array<int,mixed> $args
+     *
+     * @return mixed
+     */
+    public function __call(string $method, array $args)
+    {
+        $class = $this::class;
+        return match (substr($method, 0, 3)) {
+            'try' => $this->try(Identifier::getUnderscore($method, 3), ...$args),
+            'set' => $this->set(Identifier::getUnderscore($method, 3), ...$args),
+            'add' => $this->add(Identifier::getUnderscore($method, 3), ...$args),
+            'get' => $this->get(Identifier::getUnderscore($method, 3), ...$args),
+            'has' => $this->has(Identifier::getUnderscore($method, 3)),
+            'del' => $this->del(Identifier::getUnderscore($method, 3)),
+            default => throw new BadMethodCallException("Call to invalid method $class::$method"),
+        };
+    }
+
+    /**
      * @inheritDoc
      */
     public function set(array|int|string $id, mixed $value = null): static
@@ -62,38 +84,24 @@ abstract class AbstractDataManager implements DataManagerInterface
     }
 
     /**
-     * Call not existing methods
-     * TODO: add support "check" method
-     *
-     * @param string $method
-     * @param array<int,mixed> $args
-     *
-     * @return mixed
+     * @inheritDoc
      */
-    public function __call(string $method, array $args): mixed
+    public function add(array|int|string $id, mixed $value = null): static
     {
-        $callback = [$this, substr($method, 0, 3)];
-        if (is_callable($callback) && method_exists(...$callback)) {
-            return call_user_func($callback, Identifier::getUnderscore($method, 3), ...$args);
+        if (is_array($id)) {
+            foreach ($id as $itemId => $itemValue) {
+                $this->add($itemId, $itemValue);
+            }
+        } elseif ($id != '') {
+            if (Identifier::isPath($id)) {
+                Recursive::add(Identifier::getKeys($id), $value, $this->data);
+            } elseif (isset($this->data[$id])) {
+                $this->data[$id] = Data::join($this->data[$id], $value);
+            } else {
+                $this->data[$id] = $value;
+            }
         }
-        $class = $this::class;
-        throw new BadMethodCallException("Call to invalid method $class::$method");
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetSet(mixed $offset, mixed $value): void
-    {
-        $this->set($offset, $value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetGet(mixed $offset): mixed
-    {
-        return $this->get($offset);
+        return $this;
     }
 
     /**
@@ -139,14 +147,6 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function offsetExists(mixed $offset): bool
-    {
-        return $this->has($offset);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function has(array|int|string|null $id = null): bool
     {
         if ($id === null) {
@@ -166,14 +166,6 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
         }
         return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function offsetUnset(mixed $offset): void
-    {
-        $this->del($offset);
     }
 
     /**
@@ -200,49 +192,20 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function getIterator(array|int|string|null $id = null): Traversable
-    {
-        return new ArrayIterator($this->get($id, []));
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function add(array|int|string $id, mixed $value = null): static
-    {
-        if (is_array($id)) {
-            foreach ($id as $itemId => $itemValue) {
-                $this->add($itemId, $itemValue);
-            }
-        } elseif ($id != '') {
-            if (Identifier::isPath($id)) {
-                Recursive::add(Identifier::getKeys($id), $value, $this->data);
-            } elseif (isset($this->data[$id])) {
-                $this->data[$id] = Data::join($this->data[$id], $value);
-            } else {
-                $this->data[$id] = $value;
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function check(array|int|string|null $id = null, callable|null $check = null): bool
+    public function try(array|int|string|null $id = null, callable|null $check = null): bool
     {
         if ($id === null) {
             return (bool)$this->data;
         } elseif (is_array($id)) {
             foreach ($id as $itemId) {
-                if (!$this->check($itemId, $check)) {
+                if (!$this->try($itemId, $check)) {
                     return false;
                 }
             }
             return (bool)$id;
         } elseif ($id != '') {
             if (Identifier::isPath($id)) {
-                return Recursive::check(Identifier::getKeys($id), $this->data, $check);
+                return Recursive::try(Identifier::getKeys($id), $this->data, $check);
             } elseif (key_exists($id, $this->data)) {
                 if ($check !== null) {
                     return call_user_func($check, $this->data[$id]);
@@ -251,5 +214,45 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
         }
         return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetExists(mixed $offset): bool
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->del($offset);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getIterator(array|int|string|null $id = null): Traversable
+    {
+        return new ArrayIterator($this->get($id, []));
     }
 }
