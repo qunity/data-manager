@@ -19,6 +19,8 @@ use Qunity\Component\DataManager;
 /**
  * Trait Provider
  * @package Qunity\UnitTest\Component\AbstractDataManager
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */
 trait Provider
 {
@@ -59,7 +61,8 @@ trait Provider
         return [
             [
                 new DataManager(['key' => ['value']]),
-                new DataManager(), 'setKey_0',
+                new DataManager(),
+                'setKey_0',
                 'value',
             ], [
                 new DataManager(['key' => ['key_1' => 'value', 'key_2' => ['value']]]),
@@ -97,6 +100,15 @@ trait Provider
                 new DataManager(),
                 new DataManager(['key' => ['value']]),
                 'delKey',
+            ], [
+                true,
+                new DataManager(['key' => ['key' => ['value']]]),
+                'tryKey_key_0',
+                fn($value) => $value === 'value',
+            ], [
+                false,
+                new DataManager(['key' => ['key' => []]]),
+                'tryKey_key_0',
             ],
         ];
     }
@@ -162,7 +174,6 @@ trait Provider
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      * @return array[]
      */
     public function providerMassMethods(): array
