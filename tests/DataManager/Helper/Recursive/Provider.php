@@ -170,11 +170,11 @@ trait Provider
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value === 'value_1'],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value !== 'value_error'],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
-            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => !is_scalar($value)],
+            [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => false],
             [true, [0, 'key'], ['key' => [null, 'value_2']], null],
             [false, [0, 'key'], ['key' => [null, 'value_2']], fn($value) => !empty($value)],
             [false, ['key', 'key', 'key'], ['key' => 'value'], null],
-            [false, ['key', 'key', 'key'], ['key' => 'value'], fn($value) => !is_scalar($value)],
+            [false, ['key', 'key', 'key'], ['key' => 'value'], fn($value) => false],
         ];
     }
 }
