@@ -19,13 +19,14 @@ use Qunity\Component\DataManager\Helper\Identifier;
 /**
  * Class Test
  * @package Qunity\UnitTest\Component\DataManager\Helper\Identifier
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Test extends TestCase
 {
     use Provider;
 
     /**
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $expected
      * @param mixed $id
      * @param mixed $throw
@@ -42,7 +43,6 @@ class Test extends TestCase
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $eException
      * @param mixed $eMessage
      * @param mixed $id
@@ -58,7 +58,6 @@ class Test extends TestCase
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $expected
      * @param mixed $id
      * @return void
