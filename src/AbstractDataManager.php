@@ -42,6 +42,26 @@ abstract class AbstractDataManager implements DataManagerInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function set(array|int|string $id, mixed $value = null): static
+    {
+        if (is_array($id)) {
+            $this->data = [];
+            foreach ($id as $itemId => $itemValue) {
+                $this->set($itemId, $itemValue);
+            }
+        } elseif ($id != '') {
+            if (Identifier::isPath($id)) {
+                Recursive::set(Identifier::getKeys($id), $value, $this->data);
+            } else {
+                $this->data[$id] = $value;
+            }
+        }
+        return $this;
+    }
+
+    /**
      * Call not existing methods
      *
      * @param string $method
@@ -66,21 +86,28 @@ abstract class AbstractDataManager implements DataManagerInterface
     /**
      * @inheritDoc
      */
-    public function set(array|int|string $id, mixed $value = null): static
+    public function try(array|int|string|null $id = null, callable|null $check = null): bool
     {
-        if (is_array($id)) {
-            $this->data = [];
-            foreach ($id as $itemId => $itemValue) {
-                $this->set($itemId, $itemValue);
+        if ($id === null) {
+            return (bool)$this->data;
+        } elseif (is_array($id)) {
+            foreach ($id as $itemId) {
+                if (!$this->try($itemId, $check)) {
+                    return false;
+                }
             }
+            return (bool)$id;
         } elseif ($id != '') {
             if (Identifier::isPath($id)) {
-                Recursive::set(Identifier::getKeys($id), $value, $this->data);
-            } else {
-                $this->data[$id] = $value;
+                return Recursive::try(Identifier::getKeys($id), $this->data, $check);
+            } elseif (key_exists($id, $this->data)) {
+                if ($check !== null) {
+                    return call_user_func($check, $this->data[$id]);
+                }
+                return true;
             }
         }
-        return $this;
+        return false;
     }
 
     /**
@@ -187,33 +214,6 @@ abstract class AbstractDataManager implements DataManagerInterface
             }
         }
         return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function try(array|int|string|null $id = null, callable|null $check = null): bool
-    {
-        if ($id === null) {
-            return (bool)$this->data;
-        } elseif (is_array($id)) {
-            foreach ($id as $itemId) {
-                if (!$this->try($itemId, $check)) {
-                    return false;
-                }
-            }
-            return (bool)$id;
-        } elseif ($id != '') {
-            if (Identifier::isPath($id)) {
-                return Recursive::try(Identifier::getKeys($id), $this->data, $check);
-            } elseif (key_exists($id, $this->data)) {
-                if ($check !== null) {
-                    return call_user_func($check, $this->data[$id]);
-                }
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
