@@ -16,8 +16,6 @@ namespace Qunity\Component\DataManager\Helper;
 /**
  * Class Callback
  * @package Qunity\Component\DataManager\Helper
- *
- * TODO: add tests class
  */
 class Callback
 {
@@ -38,11 +36,9 @@ class Callback
         if (isset(self::$callbacks['is_array'][$empty])) {
             return self::$callbacks['is_array'][$empty];
         }
-        if ($empty) {
-            return self::$callbacks['is_array'][$empty] = fn($value) => !empty($value) && is_array($value);
-        } else {
-            return self::$callbacks['is_array'][$empty] = fn($value) => is_array($value);
-        }
+        return self::$callbacks['is_array'][$empty] = $empty
+            ? fn($value) => !empty($value) && is_array($value)
+            : fn($value) => is_array($value);
     }
 
     /**
@@ -56,11 +52,9 @@ class Callback
         if (isset(self::$callbacks['is_string'][$empty])) {
             return self::$callbacks['is_string'][$empty];
         }
-        if ($empty) {
-            return self::$callbacks['is_string'][$empty] = fn($value) => !empty($value) && is_string($value);
-        } else {
-            return self::$callbacks['is_string'][$empty] = fn($value) => is_string($value);
-        }
+        return self::$callbacks['is_string'][$empty] = $empty
+            ? fn($value) => !empty($value) && is_string($value)
+            : fn($value) => is_string($value);
     }
 
     /**
@@ -74,11 +68,9 @@ class Callback
         if (isset(self::$callbacks['is_scalar'][$empty])) {
             return self::$callbacks['is_scalar'][$empty];
         }
-        if ($empty) {
-            return self::$callbacks['is_scalar'][$empty] = fn($value) => !empty($value) && is_scalar($value);
-        } else {
-            return self::$callbacks['is_scalar'][$empty] = fn($value) => is_scalar($value);
-        }
+        return self::$callbacks['is_scalar'][$empty] = $empty
+            ? fn($value) => !empty($value) && is_scalar($value)
+            : fn($value) => is_scalar($value);
     }
 
     /**
