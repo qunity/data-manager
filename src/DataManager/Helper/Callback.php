@@ -33,10 +33,10 @@ class Callback
      */
     public static function getIsArray(bool $empty = true): callable
     {
-        if (isset(self::$callbacks['is_array'][$empty])) {
-            return self::$callbacks['is_array'][$empty];
+        if (isset(static::$callbacks['is_array'][$empty])) {
+            return static::$callbacks['is_array'][$empty];
         }
-        return self::$callbacks['is_array'][$empty] = $empty
+        return static::$callbacks['is_array'][$empty] = $empty
             ? fn($value) => !empty($value) && is_array($value)
             : fn($value) => is_array($value);
     }
@@ -49,10 +49,10 @@ class Callback
      */
     public static function getIsString(bool $empty = true): callable
     {
-        if (isset(self::$callbacks['is_string'][$empty])) {
-            return self::$callbacks['is_string'][$empty];
+        if (isset(static::$callbacks['is_string'][$empty])) {
+            return static::$callbacks['is_string'][$empty];
         }
-        return self::$callbacks['is_string'][$empty] = $empty
+        return static::$callbacks['is_string'][$empty] = $empty
             ? fn($value) => !empty($value) && is_string($value)
             : fn($value) => is_string($value);
     }
@@ -65,10 +65,10 @@ class Callback
      */
     public static function getIsScalar(bool $empty = true): callable
     {
-        if (isset(self::$callbacks['is_scalar'][$empty])) {
-            return self::$callbacks['is_scalar'][$empty];
+        if (isset(static::$callbacks['is_scalar'][$empty])) {
+            return static::$callbacks['is_scalar'][$empty];
         }
-        return self::$callbacks['is_scalar'][$empty] = $empty
+        return static::$callbacks['is_scalar'][$empty] = $empty
             ? fn($value) => !empty($value) && is_scalar($value)
             : fn($value) => is_scalar($value);
     }
@@ -79,10 +79,10 @@ class Callback
      */
     public static function getIsTrue(): callable
     {
-        if (isset(self::$callbacks['is_true'][0])) {
-            return self::$callbacks['is_true'][0];
+        if (isset(static::$callbacks['is_true'][0])) {
+            return static::$callbacks['is_true'][0];
         }
-        return self::$callbacks['is_true'][0] = fn($value) => $value === true;
+        return static::$callbacks['is_true'][0] = fn($value) => $value === true;
     }
 
     /**
@@ -91,10 +91,10 @@ class Callback
      */
     public static function getIsFalse(): callable
     {
-        if (isset(self::$callbacks['is_false'][0])) {
-            return self::$callbacks['is_false'][0];
+        if (isset(static::$callbacks['is_false'][0])) {
+            return static::$callbacks['is_false'][0];
         }
-        return self::$callbacks['is_false'][0] = fn($value) => $value === false;
+        return static::$callbacks['is_false'][0] = fn($value) => $value === false;
     }
 
     /**
@@ -103,9 +103,9 @@ class Callback
      */
     public static function getIsNull(): callable
     {
-        if (isset(self::$callbacks['is_null'][0])) {
-            return self::$callbacks['is_null'][0];
+        if (isset(static::$callbacks['is_null'][0])) {
+            return static::$callbacks['is_null'][0];
         }
-        return self::$callbacks['is_null'][0] = fn($value) => $value === null;
+        return static::$callbacks['is_null'][0] = fn($value) => $value === null;
     }
 }

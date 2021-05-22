@@ -45,10 +45,10 @@ class Identifier
     public static function getKeys(int|string $id): array
     {
         if ($id !== '') {
-            if (isset(self::$keys[$id])) {
-                return self::$keys[$id];
+            if (isset(static::$keys[$id])) {
+                return static::$keys[$id];
             }
-            return self::$keys[$id] = array_reverse(
+            return static::$keys[$id] = array_reverse(
                 explode(DataManagerInterface::DELIMITER_PATH, (string)$id)
             );
         }
@@ -69,10 +69,10 @@ class Identifier
             if ($offset != 0) {
                 $method = substr($method, $offset);
             }
-            if (isset(self::$underscore[$method])) {
-                return self::$underscore[$method];
+            if (isset(static::$underscore[$method])) {
+                return static::$underscore[$method];
             }
-            return self::$underscore[$method] = strtolower(trim(
+            return static::$underscore[$method] = strtolower(trim(
                 (string)preg_replace([
                     '%' . DataManagerInterface::DELIMITER_KEY . '+%',
                     '%([A-Z]|[0-9]+)%',

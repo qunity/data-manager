@@ -30,7 +30,7 @@ class Data
         return array_reduce($items, function (mixed $carry, mixed $item): mixed {
             if (is_array($carry)) {
                 if (is_array($item)) {
-                    return self::joinArrays($carry, $item);
+                    return static::joinArrays($carry, $item);
                 }
                 return array_merge($carry, (array)$item);
             }
@@ -50,7 +50,7 @@ class Data
             if ($carry !== null) {
                 foreach ($item as $key => $value) {
                     if (isset($carry[$key]) && is_array($value)) {
-                        $carry[$key] = self::join($carry[$key], $value);
+                        $carry[$key] = static::join($carry[$key], $value);
                     } elseif (is_numeric($key)) {
                         $carry = array_merge($carry, (array)$value);
                     } else {

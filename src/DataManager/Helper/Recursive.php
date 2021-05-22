@@ -33,7 +33,7 @@ class Recursive
                 if (!(isset($data[$key]) && is_array($data[$key]))) {
                     $data[$key] = [];
                 }
-                self::set($keys, $value, $data[$key]);
+                static::set($keys, $value, $data[$key]);
             } else {
                 $data[$key] = $value;
             }
@@ -54,7 +54,7 @@ class Recursive
                 if (!(isset($data[$key]) && is_array($data[$key]))) {
                     $data[$key] = [];
                 }
-                self::add($keys, $value, $data[$key]);
+                static::add($keys, $value, $data[$key]);
             } elseif (isset($data[$key])) {
                 $data[$key] = Data::join($data[$key], $value);
             } else {
@@ -77,7 +77,7 @@ class Recursive
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key]) && is_array($data[$key])) {
-                    return self::get($keys, $data[$key], $default);
+                    return static::get($keys, $data[$key], $default);
                 }
             } elseif (isset($data[$key])) {
                 return $data[$key];
@@ -99,7 +99,7 @@ class Recursive
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key]) && is_array($data[$key])) {
-                    return self::has($keys, $data[$key]);
+                    return static::has($keys, $data[$key]);
                 }
             } else {
                 return isset($data[$key]);
@@ -119,7 +119,7 @@ class Recursive
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key]) && is_array($data[$key])) {
-                    self::del($keys, $data[$key]);
+                    static::del($keys, $data[$key]);
                 }
             } else {
                 unset($data[$key]);
@@ -141,7 +141,7 @@ class Recursive
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key]) && is_array($data[$key])) {
-                    return self::check($keys, $data[$key], $check);
+                    return static::check($keys, $data[$key], $check);
                 }
             } elseif (key_exists($key, $data)) {
                 if ($check !== null) {
