@@ -20,6 +20,8 @@ use Qunity\Component\DataManagerInterface;
 /**
  * Class Test
  * @package Qunity\UnitTest\Component\AbstractDataManager
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Test extends TestCase
 {
@@ -27,7 +29,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @return void
      * @dataProvider providerGetIterator
      */
@@ -42,9 +44,8 @@ class Test extends TestCase
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @param mixed $id
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
@@ -65,7 +66,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @param mixed $method
      * @param mixed ...$args
      * @return void
@@ -80,7 +81,7 @@ class Test extends TestCase
     /**
      * @param mixed $eException
      * @param mixed $eMessage
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @param mixed $method
      * @return void
      * @dataProvider providerErrorMagicMethods
@@ -93,8 +94,7 @@ class Test extends TestCase
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ShortVariable)
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
@@ -108,16 +108,16 @@ class Test extends TestCase
         $this->assertFalse($dataManager->has($id));
         $this->assertNull($dataManager->get($id));
         $this->assertEquals('default', $dataManager->get($id, 'default'));
-        $this->assertFalse($dataManager->check($id));
-        $this->assertFalse($dataManager->check($id, fn($value) => empty($value)));
+        $this->assertFalse($dataManager->try($id));
+        $this->assertFalse($dataManager->try($id, fn($value) => empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($id, $value));
 
         $this->assertTrue($dataManager->has($id));
         $this->assertEquals($value, $dataManager->get($id));
         $this->assertEquals($value, $dataManager->get($id, 'default'));
-        $this->assertTrue($dataManager->check($id));
-        $this->assertTrue($dataManager->check($id, fn($value) => !empty($value)));
+        $this->assertTrue($dataManager->try($id));
+        $this->assertTrue($dataManager->try($id, fn($value) => !empty($value)));
 
         list('id' => $id, 'value' => $value) = $step2;
 
@@ -128,26 +128,26 @@ class Test extends TestCase
         $this->assertTrue($dataManager->has($id));
         $this->assertEquals($value, $dataManager->get($id));
         $this->assertEquals($value, $dataManager->get($id, 'default'));
-        $this->assertTrue($dataManager->check($id));
-        $this->assertTrue($dataManager->check($id, fn($value) => !empty($value)));
+        $this->assertTrue($dataManager->try($id));
+        $this->assertTrue($dataManager->try($id, fn($value) => !empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del($id));
 
         $this->assertFalse($dataManager->has($id));
         $this->assertNull($dataManager->get($id));
         $this->assertEquals('default', $dataManager->get($id, 'default'));
-        $this->assertFalse($dataManager->check($id));
-        $this->assertFalse($dataManager->check($id, fn($value) => empty($value)));
+        $this->assertFalse($dataManager->try($id));
+        $this->assertFalse($dataManager->try($id, fn($value) => empty($value)));
     }
 
     /**
-     * @noinspection DuplicatedCode
-     * @param mixed $dataManager
+     * @param mixed|DataManagerInterface $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerMassMethods
+     * @noinspection DuplicatedCode
      */
     public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
     {
@@ -158,9 +158,9 @@ class Test extends TestCase
         $this->assertEquals([], $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
-        $this->assertFalse($dataManager->check());
-        $this->assertFalse($dataManager->check($ids));
-        $this->assertFalse($dataManager->check($ids, fn($value) => empty($value)));
+        $this->assertFalse($dataManager->try());
+        $this->assertFalse($dataManager->try($ids));
+        $this->assertFalse($dataManager->try($ids, fn($value) => empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->set($data));
 
@@ -169,9 +169,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($real, $dataManager->get($ids));
         $this->assertEquals($real, $dataManager->get($ids, 'default'));
-        $this->assertTrue($dataManager->check());
-        $this->assertTrue($dataManager->check($ids));
-        $this->assertTrue($dataManager->check($ids, fn($value) => !empty($value)));
+        $this->assertTrue($dataManager->try());
+        $this->assertTrue($dataManager->try($ids));
+        $this->assertTrue($dataManager->try($ids, fn($value) => !empty($value)));
 
         list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step2;
 
@@ -182,9 +182,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
-        $this->assertTrue($dataManager->check());
-        $this->assertTrue($dataManager->check($ids));
-        $this->assertTrue($dataManager->check($ids, fn($value) => !empty($value)));
+        $this->assertTrue($dataManager->try());
+        $this->assertTrue($dataManager->try($ids));
+        $this->assertTrue($dataManager->try($ids, fn($value) => !empty($value)));
 
         list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step3;
         unset($data);
@@ -196,9 +196,9 @@ class Test extends TestCase
         $this->assertEquals($real, $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
-        $this->assertTrue($dataManager->check());
-        $this->assertFalse($dataManager->check($ids));
-        $this->assertFalse($dataManager->check($ids, fn($value) => !empty($value)));
+        $this->assertTrue($dataManager->try());
+        $this->assertFalse($dataManager->try($ids));
+        $this->assertFalse($dataManager->try($ids, fn($value) => !empty($value)));
 
         $this->assertInstanceOf(DataManagerInterface::class, $dataManager->del());
 
@@ -210,8 +210,8 @@ class Test extends TestCase
         $this->assertEquals([], $dataManager->get());
         $this->assertEquals($null, $dataManager->get($ids));
         $this->assertEquals($default, $dataManager->get($ids, 'default'));
-        $this->assertFalse($dataManager->check());
-        $this->assertFalse($dataManager->check($ids));
-        $this->assertFalse($dataManager->check($ids, fn($value) => empty($value)));
+        $this->assertFalse($dataManager->try());
+        $this->assertFalse($dataManager->try($ids));
+        $this->assertFalse($dataManager->try($ids, fn($value) => empty($value)));
     }
 }
