@@ -162,7 +162,7 @@ trait Provider
     /**
      * @return array[]
      */
-    public function providerCheck(): array
+    public function providerTry(): array
     {
         return [
             [false, [], ['value'], null],

@@ -91,12 +91,12 @@ interface DataManagerInterface extends ArrayAccess, IteratorAggregate
     public function del(array|int|string|null $id = null): static;
 
     /**
-     * Check data in object
+     * Try check data in object
      *
      * @param array<array|int|string>|int|string|null $id
      * @param callable|null $check
      *
      * @return bool
      */
-    public function check(array|int|string|null $id = null, callable|null $check = null): bool;
+    public function try(array|int|string|null $id = null, callable|null $check = null): bool;
 }

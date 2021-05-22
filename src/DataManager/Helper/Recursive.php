@@ -128,7 +128,7 @@ class Recursive
     }
 
     /**
-     * Check element recursively
+     * Try check element recursively
      *
      * @param array<int|string> $keys
      * @param array<int|string,mixed> $data
@@ -136,12 +136,12 @@ class Recursive
      *
      * @return bool
      */
-    public static function check(array $keys, array $data, callable|null $check = null): bool
+    public static function try(array $keys, array $data, callable|null $check = null): bool
     {
         if (($key = array_pop($keys)) !== null) {
             if ($keys != []) {
                 if (isset($data[$key]) && is_array($data[$key])) {
-                    return static::check($keys, $data[$key], $check);
+                    return static::try($keys, $data[$key], $check);
                 }
             } elseif (key_exists($key, $data)) {
                 if ($check !== null) {

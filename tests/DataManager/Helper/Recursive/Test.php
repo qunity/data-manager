@@ -100,14 +100,14 @@ class Test extends TestCase
      * @param mixed $data
      * @param mixed $check
      * @return void
-     * @dataProvider providerCheck
+     * @dataProvider providerTry
      */
-    public function testCheck(mixed $expected, mixed $keys, mixed $data, mixed $check)
+    public function testTry(mixed $expected, mixed $keys, mixed $data, mixed $check)
     {
         if ($check === null) {
-            $this->assertEquals($expected, Recursive::check($keys, $data));
+            $this->assertEquals($expected, Recursive::try($keys, $data));
         } else {
-            $this->assertEquals($expected, Recursive::check($keys, $data, $check));
+            $this->assertEquals($expected, Recursive::try($keys, $data, $check));
         }
     }
 }
