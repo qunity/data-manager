@@ -145,8 +145,7 @@ class Recursive
                 }
             } elseif (key_exists($key, $data)) {
                 if ($check !== null) {
-                    // TODO: add key argument to callback function
-                    return (bool)call_user_func($check, $data[$key]);
+                    return (bool)call_user_func($check, $data[$key], $key);
                 }
                 return true;
             }

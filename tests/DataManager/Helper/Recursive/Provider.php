@@ -184,6 +184,8 @@ trait Provider
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value === 'value_1'],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => 'true'],
             [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => $value !== 'value_error'],
+            [true, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value, $key) => $key === 0],
+            [false, [0, 'key'], ['key' => ['value_1', 'value_2']], fn($value, $key) => $key === '0'],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']], null],
             [false, [5, 'key'], ['key' => ['value_1', 'value_2']], fn($value) => false],
             [true, [0, 'key'], ['key' => [null, 'value_2']], null],
