@@ -102,7 +102,8 @@ abstract class AbstractDataManager implements DataManagerInterface
                 return Recursive::try(Identifier::getKeys($id), $this->data, $check);
             } elseif (key_exists($id, $this->data)) {
                 if ($check !== null) {
-                    return call_user_func($check, $this->data[$id]);
+                    // TODO: add key argument to callback function
+                    return (bool)call_user_func($check, $this->data[$id]);
                 }
                 return true;
             }
