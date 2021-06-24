@@ -29,7 +29,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @return void
      * @dataProvider providerGetIterator
      */
@@ -45,7 +45,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $id
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
@@ -66,7 +66,7 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @param mixed $method
      * @param mixed ...$args
      * @return void
@@ -81,7 +81,7 @@ class Test extends TestCase
     /**
      * @param mixed $eException
      * @param mixed $eMessage
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @param mixed $method
      * @return void
      * @dataProvider providerErrorMagicMethods
@@ -94,7 +94,7 @@ class Test extends TestCase
     }
 
     /**
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
@@ -141,7 +141,7 @@ class Test extends TestCase
     }
 
     /**
-     * @param mixed|DataManagerInterface $dataManager
+     * @param mixed $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
