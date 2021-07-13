@@ -253,6 +253,6 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function getIterator(array|int|string|null $id = null): Traversable
     {
-        return new ArrayIterator($this->get($id, []));
+        return new ArrayIterator((array)$this->get($id));
     }
 }
