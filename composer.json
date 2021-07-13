@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Qunity\\Component\\": "src"
+      "Qunity\\": "src"
     }
   }
 }

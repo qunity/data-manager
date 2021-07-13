@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Data;
+namespace Qunity\UnitTest\DataManager\Helper\Data;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\Helper\Data;
+use Qunity\DataManager\Helper\Data;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\DataManager\Helper\Data
+ * @package Qunity\UnitTest\DataManager\Helper\Data
  */
 class Test extends TestCase
 {

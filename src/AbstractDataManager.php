@@ -11,18 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component;
+namespace Qunity;
 
 use ArrayIterator;
 use BadMethodCallException;
-use Qunity\Component\DataManager\Helper\Data;
-use Qunity\Component\DataManager\Helper\Identifier;
-use Qunity\Component\DataManager\Helper\Recursive;
+use Qunity\DataManager\Helper\Data;
+use Qunity\DataManager\Helper\Identifier;
+use Qunity\DataManager\Helper\Recursive;
 use Traversable;
 
 /**
  * Class AbstractDataManager
- * @package Qunity\Component
+ * @package Qunity
  */
 abstract class AbstractDataManager implements DataManagerInterface
 {

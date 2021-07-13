@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component;
+namespace Qunity;
 
 use ArrayAccess;
 use IteratorAggregate;
@@ -19,7 +19,7 @@ use Traversable;
 
 /**
  * Interface DataManagerInterface
- * @package Qunity\Component
+ * @package Qunity
  *
  * @extends ArrayAccess<mixed,mixed>
  * @extends IteratorAggregate<mixed>

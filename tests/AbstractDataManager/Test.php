@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\AbstractDataManager;
+namespace Qunity\UnitTest\AbstractDataManager;
 
 use ArrayIterator;
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManagerInterface;
+use Qunity\DataManagerInterface;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\AbstractDataManager
+ * @package Qunity\UnitTest\AbstractDataManager
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */

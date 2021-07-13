@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Identifier;
+namespace Qunity\UnitTest\DataManager\Helper\Identifier;
 
 use InvalidArgumentException;
 
 /**
  * Trait Provider
- * @package Qunity\UnitTest\Component\DataManager\Helper\Identifier
+ * @package Qunity\UnitTest\DataManager\Helper\Identifier
  */
 trait Provider
 {

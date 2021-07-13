@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component\DataManager\Helper;
+namespace Qunity\DataManager\Helper;
 
 use InvalidArgumentException;
-use Qunity\Component\DataManagerInterface;
+use Qunity\DataManagerInterface;
 
 /**
  * Class Identifier
- * @package Qunity\Component\DataManager\Helper
+ * @package Qunity\DataManager\Helper
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */

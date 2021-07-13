@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Recursive;
+namespace Qunity\UnitTest\DataManager\Helper\Recursive;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\Helper\Recursive;
+use Qunity\DataManager\Helper\Recursive;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\DataManager\Helper\Recursive
+ * @package Qunity\UnitTest\DataManager\Helper\Recursive
  */
 class Test extends TestCase
 {

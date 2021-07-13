@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Data;
+namespace Qunity\UnitTest\DataManager\Helper\Data;
 
 /**
  * Trait Provider
- * @package Qunity\UnitTest\Component\DataManager\Helper\Data
+ * @package Qunity\UnitTest\DataManager\Helper\Data
  */
 trait Provider
 {

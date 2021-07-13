@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\AbstractDataManager;
+namespace Qunity\UnitTest\AbstractDataManager;
 
 use BadMethodCallException;
-use Qunity\Component\DataManager;
+use Qunity\DataManager;
 
 /**
  * Trait Provider
- * @package Qunity\UnitTest\Component\AbstractDataManager
+ * @package Qunity\UnitTest\AbstractDataManager
  *
  * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
  */

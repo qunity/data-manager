@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component;
+namespace Qunity;
 
 /**
  * Class DataManager
- * @package Qunity\Component
+ * @package Qunity
  */
 class DataManager extends AbstractDataManager
 {

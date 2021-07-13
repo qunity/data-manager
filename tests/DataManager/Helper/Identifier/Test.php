@@ -11,14 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Qunity\UnitTest\Component\DataManager\Helper\Identifier;
+namespace Qunity\UnitTest\DataManager\Helper\Identifier;
 
 use PHPUnit\Framework\TestCase;
-use Qunity\Component\DataManager\Helper\Identifier;
+use Qunity\DataManager\Helper\Identifier;
 
 /**
  * Class Test
- * @package Qunity\UnitTest\Component\DataManager\Helper\Identifier
+ * @package Qunity\UnitTest\DataManager\Helper\Identifier
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */

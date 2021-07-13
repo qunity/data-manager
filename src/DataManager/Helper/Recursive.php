@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Qunity\Component\DataManager\Helper;
+namespace Qunity\DataManager\Helper;
 
 /**
  * Class Recursive
- * @package Qunity\Component\DataManager\Helper
+ * @package Qunity\DataManager\Helper
  */
 class Recursive
 {
