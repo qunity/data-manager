@@ -29,11 +29,11 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @return void
      * @dataProvider providerGetIterator
      */
-    public function testGetIterator(mixed $expected, mixed $dataManager)
+    public function testGetIterator(mixed $expected, DataManagerInterface $dataManager)
     {
         $this->assertEquals($expected, $dataManager->get());
         $this->assertEquals(new ArrayIterator($expected), $dataManager->getIterator());
@@ -45,12 +45,12 @@ class Test extends TestCase
 
     /**
      * @param mixed $id
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @param mixed $value
      * @return void
      * @dataProvider providerArrayAccess
      */
-    public function testArrayAccess(mixed $id, mixed $dataManager, mixed $value)
+    public function testArrayAccess(mixed $id, DataManagerInterface $dataManager, mixed $value)
     {
         $this->assertFalse(isset($dataManager[$id]));
         $this->assertNull($dataManager[$id]);
@@ -66,14 +66,18 @@ class Test extends TestCase
 
     /**
      * @param mixed $expected
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @param mixed $method
      * @param mixed ...$args
      * @return void
      * @dataProvider providerSuccessMagicMethods
      */
-    public function testSuccessMagicMethods(mixed $expected, mixed $dataManager, mixed $method, mixed ...$args)
-    {
+    public function testSuccessMagicMethods(
+        mixed $expected,
+        DataManagerInterface $dataManager,
+        mixed $method,
+        mixed ...$args
+    ) {
         // @phpstan-ignore-next-line
         $this->assertEquals($expected, call_user_func_array([$dataManager, $method], $args));
     }
@@ -81,27 +85,31 @@ class Test extends TestCase
     /**
      * @param mixed $eException
      * @param mixed $eMessage
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @param mixed $method
      * @return void
      * @dataProvider providerErrorMagicMethods
      */
-    public function testErrorMagicMethods(mixed $eException, mixed $eMessage, mixed $dataManager, mixed $method)
-    {
+    public function testErrorMagicMethods(
+        mixed $eException,
+        mixed $eMessage,
+        DataManagerInterface $dataManager,
+        mixed $method
+    ) {
         $this->expectException($eException);
         $this->expectExceptionMessage($eMessage);
         call_user_func([$dataManager, $method]); // @phpstan-ignore-line
     }
 
     /**
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
      * @return void
      * @dataProvider providerSingleMethods
      */
-    public function testSingleMethods(mixed $dataManager, array $step1, array $step2, array $step3)
+    public function testSingleMethods(DataManagerInterface $dataManager, array $step1, array $step2, array $step3)
     {
         list('id' => $id, 'value' => $value) = $step1;
 
@@ -141,7 +149,7 @@ class Test extends TestCase
     }
 
     /**
-     * @param mixed $dataManager
+     * @param DataManagerInterface $dataManager
      * @param array<string,array> $step1
      * @param array<string,array> $step2
      * @param array<string,array> $step3
@@ -149,7 +157,7 @@ class Test extends TestCase
      * @dataProvider providerMassMethods
      * @noinspection DuplicatedCode
      */
-    public function testMassMethods(mixed $dataManager, array $step1, array $step2, array $step3)
+    public function testMassMethods(DataManagerInterface $dataManager, array $step1, array $step2, array $step3)
     {
         list('data' => $data, 'real' => $real, 'ids' => $ids, 'null' => $null, 'default' => $default) = $step1;
 
